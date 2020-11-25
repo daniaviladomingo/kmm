@@ -1,0 +1,17 @@
+CREATE TABLE CharacterFavorite(
+    id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    image TEXT NOT NULL
+);
+
+insertCharacterFavorite:
+INSERT INTO CharacterFavorite(id, name, image) VALUES (?,?,?);
+
+removeCharacterFavorite:
+DELETE FROM CharacterFavorite WHERE id = ?;
+
+selectAllCharacterFavorite:
+SELECT * FROM CharacterFavorite;
+
+selectCharacterFavoriteById:
+SELECT * FROM CharacterFavorite WHERE id = ?;
