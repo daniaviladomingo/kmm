@@ -91,6 +91,14 @@ android {
         }
     }
 }
+
+sqldelight {
+    database("AppDatabase") {
+        packageName = "daniel.avila.ricknmortykmm.shared.data_cache.sqldelight"
+        sourceFolders = listOf("kotlin")
+    }
+}
+
 val packForXcode by tasks.creating(Sync::class) {
     group = "build"
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
@@ -103,10 +111,5 @@ val packForXcode by tasks.creating(Sync::class) {
     from({ framework.outputDirectory })
     into(targetDir)
 }
-tasks.getByName("build").dependsOn(packForXcode)
 
-sqldelight {
-    database("AppDatabase") {
-        packageName = "daniel.avila.ricknmortykmm.shared.data_cache.sqldelight"
-    }
-}
+tasks.getByName("build").dependsOn(packForXcode)
