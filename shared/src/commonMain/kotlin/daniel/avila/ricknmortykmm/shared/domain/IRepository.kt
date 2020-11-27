@@ -1,5 +1,12 @@
 package daniel.avila.ricknmortykmm.shared.domain
 
-interface IRepository {
+import daniel.avila.ricknmortykmm.shared.domain.model.Character
+import kotlinx.coroutines.flow.Flow
 
+interface IRepository {
+    suspend fun getCharacters(): List<Character>
+    suspend fun getCharactersFavorites(): List<Character>
+    suspend fun addCharacterToFavorites(character: Character)
+    suspend fun removeCharacterFromFavorite(idCharacter: Int)
+    suspend fun isCharacterFavorite(idCharacter: Int)
 }
