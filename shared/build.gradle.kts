@@ -42,7 +42,7 @@ kotlin {
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9-native-mt")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
 //                api("org.koin:koin-core:$koinVersion")
             }
@@ -61,6 +61,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
                 implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
 
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2")
             }
         }
         val androidTest by getting {

@@ -1,8 +1,7 @@
 package daniel.avila.ricknmortykmm.shared.repository
 
-import daniel.avila.ricknmortykmm.shared.data_remote.model.ApiCharacter
-import kotlinx.coroutines.flow.Flow
+import daniel.avila.ricknmortykmm.shared.data_remote.model.ApiCharactersResponse
 
 interface IRemoteData {
-    fun getCharactersFromApi(): Flow<List<ApiCharacter>>
+    suspend fun getCharactersFromApi(): ApiCharactersResponse
 }
