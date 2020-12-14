@@ -8,23 +8,25 @@ import daniel.avila.ricknmortykmm.shared.repository.model.mapper.ApiCharacterMap
 class RepositoryImp(
     private val cacheData: ICacheData,
     private val remoteData: IRemoteData,
-    private val apiCharacterMapper: ApiCharacterMapper,
+    private val apiCharacterMapper: ApiCharacterMapper
 ): IRepository {
-    override suspend fun getCharacters(): List<Character> = remoteData.getCharactersFromApi().results.map { apiCharacterMapper.map(it) }
 
-    override suspend fun getCharactersFavorites(): List<Character> {
-        TODO("Not yet implemented")
-    }
 
-    override suspend fun addCharacterToFavorites(character: Character) {
-        TODO("Not yet implemented")
-    }
+    @Throws(Exception::class) override suspend fun getCharacters(): List<Character> = remoteData.getCharactersFromApi().results.map { apiCharacterMapper.map(it) }
 
-    override suspend fun removeCharacterFromFavorite(idCharacter: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun isCharacterFavorite(idCharacter: Int) {
-        TODO("Not yet implemented")
-    }
+//    override suspend fun getCharactersFavorites(): List<Character> {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override suspend fun addCharacterToFavorites(character: Character) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override suspend fun removeCharacterFromFavorite(idCharacter: Int) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override suspend fun isCharacterFavorite(idCharacter: Int) {
+//        TODO("Not yet implemented")
+//    }
 }

@@ -1,13 +1,15 @@
 package daniel.avila.ricknmortykmm.shared.data_cache
 
 import daniel.avila.ricknmortykmm.shared.data_cache.sqldelight.AppDatabase
+import daniel.avila.ricknmortykmm.shared.data_cache.sqldelight.DatabaseDriverFactory
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.repository.ICacheData
 
 class CacheDataImp(
-    sqldelightDataBase: AppDatabase
+    databaseDriverFactory: DatabaseDriverFactory
 ) : ICacheData {
-    private val dbQuery = sqldelightDataBase.appDatabaseQueries
+    private val database = AppDatabase.invoke(databaseDriverFactory.createDriver())
+    private val dbQuery = database.appDatabaseQueries
 
     override fun addCharacterToFavorite(character: Character) {
         dbQuery.transaction {

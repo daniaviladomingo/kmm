@@ -17,12 +17,6 @@ dependencies {
     implementation("com.google.android.material:material:1.2.1")
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
-
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2")
-
-
-    implementation("io.ktor:ktor-client-android:1.4.0")
-    implementation("io.ktor:ktor-client-serialization:1.4.0")
 }
 
 android {
