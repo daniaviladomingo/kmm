@@ -2,8 +2,21 @@ package daniel.avila.ricknmortykmm.androidApp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import daniel.avila.ricknmortykmm.shared.Greeting
 import android.widget.TextView
+import daniel.avila.ricknmortykmm.shared.apiCharacterMapper
+import daniel.avila.ricknmortykmm.shared.dataRemote
+import daniel.avila.ricknmortykmm.shared.data_cache.CacheDataImp
+import daniel.avila.ricknmortykmm.shared.data_cache.sqldelight.DatabaseDriverFactory
+import daniel.avila.ricknmortykmm.shared.repository.RepositoryImp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 fun greet(): String {
     return Greeting().greeting()
@@ -14,20 +27,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val dataCache = CacheDataImp(AppDatabase.invoke(DatabaseDriverFactory(this).createDriver()))
-//
-//        val repository = RepositoryImp(dataCache, dataRemote, apiCharacterMapper)
-//
-//        GlobalScope.launch(Dispatchers.Main) {
-//            val characters = withContext(Dispatchers.IO){
-//                repository.getCharacters()
-//            }
-//            characters.forEach {
-//                Log.d("aaa", "$it")
-//            }
-//        }
-
         val tv: TextView = findViewById(R.id.text_view)
         tv.text = greet()
+
+        val cacheData = CacheDataImp(DatabaseDriverFactory(this))
+
+        val repository = RepositoryImp(
+            cacheData = cacheData,
+            remoteData = dataRemote,
+            apiCharacterMapper = apiCharacterMapper
+        )
+
+        GlobalScope.launch(Dispatchers.Main) {
+            repository
+                .getCharacters()
+                .catch { throwable -> Log.d("aaa", "$throwable") }
+                .collect { characters ->
+                    Log.d("aaa", Thread.currentThread().name)
+                    tv.text = "Hola"
+                    characters.forEach { Log.d("aaa", "$it") }
+                }
+        }
+
+
+//            val characters = withContext(Dispatchers.IO) {
+//                try {
+//                    repository.getCharacters()
+//                } catch (e: Exception) {
+//                    Log.d("aaa", "Error: $e")
+//                }
+//            }
+////            characters.forEach {
+////                Log.d("aaa", "$it")
+////            }
+//        }
+
+
+
     }
 }

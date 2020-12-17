@@ -3,6 +3,8 @@ package daniel.avila.ricknmortykmm.shared.repository
 import daniel.avila.ricknmortykmm.shared.domain.IRepository
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.repository.model.mapper.ApiCharacterMapper
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 
 class RepositoryImp(
@@ -11,8 +13,9 @@ class RepositoryImp(
     private val apiCharacterMapper: ApiCharacterMapper
 ): IRepository {
 
-
-    @Throws(Exception::class) override suspend fun getCharacters(): List<Character> = remoteData.getCharactersFromApi().results.map { apiCharacterMapper.map(it) }
+    override suspend fun getCharacters(): Flow<List<Character>> = flow {
+        emit(remoteData.getCharactersFromApi().results.map { apiCharacterMapper.map(it) })
+    }
 
 //    override suspend fun getCharactersFavorites(): List<Character> {
 //        TODO("Not yet implemented")

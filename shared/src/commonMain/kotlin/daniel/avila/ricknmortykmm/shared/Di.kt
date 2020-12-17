@@ -8,6 +8,8 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import kotlinx.serialization.json.Json
 
+const val END_POINT = "https://rickandmortyapi.com/"
+
 val httpClient = HttpClient {
     install(JsonFeature) {
         val json = Json { ignoreUnknownKeys = true }
@@ -15,7 +17,7 @@ val httpClient = HttpClient {
     }
 }
 
-val dataRemote: IRemoteData = RemoteDataImp(httpClient)
+val dataRemote: IRemoteData = RemoteDataImp(END_POINT, httpClient)
 
 val apiCharacterMapper: ApiCharacterMapper = ApiCharacterMapper()
 

@@ -57,7 +57,6 @@ kotlin {
         // ANDROID
         val androidMain by getting {
             dependencies {
-                implementation("com.google.android.material:material:1.2.0")
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
                 implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
             }
