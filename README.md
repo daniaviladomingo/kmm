@@ -1,4 +1,8 @@
 # Kotlin Mobile Multiplatform
-* Coroutines
+
+* SOLID
+* CLEAN ARCHITECTURE
+* MVP
 * Sqldelight
 * Ktor
+* Flow

@@ -1,4 +1,12 @@
 package daniel.avila.ricknmortykmm.shared.domain.interactors
 
-class GetCharacterUseCase {
+import daniel.avila.ricknmortykmm.shared.domain.IRepository
+import daniel.avila.ricknmortykmm.shared.domain.interactors.type.UseCaseOut
+import daniel.avila.ricknmortykmm.shared.domain.model.Character
+import kotlinx.coroutines.flow.Flow
+
+class GetCharacterUseCase(
+    private val repository: IRepository
+): UseCaseOut<List<Character>> {
+    override suspend fun execute(): Flow<List<Character>> = repository.getCharacters()
 }

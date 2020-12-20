@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlin.coroutines.CoroutineContext
 
-class BasePresenter<out View : IViewResourceState>(
+open class BasePresenter<out View : IViewResourceState>(
     private val view: View,
     private val executor: IExecutor
 ): CoroutineScope {
