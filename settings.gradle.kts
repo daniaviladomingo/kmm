@@ -18,6 +18,6 @@ rootProject.name = "RickNMortyKMM"
 
 include(":androidApp")
 include(":shared")
-//include(":domain")
+//include(":daniel.avila.ricknmortykmm.shared.domain")
 
 

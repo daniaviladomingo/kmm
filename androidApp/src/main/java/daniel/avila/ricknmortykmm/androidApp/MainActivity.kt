@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 .catch { throwable -> Log.d("aaa", "$throwable") }
                 .collect { characters ->
                     Log.d("aaa", Thread.currentThread().name)
-                    tv.text = "Hola"
+//                    tv.text = "Hola"
                     characters.forEach { Log.d("aaa", "$it") }
                 }
         }
