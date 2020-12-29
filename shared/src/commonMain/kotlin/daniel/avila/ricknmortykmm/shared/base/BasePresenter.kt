@@ -5,15 +5,28 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlin.coroutines.CoroutineContext
 
-open class BasePresenter<out View : IViewResourceState>(
-    private val view: View,
+abstract class BasePresenter<View : IBaseView>(
     private val executor: Executor
-): CoroutineScope {
+) : IBasePresenter<View>, CoroutineScope {
+    // TODO: best option
+    //    private var weakViewReference: WeakReference<View>? = null
+
+    private var view: View? = null
+    private val isViewAttached: Boolean get() = view != null
 
     private val job = SupervisorJob()
 
     override val coroutineContext: CoroutineContext
         get() = job + executor.main
 
-    fun detach() = job.cancel()
+    override fun attach(view: View) {
+        if (!isViewAttached) {
+            this.view = view
+        }
+    }
+
+    override fun detach() {
+        job.cancel()
+        view = null
+    }
 }
