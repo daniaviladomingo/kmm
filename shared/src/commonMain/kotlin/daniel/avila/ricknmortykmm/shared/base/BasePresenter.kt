@@ -11,22 +11,25 @@ abstract class BasePresenter<View : IBaseView>(
     // TODO: best option
     //    private var weakViewReference: WeakReference<View>? = null
 
-    private var view: View? = null
-    private val isViewAttached: Boolean get() = view != null
+    private var viewAttach: View? = null
+    private val isViewAttached: Boolean get() = viewAttach != null
 
     private val job = SupervisorJob()
 
     override val coroutineContext: CoroutineContext
         get() = job + executor.main
 
+    protected val view: View
+        get() = viewAttach ?: throw IllegalStateException("View don't attached")
+
     override fun attach(view: View) {
         if (!isViewAttached) {
-            this.view = view
+            this.viewAttach = view
         }
     }
 
     override fun detach() {
         job.cancel()
-        view = null
+        viewAttach = null
     }
 }
