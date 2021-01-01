@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainActivity : BaseActivity(), ICharactersView {
+class CharactersActivity : BaseActivity(), ICharactersView {
     val cacheData = CacheDataImp(DatabaseDriverFactory(this))
 
     val repository = RepositoryImp(
@@ -49,20 +49,12 @@ class MainActivity : BaseActivity(), ICharactersView {
         val tv: TextView = findViewById(R.id.text_view)
         tv.text = Greeting().greeting()
 
-        Log.d("aaa", "Antes del load")
         presenter.loadCharacters()
 
-//        val cacheData = CacheDataImp(DatabaseDriverFactory(this))
-//
-//        val repository = RepositoryImp(
-//            cacheData = cacheData,
-//            remoteData = dataRemote,
-//            apiCharacterMapper = apiCharacterMapper
-//        )
-//
 //        GlobalScope.launch(Dispatchers.Main) {
 //            repository
 //                .getCharacters()
+//                .flowOn(Dispatchers.IO)
 //                .catch { throwable -> Log.d("aaa", "$throwable") }
 //                .collect { characters ->
 //                    Log.d("aaa", Thread.currentThread().name)
@@ -88,7 +80,7 @@ class MainActivity : BaseActivity(), ICharactersView {
     }
 
     override fun displayCharacters(characters: List<Character>) {
-        Log.d("aaa", "HOLA")
+        Log.d("aaa", Thread.currentThread().name)
         characters.forEach { Log.d("aaa", "$it") }
     }
 }
