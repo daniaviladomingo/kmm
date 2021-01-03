@@ -122,8 +122,8 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				704E25BC259F676900721B90 /* CharactersViewController.swift */,
 				704E25B6259F55DF00721B90 /* BaseViewController.swift */,
+				704E25BC259F676900721B90 /* CharactersViewController.swift */,
 				7555FF7E242A565900829871 /* AppDelegate.swift */,
 				7555FF80242A565900829871 /* SceneDelegate.swift */,
 				7555FF82242A565900829871 /* ContentView.swift */,

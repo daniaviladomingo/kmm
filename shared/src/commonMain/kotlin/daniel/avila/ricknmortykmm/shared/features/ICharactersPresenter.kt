@@ -1,5 +1,7 @@
 package daniel.avila.ricknmortykmm.shared.features
 
-interface ICharactersPresenter {
+import daniel.avila.ricknmortykmm.shared.base.IBasePresenter
+
+interface ICharactersPresenter<View: ICharactersView>: IBasePresenter<View> {
     fun loadCharacters()
 }

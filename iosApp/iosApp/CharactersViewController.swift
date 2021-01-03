@@ -9,14 +9,14 @@
 import UIKit
 import shared
 
-class CharactersViewController: BaseViewController, ICharactersView {
-    private let presenter: CharactersPresenter = CharactersPresenter(getCharacterUseCase: <#T##GetCharacterUseCase#>, executor: <#T##Executor#>)
-    
-    override func getPresenter() -> IBasePresenter {
-        return CharactersPresenter
+class CharactersViewController: BaseViewController<CharactersPresenter>, ICharactersView {
+    override func viewDidLoad() {
+        presenter!.loadCharacters()
     }
     
     func displayCharacters(characters: [Character]) {
-        <#code#>
+        characters.forEach{
+            print($0)
+        }
     }
 }

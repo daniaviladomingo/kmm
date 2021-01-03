@@ -1,6 +1,7 @@
 package daniel.avila.ricknmortykmm.shared
 
 import daniel.avila.ricknmortykmm.shared.data_remote.RemoteDataImp
+import daniel.avila.ricknmortykmm.shared.domain.Executor
 import daniel.avila.ricknmortykmm.shared.repository.IRemoteData
 import daniel.avila.ricknmortykmm.shared.repository.model.mapper.ApiCharacterMapper
 import io.ktor.client.HttpClient
@@ -20,5 +21,13 @@ val httpClient = HttpClient {
 val dataRemote: IRemoteData = RemoteDataImp(END_POINT, httpClient)
 
 val apiCharacterMapper: ApiCharacterMapper = ApiCharacterMapper()
+
+val executor: Executor = Executor()
+
+/* USE CASES */
+
+
+
+/* PRESENTERS */
 
 

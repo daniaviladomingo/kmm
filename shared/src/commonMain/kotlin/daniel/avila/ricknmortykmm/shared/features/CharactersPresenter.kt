@@ -13,12 +13,12 @@ class CharactersPresenter(
     executor: Executor
 ) : BasePresenter<ICharactersView>(
     executor
-), ICharactersPresenter {
+), ICharactersPresenter<ICharactersView> {
     override fun loadCharacters() {
         launch {
             getCharacterUseCase
                 .execute()
-                .flowOn(Dispatchers.Default)
+                .flowOn(Dispatchers.Unconfined)
                 .collect { characters ->
                     view.displayCharacters(characters)
                 }

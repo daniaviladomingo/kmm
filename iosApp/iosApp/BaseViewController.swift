@@ -9,20 +9,18 @@
 import UIKit
 import shared
 
-class BaseViewController: UIViewController, IBaseView {
-    func getPresenter() -> IBasePresenter  {
-        preconditionFailure("This method must be overridden")
-    }
-    
+class BaseViewController<P : IBasePresenter>: UIViewController, IBaseView {
+    var presenter: P?
+        
     func managementResourceState(resource: Resource<AnyObject>) {
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getPresenter().attach(view: self)
+        presenter?.attach(view: self)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        getPresenter().detach()
+        presenter?.detach()
     }
 }
