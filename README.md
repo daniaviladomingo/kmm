@@ -1,4 +1,4 @@
-# Kotlin Mobile Multiplatform
+# Kotlin Multiplatform Mobile
 
 * SOLID
 * CLEAN ARCHITECTURE
