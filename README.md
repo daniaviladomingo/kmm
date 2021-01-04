@@ -1,5 +1,7 @@
 # Kotlin Multiplatform Mobile
 
+[KMM]
+
 * SOLID
 * CLEAN ARCHITECTURE
 * MVP
@@ -8,3 +10,6 @@
 * Flow
 
 ![alt text](./kmm.png)
+
+
+[KMM]: https://kotlinlang.org/lp/mobile/
