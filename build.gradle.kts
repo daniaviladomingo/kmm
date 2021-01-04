@@ -1,5 +1,6 @@
 buildscript {
     val kotlinVersion by extra("1.4.20")
+    val kotlin_version by extra("1.4.21")
     repositories {
         gradlePluginPortal()
         jcenter()

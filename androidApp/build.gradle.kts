@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     id("kotlin-android-extensions")
     id("kotlin-kapt")
+    id("kotlin-android")
 }
 group = "daniel.avila.ricknmortykmm"
 version = "1.0-SNAPSHOT"
@@ -24,6 +25,7 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.11.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
     kapt("com.github.bumptech.glide:compiler:4.11.0")
 }
 

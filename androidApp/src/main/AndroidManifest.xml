@@ -7,6 +7,7 @@
         android:label="Kotlin Multiplatform Mobile"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".DetailCharacterActivity"></activity>
         <activity android:name=".CharactersActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
