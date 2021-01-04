@@ -14,7 +14,6 @@ class CharactersAdapter(
     private val onClickCharacter: (Character) -> Unit
 ) : ListAdapter<Character, CharactersAdapter.ViewHolder>(DiffUtilCallback) {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.character_item, null)
         return ViewHolder(view)

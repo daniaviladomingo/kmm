@@ -1,7 +1,6 @@
 package daniel.avila.ricknmortykmm.androidApp
 
 import android.os.Bundle
-import android.util.Log
 import daniel.avila.ricknmortykmm.androidApp.databinding.ActivityMainBinding
 import daniel.avila.ricknmortykmm.shared.apiCharacterMapper
 import daniel.avila.ricknmortykmm.shared.base.IBasePresenter
@@ -42,8 +41,6 @@ class CharactersActivity : BaseActivity(), ICharactersView {
     }
 
     override fun displayCharacters(characters: List<Character>) {
-        Log.d("aaa", Thread.currentThread().name)
         adapter.submitList(characters)
-        characters.forEach { Log.d("aaa", "$it") }
     }
 }

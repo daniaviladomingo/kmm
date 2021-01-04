@@ -18,6 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         charactersViewController.presenter = characterPresenter
         
         let nvc: UINavigationController = UINavigationController()
+        
+        nvc.navigationBar.barTintColor = UIColor(red: 98, green: 0, blue: 238, alpha: 100)
         nvc.viewControllers = [charactersViewController]
         
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
