@@ -1,9 +1,9 @@
 # Rick & Morty KMM
 
-Kotlin Multiplatform Mobile [KMM]
-Coroutines [Flow]
-[Sqldelight]
-[Ktor]
+* Kotlin Multiplatform Mobile [KMM]
+* Coroutines [Flow]
+* [Sqldelight]
+* [Ktor]
 
 ![alt text](./kmm.png)
 
