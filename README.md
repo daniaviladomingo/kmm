@@ -9,7 +9,7 @@
 
 ![alt text](./kmm.png)
 
-## Especial thanks
+## Especial thank
 
 * [Alex Fuhrmann] for his fantastic job: [The Rick and Morty Api]
 

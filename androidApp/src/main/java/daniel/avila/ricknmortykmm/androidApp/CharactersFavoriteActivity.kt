@@ -2,24 +2,22 @@ package daniel.avila.ricknmortykmm.androidApp
 
 import android.content.Intent
 import android.os.Bundle
-import daniel.avila.ricknmortykmm.androidApp.DetailCharacterActivity.Companion.CHARACTER
 import daniel.avila.ricknmortykmm.androidApp.databinding.ActivityMainBinding
-import daniel.avila.ricknmortykmm.androidApp.model.mapper.CharacterMapper
 import daniel.avila.ricknmortykmm.shared.apiCharacterMapper
 import daniel.avila.ricknmortykmm.shared.base.IBasePresenter
 import daniel.avila.ricknmortykmm.shared.dataRemote
 import daniel.avila.ricknmortykmm.shared.data_cache.CacheDataImp
 import daniel.avila.ricknmortykmm.shared.data_cache.sqldelight.DatabaseDriverFactory
-import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersUseCase
+import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersFavoritesUseCase
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.executor
-import daniel.avila.ricknmortykmm.shared.features.characters.CharactersPresenter
-import daniel.avila.ricknmortykmm.shared.features.characters.ICharactersPresenter
-import daniel.avila.ricknmortykmm.shared.features.characters.ICharactersView
-import daniel.avila.ricknmortykmm.shared.features.characters.INavigatorCharacters
+import daniel.avila.ricknmortykmm.shared.features.favorites.CharactersFavoritesPresenter
+import daniel.avila.ricknmortykmm.shared.features.favorites.ICharactersFavoritePresenter
+import daniel.avila.ricknmortykmm.shared.features.favorites.ICharactersFavoritesView
+import daniel.avila.ricknmortykmm.shared.features.favorites.INavigatorCharactersFavorites
 import daniel.avila.ricknmortykmm.shared.repository.RepositoryImp
 
-class CharactersActivity : BaseActivity(), ICharactersView, INavigatorCharacters {
+class CharactersFavoriteActivity : BaseActivity(), ICharactersFavoritesView, INavigatorCharactersFavorites {
     val cacheData = CacheDataImp(DatabaseDriverFactory(this))
 
     val repository = RepositoryImp(
@@ -28,9 +26,10 @@ class CharactersActivity : BaseActivity(), ICharactersView, INavigatorCharacters
         apiCharacterMapper = apiCharacterMapper
     )
 
-    private val characterMapper = CharacterMapper()
-
-    private val presenter: ICharactersPresenter<ICharactersView> = CharactersPresenter(GetCharactersUseCase(repository), this, executor)
+    private val presenter: ICharactersFavoritePresenter<ICharactersFavoritesView> =
+        CharactersFavoritesPresenter(
+            GetCharactersFavoritesUseCase(repository), this, executor
+        )
 
     override fun getPresenter(): IBasePresenter<*> = presenter
 
@@ -53,12 +52,6 @@ class CharactersActivity : BaseActivity(), ICharactersView, INavigatorCharacters
     }
 
     override fun navigateToDetail(character: Character) {
-        startActivity(Intent(this, DetailCharacterActivity::class.java).apply {
-            putExtra(CHARACTER, characterMapper.map(character))
-        })
-    }
-
-    override fun navigateToFavorites() {
-        TODO("Not yet implemented")
+        startActivity(Intent(this, DetailCharacterActivity::class.java))
     }
 }

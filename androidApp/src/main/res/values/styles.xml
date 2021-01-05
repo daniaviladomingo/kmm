@@ -7,16 +7,4 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="CharacterTitle" parent="android:TextAppearance.Large.Inverse">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@android:color/darker_gray</item>
-    </style>
-
-    <style name="CharacterContent" parent="android:TextAppearance.Large">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@android:color/black</item>
-    </style>
-
 </resources>

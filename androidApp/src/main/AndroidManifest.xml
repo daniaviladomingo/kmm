@@ -7,8 +7,17 @@
         android:label="Kotlin Multiplatform Mobile"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetailCharacterActivity"></activity>
-        <activity android:name=".CharactersActivity">
+        <activity
+            android:name=".DetailCharacterActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".CharactersFavoriteActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".CharactersActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

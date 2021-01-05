@@ -10,11 +10,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let cacheData: ICacheData = CacheDataImp(databaseDriverFactory: DatabaseDriverFactory())
         let repository: IRepository = RepositoryImp(cacheData: cacheData, remoteData: DiKt.dataRemote, apiCharacterMapper: DiKt.apiCharacterMapper)
         
-        let getCharactersUseCase = GetCharacterUseCase(repository: repository)
-        
-        let characterPresenter = CharactersPresenter(getCharacterUseCase: getCharactersUseCase, executor: DiKt.executor)
+        let getCharactersUseCase = GetCharactersUseCase(repository: repository)
         
         let charactersViewController = CharactersViewController()
+        let characterPresenter = CharactersPresenter(getCharactersUseCase: getCharactersUseCase, navigator: charactersViewController, executor: DiKt.executor)
+        
+        
         charactersViewController.presenter = characterPresenter
         
         let nvc: UINavigationController = UINavigationController()

@@ -9,7 +9,15 @@
 import UIKit
 import shared
 
-class CharactersViewController: BaseViewController<CharactersPresenter>, ICharactersView {
+class CharactersViewController: BaseViewController<CharactersPresenter>, ICharactersView, INavigatorCharacters {
+    func navigateToDetail(character: Character) {
+        print("Navego")
+    }
+    
+    func navigateToFavorites() {
+        
+    }
+    
     private let tableView = UITableView()
     private var characters: [Character] = []
     
@@ -64,6 +72,7 @@ extension CharactersViewController: UITableViewDataSource{
 extension CharactersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //presenter?.loadCharacters(id: characters[indexPath.row].id)
+        presenter?.onCharacterClick(character: characters[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

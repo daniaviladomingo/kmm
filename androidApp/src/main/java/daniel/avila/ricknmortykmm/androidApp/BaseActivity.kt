@@ -1,5 +1,6 @@
 package daniel.avila.ricknmortykmm.androidApp
 
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import daniel.avila.ricknmortykmm.shared.base.IBasePresenter
 import daniel.avila.ricknmortykmm.shared.base.IBaseView
@@ -20,5 +21,12 @@ abstract class BaseActivity: AppCompatActivity(), IBaseView {
 
     override fun managementResourceState(resource: Resource<*>) {
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
