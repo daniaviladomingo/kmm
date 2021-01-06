@@ -52,6 +52,7 @@ class DetailCharacterActivity : BaseActivity(), ICharacterDetailView {
         setContentView(R.layout.activity_detail_character)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Detail"
 
         val binding = ActivityDetailCharacterBinding.inflate(layoutInflater)
         setContentView(binding.root)

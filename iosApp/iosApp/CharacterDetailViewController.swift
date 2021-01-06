@@ -7,13 +7,11 @@
 //
 
 import UIKit
+import shared
 
-class CharacterDetailViewController: BaseViewController<> {
-    var id: Int!
+class CharacterDetailViewController: BaseViewController<CharacterDetailPresenter>, ICharacterDetailView {
     var character: Character!
-    
-    var presenter: IPresenterCharacter?
-    
+        
     let imageCharacter: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
@@ -51,22 +49,26 @@ class CharacterDetailViewController: BaseViewController<> {
         super.viewDidLoad()
         
         buildUI()
-        presenter?.loadCharacter(id: id)
+        presenter?.isFavorite(idCharacter: character.id)
+        
+        showCharacter(character: character)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
     }
     
-    func showCharacter(character: Character) {
-        self.character = character
-        
+    private func showCharacter(character: Character) {
         name.text = character.name
         species.text = "\(character.origin), \(character.species)"
-        status.text = character.status.rawValue
+        status.text = character.status.name
         
         switch character.status {
-        case .ALIVE:
+        case .alive:
             status.textColor = .green
-        case .DEAD:
+        case .dead:
             status.textColor = .red
-        case .UNKNOWN:
+        case .unknown:
+            status.textColor = .orange
+        default:
             status.textColor = .orange
         }
         
@@ -104,15 +106,31 @@ class CharacterDetailViewController: BaseViewController<> {
         ])
     }
     
-    func isCharacterFavorite(isFavorite: Bool) {
+    func addedFavorite() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(removeFavorite))
+    }
+    
+    func removedFavorite() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(addFavorite))
+    }
+    
+    func isFavorite(isFavorite: Bool) {
         if (isFavorite) {
-            navigationItem.rightBarButtonItem = nil
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(removeFavorite))
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(addFavorite))
         }
     }
     
+    @objc private func done() {
+        dismiss(animated: false)
+    }
+    
+    @objc private func removeFavorite() {
+        presenter?.removeCharacterFromFavorite(id: character.id)
+    }
+    
     @objc private func addFavorite() {
-        presenter?.addToFavorite(character: character)
+        presenter?.addCharacterToFavorite(character: character)
     }
 }

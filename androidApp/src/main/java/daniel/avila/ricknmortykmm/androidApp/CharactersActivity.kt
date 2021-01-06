@@ -2,6 +2,8 @@ package daniel.avila.ricknmortykmm.androidApp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import daniel.avila.ricknmortykmm.androidApp.DetailCharacterActivity.Companion.CHARACTER
 import daniel.avila.ricknmortykmm.androidApp.databinding.ActivityMainBinding
 import daniel.avila.ricknmortykmm.androidApp.model.mapper.CharacterMapper
@@ -30,7 +32,8 @@ class CharactersActivity : BaseActivity(), ICharactersView, INavigatorCharacters
 
     private val characterMapper = CharacterMapper()
 
-    private val presenter: ICharactersPresenter<ICharactersView> = CharactersPresenter(GetCharactersUseCase(repository), this, executor)
+    private val presenter: ICharactersPresenter<ICharactersView> =
+        CharactersPresenter(GetCharactersUseCase(repository), this, executor)
 
     override fun getPresenter(): IBasePresenter<*> = presenter
 
@@ -48,6 +51,21 @@ class CharactersActivity : BaseActivity(), ICharactersView, INavigatorCharacters
         presenter.loadCharacters()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            R.id.action_favorite -> {
+                presenter.onFavoritesClick()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun displayCharacters(characters: List<Character>) {
         adapter.submitList(characters)
     }
@@ -59,6 +77,6 @@ class CharactersActivity : BaseActivity(), ICharactersView, INavigatorCharacters
     }
 
     override fun navigateToFavorites() {
-        TODO("Not yet implemented")
+        startActivity(Intent(this, CharactersFavoriteActivity::class.java))
     }
 }

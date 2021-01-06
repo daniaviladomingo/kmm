@@ -11,10 +11,24 @@ import shared
 
 class CharactersViewController: BaseViewController<CharactersPresenter>, ICharactersView, INavigatorCharacters {
     func navigateToDetail(character: Character) {
-        print("Navego")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let characterDetailPresenter = CharacterDetailPresenter(
+            isCharacterFavoriteUseCase: IsCharacterFavoriteUseCase(repository: appDelegate.repository),
+            addCharacterToFavoritesUseCase: AddCharacterToFavoritesUseCase(repository: appDelegate.repository),
+            removeCharacterFromFavoritesUseCase: RemoveCharacterFromFavoritesUseCase(repository: appDelegate.repository),
+            executor: DiKt.executor
+        )
+        
+        let characterDetailViewController = CharacterDetailViewController()
+        characterDetailViewController.presenter = characterDetailPresenter
+        characterDetailViewController.character = character
+              
+        appDelegate.nvc.pushViewController(characterDetailViewController, animated: true)
+//        appDelegate.nvc.viewControllers = [characterDetailViewController]
     }
     
-    func navigateToFavorites() {
+    @objc func navigateToFavorites() {
         
     }
     
@@ -46,6 +60,9 @@ class CharactersViewController: BaseViewController<CharactersPresenter>, ICharac
         tableView.delegate = self
         
         navigationItem.title = "Kotlin Multiplatform Mobile"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(navigateToFavorites))
+ 
     }
 }
 
@@ -71,7 +88,6 @@ extension CharactersViewController: UITableViewDataSource{
 
 extension CharactersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //presenter?.loadCharacters(id: characters[indexPath.row].id)
         presenter?.onCharacterClick(character: characters[indexPath.row])
     }
     

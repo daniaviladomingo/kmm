@@ -130,11 +130,11 @@
 			children = (
 				704E25B6259F55DF00721B90 /* BaseViewController.swift */,
 				704E25BC259F676900721B90 /* CharactersViewController.swift */,
-				704E25CE25A30B4900721B90 /* CharacterViewCell.swift */,
 				708AEF3D25A4D24C004F305F /* CharacterDetailViewController.swift */,
 				7555FF7E242A565900829871 /* AppDelegate.swift */,
 				7555FF80242A565900829871 /* SceneDelegate.swift */,
 				7555FF82242A565900829871 /* ContentView.swift */,
+				704E25CE25A30B4900721B90 /* CharacterViewCell.swift */,
 				7555FF84242A565B00829871 /* Assets.xcassets */,
 				7555FF89242A565B00829871 /* LaunchScreen.storyboard */,
 				7555FF8C242A565B00829871 /* Info.plist */,

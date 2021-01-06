@@ -5,36 +5,31 @@ import shared
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let cacheData: ICacheData = CacheDataImp(databaseDriverFactory: DatabaseDriverFactory())
-        let repository: IRepository = RepositoryImp(cacheData: cacheData, remoteData: DiKt.dataRemote, apiCharacterMapper: DiKt.apiCharacterMapper)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        let getCharactersUseCase = GetCharactersUseCase(repository: repository)
+        let getCharactersUseCase = GetCharactersUseCase(repository: appDelegate.repository)
         
         let charactersViewController = CharactersViewController()
         let characterPresenter = CharactersPresenter(getCharactersUseCase: getCharactersUseCase, navigator: charactersViewController, executor: DiKt.executor)
         
-        
         charactersViewController.presenter = characterPresenter
         
-        let nvc: UINavigationController = UINavigationController()
-        
-        nvc.navigationBar.barTintColor = UIColor(red: 98, green: 0, blue: 238, alpha: 100)
-        nvc.viewControllers = [charactersViewController]
+//        appDelegate.nvc.navigationBar.barTintColor = UIColor(red: 0, green: 133/255, blue: 119/255, alpha: 1.0)
+        appDelegate.nvc.viewControllers = [charactersViewController]
         
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
+//        let contentView = ContentView()
         
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = nvc//UIHostingController(rootView: contentView)
+            window.rootViewController = appDelegate.nvc//UIHostingController(rootView: contentView)
             self.window = window
             window.makeKeyAndVisible()
         }

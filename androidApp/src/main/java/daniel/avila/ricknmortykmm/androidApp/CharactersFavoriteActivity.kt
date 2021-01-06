@@ -3,6 +3,7 @@ package daniel.avila.ricknmortykmm.androidApp
 import android.content.Intent
 import android.os.Bundle
 import daniel.avila.ricknmortykmm.androidApp.databinding.ActivityMainBinding
+import daniel.avila.ricknmortykmm.androidApp.model.mapper.CharacterMapper
 import daniel.avila.ricknmortykmm.shared.apiCharacterMapper
 import daniel.avila.ricknmortykmm.shared.base.IBasePresenter
 import daniel.avila.ricknmortykmm.shared.dataRemote
@@ -26,6 +27,8 @@ class CharactersFavoriteActivity : BaseActivity(), ICharactersFavoritesView, INa
         apiCharacterMapper = apiCharacterMapper
     )
 
+    private val characterMapper = CharacterMapper()
+
     private val presenter: ICharactersFavoritePresenter<ICharactersFavoritesView> =
         CharactersFavoritesPresenter(
             GetCharactersFavoritesUseCase(repository), this, executor
@@ -44,6 +47,12 @@ class CharactersFavoriteActivity : BaseActivity(), ICharactersFavoritesView, INa
         binding.recycler.adapter = adapter
         setContentView(binding.root)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Favorites"
+    }
+
+    override fun onResume() {
+        super.onResume()
         presenter.loadCharacters()
     }
 
@@ -52,6 +61,8 @@ class CharactersFavoriteActivity : BaseActivity(), ICharactersFavoritesView, INa
     }
 
     override fun navigateToDetail(character: Character) {
-        startActivity(Intent(this, DetailCharacterActivity::class.java))
+        startActivity(Intent(this, DetailCharacterActivity::class.java).apply {
+            putExtra(DetailCharacterActivity.CHARACTER, characterMapper.map(character))
+        })
     }
 }
