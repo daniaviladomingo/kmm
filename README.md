@@ -1,7 +1,7 @@
 # Rick & Morty KMM
 
-![](android.gif)
-![](ios.gif)
+![](android.gif)![](ios.gif)
+
 
 * Kotlin Multiplatform Mobile [KMM]
 * Coroutines [Flow]
