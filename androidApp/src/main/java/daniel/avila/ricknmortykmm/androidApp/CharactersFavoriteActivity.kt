@@ -4,35 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import daniel.avila.ricknmortykmm.androidApp.databinding.ActivityMainBinding
 import daniel.avila.ricknmortykmm.androidApp.model.mapper.CharacterMapper
-import daniel.avila.ricknmortykmm.shared.apiCharacterMapper
 import daniel.avila.ricknmortykmm.shared.base.IBasePresenter
-import daniel.avila.ricknmortykmm.shared.dataRemote
-import daniel.avila.ricknmortykmm.shared.data_cache.CacheDataImp
-import daniel.avila.ricknmortykmm.shared.data_cache.sqldelight.DatabaseDriverFactory
-import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersFavoritesUseCase
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
-import daniel.avila.ricknmortykmm.shared.executor
-import daniel.avila.ricknmortykmm.shared.features.favorites.CharactersFavoritesPresenter
 import daniel.avila.ricknmortykmm.shared.features.favorites.ICharactersFavoritePresenter
 import daniel.avila.ricknmortykmm.shared.features.favorites.ICharactersFavoritesView
 import daniel.avila.ricknmortykmm.shared.features.favorites.INavigatorCharactersFavorites
-import daniel.avila.ricknmortykmm.shared.repository.RepositoryImp
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class CharactersFavoriteActivity : BaseActivity(), ICharactersFavoritesView, INavigatorCharactersFavorites {
-    val cacheData = CacheDataImp(DatabaseDriverFactory(this))
-
-    val repository = RepositoryImp(
-        cacheData = cacheData,
-        remoteData = dataRemote,
-        apiCharacterMapper = apiCharacterMapper
-    )
-
-    private val characterMapper = CharacterMapper()
-
-    private val presenter: ICharactersFavoritePresenter<ICharactersFavoritesView> =
-        CharactersFavoritesPresenter(
-            GetCharactersFavoritesUseCase(repository), this, executor
-        )
+    private val presenter: ICharactersFavoritePresenter<ICharactersFavoritesView> by inject { parametersOf(this) }
+    private val mapper: CharacterMapper by inject()
 
     override fun getPresenter(): IBasePresenter<*> = presenter
 
@@ -62,7 +44,7 @@ class CharactersFavoriteActivity : BaseActivity(), ICharactersFavoritesView, INa
 
     override fun navigateToDetail(character: Character) {
         startActivity(Intent(this, DetailCharacterActivity::class.java).apply {
-            putExtra(DetailCharacterActivity.CHARACTER, characterMapper.map(character))
+            putExtra(DetailCharacterActivity.CHARACTER, mapper.map(character))
         })
     }
 }

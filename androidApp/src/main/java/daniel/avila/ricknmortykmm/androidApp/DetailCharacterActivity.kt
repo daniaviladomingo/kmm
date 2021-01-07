@@ -8,40 +8,15 @@ import com.bumptech.glide.Glide
 import daniel.avila.ricknmortykmm.androidApp.databinding.ActivityDetailCharacterBinding
 import daniel.avila.ricknmortykmm.androidApp.model.CharacterParcelable
 import daniel.avila.ricknmortykmm.androidApp.model.mapper.CharacterMapper
-import daniel.avila.ricknmortykmm.shared.apiCharacterMapper
 import daniel.avila.ricknmortykmm.shared.base.IBasePresenter
-import daniel.avila.ricknmortykmm.shared.dataRemote
-import daniel.avila.ricknmortykmm.shared.data_cache.CacheDataImp
-import daniel.avila.ricknmortykmm.shared.data_cache.sqldelight.DatabaseDriverFactory
-import daniel.avila.ricknmortykmm.shared.domain.interactors.AddCharacterToFavoritesUseCase
-import daniel.avila.ricknmortykmm.shared.domain.interactors.IsCharacterFavoriteUseCase
-import daniel.avila.ricknmortykmm.shared.domain.interactors.RemoveCharacterFromFavoritesUseCase
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
-
-import daniel.avila.ricknmortykmm.shared.executor
-import daniel.avila.ricknmortykmm.shared.features.detail.CharacterDetailPresenter
 import daniel.avila.ricknmortykmm.shared.features.detail.ICharacterDetailPresenter
 import daniel.avila.ricknmortykmm.shared.features.detail.ICharacterDetailView
-import daniel.avila.ricknmortykmm.shared.repository.RepositoryImp
+import org.koin.android.ext.android.inject
 
 class DetailCharacterActivity : BaseActivity(), ICharacterDetailView {
-    val cacheData = CacheDataImp(DatabaseDriverFactory(this))
-
-    val repository = RepositoryImp(
-        cacheData = cacheData,
-        remoteData = dataRemote,
-        apiCharacterMapper = apiCharacterMapper
-    )
-
-    private val characterMapper = CharacterMapper()
-
-    private val presenter: ICharacterDetailPresenter<ICharacterDetailView> =
-        CharacterDetailPresenter(
-            IsCharacterFavoriteUseCase(repository),
-            AddCharacterToFavoritesUseCase(repository),
-            RemoveCharacterFromFavoritesUseCase(repository),
-            executor
-        )
+    private val presenter: ICharacterDetailPresenter<ICharacterDetailView> by inject()
+    private val mapper: CharacterMapper by inject()
 
     private var menuFavorite = false
     private lateinit var character: Character
@@ -61,7 +36,7 @@ class DetailCharacterActivity : BaseActivity(), ICharacterDetailView {
         intent.extras?.run {
             with(binding) {
                 character =
-                    characterMapper.inverseMap(getParcelable<CharacterParcelable>(CHARACTER)!!)
+                    mapper.inverseMap(getParcelable<CharacterParcelable>(CHARACTER)!!)
                 presenter.isFavorite(character.id)
                 name.text = character.name
                 Glide.with(image).load(character.image).into(image)

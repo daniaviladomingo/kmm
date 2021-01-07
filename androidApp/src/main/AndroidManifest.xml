@@ -6,6 +6,7 @@
         android:allowBackup="false"
         android:label="Kotlin Multiplatform Mobile"
         android:supportsRtl="true"
+        android:name=".KmmApplication"
         android:theme="@style/AppTheme">
         <activity
             android:name=".DetailCharacterActivity"

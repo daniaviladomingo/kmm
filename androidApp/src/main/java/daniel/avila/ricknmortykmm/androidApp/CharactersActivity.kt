@@ -7,33 +7,18 @@ import android.view.MenuItem
 import daniel.avila.ricknmortykmm.androidApp.DetailCharacterActivity.Companion.CHARACTER
 import daniel.avila.ricknmortykmm.androidApp.databinding.ActivityMainBinding
 import daniel.avila.ricknmortykmm.androidApp.model.mapper.CharacterMapper
-import daniel.avila.ricknmortykmm.shared.apiCharacterMapper
 import daniel.avila.ricknmortykmm.shared.base.IBasePresenter
-import daniel.avila.ricknmortykmm.shared.dataRemote
-import daniel.avila.ricknmortykmm.shared.data_cache.CacheDataImp
-import daniel.avila.ricknmortykmm.shared.data_cache.sqldelight.DatabaseDriverFactory
-import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersUseCase
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
-import daniel.avila.ricknmortykmm.shared.executor
-import daniel.avila.ricknmortykmm.shared.features.characters.CharactersPresenter
 import daniel.avila.ricknmortykmm.shared.features.characters.ICharactersPresenter
 import daniel.avila.ricknmortykmm.shared.features.characters.ICharactersView
 import daniel.avila.ricknmortykmm.shared.features.characters.INavigatorCharacters
-import daniel.avila.ricknmortykmm.shared.repository.RepositoryImp
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
+
 
 class CharactersActivity : BaseActivity(), ICharactersView, INavigatorCharacters {
-    val cacheData = CacheDataImp(DatabaseDriverFactory(this))
-
-    val repository = RepositoryImp(
-        cacheData = cacheData,
-        remoteData = dataRemote,
-        apiCharacterMapper = apiCharacterMapper
-    )
-
-    private val characterMapper = CharacterMapper()
-
-    private val presenter: ICharactersPresenter<ICharactersView> =
-        CharactersPresenter(GetCharactersUseCase(repository), this, executor)
+    private val presenter: ICharactersPresenter<ICharactersView> by inject { parametersOf(this) }
+    private val mapper: CharacterMapper by inject()
 
     override fun getPresenter(): IBasePresenter<*> = presenter
 
@@ -72,7 +57,7 @@ class CharactersActivity : BaseActivity(), ICharactersView, INavigatorCharacters
 
     override fun navigateToDetail(character: Character) {
         startActivity(Intent(this, DetailCharacterActivity::class.java).apply {
-            putExtra(CHARACTER, characterMapper.map(character))
+            putExtra(CHARACTER, mapper.map(character))
         })
     }
 
