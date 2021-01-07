@@ -9,7 +9,7 @@
 
 ![alt text](./kmm.png)
 
-## The Result
+## Result
 
 ![](android.gif)![](ios.gif)
 
