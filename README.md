@@ -1,8 +1,5 @@
 # Rick & Morty KMM
 
-![](android.gif)![](ios.gif)
-
-
 * Kotlin Multiplatform Mobile [KMM]
 * Coroutines [Flow]
 * [Sqldelight]
@@ -11,6 +8,10 @@
 ## Architecture
 
 ![alt text](./kmm.png)
+
+## The Result
+
+![](android.gif)![](ios.gif)
 
 ## Especial thank
 
