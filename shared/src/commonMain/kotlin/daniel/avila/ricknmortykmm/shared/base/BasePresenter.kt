@@ -2,6 +2,7 @@ package daniel.avila.ricknmortykmm.shared.base
 
 import daniel.avila.ricknmortykmm.shared.domain.Executor
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlin.coroutines.CoroutineContext
 
@@ -14,7 +15,7 @@ abstract class BasePresenter<View : IBaseView>(
     private var viewAttach: View? = null
     private val isViewAttached: Boolean get() = viewAttach != null
 
-    private val job = SupervisorJob()
+    private var job = SupervisorJob()
 
     override val coroutineContext: CoroutineContext
         get() = job + executor.main
@@ -23,6 +24,7 @@ abstract class BasePresenter<View : IBaseView>(
         get() = viewAttach ?: throw IllegalStateException("View don't attached")
 
     override fun attach(view: View) {
+        job = SupervisorJob()
         if (!isViewAttached) {
             this.viewAttach = view
         }

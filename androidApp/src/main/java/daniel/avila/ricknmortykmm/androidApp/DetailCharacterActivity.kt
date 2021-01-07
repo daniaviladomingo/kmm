@@ -3,6 +3,7 @@ package daniel.avila.ricknmortykmm.androidApp
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import daniel.avila.ricknmortykmm.androidApp.databinding.ActivityDetailCharacterBinding
 import daniel.avila.ricknmortykmm.androidApp.model.CharacterParcelable
@@ -77,11 +78,13 @@ class DetailCharacterActivity : BaseActivity(), ICharacterDetailView {
     }
 
     override fun addedFavorite() {
+        Toast.makeText(this, "Aded to favorites", Toast.LENGTH_SHORT).show()
         menuFavorite = true
         invalidateOptionsMenu()
     }
 
     override fun removedFavorite() {
+        Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show()
         menuFavorite = false
         invalidateOptionsMenu()
     }

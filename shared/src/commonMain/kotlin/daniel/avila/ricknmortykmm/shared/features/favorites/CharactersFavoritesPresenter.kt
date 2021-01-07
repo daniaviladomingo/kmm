@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class CharactersFavoritesPresenter(
-    private val getCharactersUseCase: GetCharactersFavoritesUseCase,
+    private val getCharactersFavoritesUseCase: GetCharactersFavoritesUseCase,
     private val navigator: INavigatorCharactersFavorites,
     executor: Executor
 ) : BasePresenter<ICharactersFavoritesView>(
@@ -18,7 +18,7 @@ class CharactersFavoritesPresenter(
 ), ICharactersFavoritePresenter<ICharactersFavoritesView> {
     override fun loadCharacters() {
         launch {
-            getCharactersUseCase
+            getCharactersFavoritesUseCase
                 .execute()
                 .flowOn(Dispatchers.Unconfined)
                 .collect { characters ->

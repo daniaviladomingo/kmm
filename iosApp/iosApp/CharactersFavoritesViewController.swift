@@ -1,15 +1,15 @@
 //
-//  CharactersViewController.swift
+//  CharactersFavoritesViewController.swift
 //  iosApp
 //
-//  Created by Daniel Ávila Domingo on 01/01/2021.
+//  Created by Daniel Ávila Domingo on 06/01/2021.
 //  Copyright © 2021 orgName. All rights reserved.
 //
 
 import UIKit
 import shared
 
-class CharactersViewController: BaseViewController<CharactersPresenter>, ICharactersView, INavigatorCharacters {
+class CharacterFavoritesViewController: BaseViewController<CharactersFavoritesPresenter>, ICharactersFavoritesView, INavigatorCharactersFavorites {
     func navigateToDetail(character: Character) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
@@ -28,28 +28,24 @@ class CharactersViewController: BaseViewController<CharactersPresenter>, ICharac
 //        appDelegate.nvc.viewControllers = [characterDetailViewController]
     }
     
-    func navigateToFavorites() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let getCharactersFavoritesUseCase = GetCharactersFavoritesUseCase(repository: appDelegate.repository)
-        
-        let charactersFavoritesViewController = CharacterFavoritesViewController()
-        let characterPresenter = CharactersFavoritesPresenter(getCharactersFavoritesUseCase: getCharactersFavoritesUseCase, navigator: charactersFavoritesViewController, executor: DiKt.executor)
-        
-        charactersFavoritesViewController.presenter = characterPresenter
-        appDelegate.nvc.pushViewController(charactersFavoritesViewController, animated: true)
-    }
-    
     private let tableView = UITableView()
     private var characters: [Character] = []
     
     override func viewDidLoad() {
         buildUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         presenter!.loadCharacters()
     }
     
     func displayCharacters(characters: [Character]) {
         self.characters = characters
+        characters.forEach{ character in
+            print(character)
+            
+        }
         tableView.reloadData()
     }
     
@@ -67,17 +63,12 @@ class CharactersViewController: BaseViewController<CharactersPresenter>, ICharac
         tableView.dataSource = self
         tableView.delegate = self
         
-        navigationItem.title = "Kotlin Multiplatform Mobile"
+        navigationItem.title = "Favorites"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "un_favorite.png"), style: .done, target: self, action: #selector(onFavoritesClick))
-    }
-    
-    @objc func onFavoritesClick() {
-        presenter?.onFavoritesClick()
     }
 }
 
-extension CharactersViewController: UITableViewDataSource{
+extension CharacterFavoritesViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return characters.count
     }
@@ -97,7 +88,7 @@ extension CharactersViewController: UITableViewDataSource{
     }
 }
 
-extension CharactersViewController: UITableViewDelegate {
+extension CharacterFavoritesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         presenter?.onCharacterClick(character: characters[indexPath.row])
     }
@@ -106,4 +97,5 @@ extension CharactersViewController: UITableViewDelegate {
         return 100
     }
 }
+
 

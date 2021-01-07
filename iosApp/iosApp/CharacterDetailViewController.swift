@@ -52,8 +52,6 @@ class CharacterDetailViewController: BaseViewController<CharacterDetailPresenter
         presenter?.isFavorite(idCharacter: character.id)
         
         showCharacter(character: character)
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
     }
     
     private func showCharacter(character: Character) {
@@ -104,26 +102,26 @@ class CharacterDetailViewController: BaseViewController<CharacterDetailPresenter
             status.topAnchor.constraint(equalTo: species.bottomAnchor, constant: 20),
             status.centerXAnchor.constraint(equalTo: imageCharacter.centerXAnchor)
         ])
+        
+        navigationItem.title = "Detail"
     }
     
     func addedFavorite() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(removeFavorite))
+        showToast(message: "Added to favorites")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "un_favorite.png"), style: .done, target: self, action: #selector(removeFavorite))
     }
     
     func removedFavorite() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(addFavorite))
+        showToast(message: "Removed from favorites")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "favorite.png"), style: .done, target: self, action: #selector(addFavorite))
     }
     
     func isFavorite(isFavorite: Bool) {
         if (isFavorite) {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(removeFavorite))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "un_favorite.png"), style: .done, target: self, action: #selector(removeFavorite))
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(addFavorite))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "favorite.png"), style: .done, target: self, action: #selector(addFavorite))
         }
-    }
-    
-    @objc private func done() {
-        dismiss(animated: false)
     }
     
     @objc private func removeFavorite() {
