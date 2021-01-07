@@ -1,4 +1,4 @@
-package daniel.avila.ricknmortykmm.shared
+package daniel.avila.ricknmortykmm.shared.di
 
 import daniel.avila.ricknmortykmm.shared.data_remote.RemoteDataImp
 import daniel.avila.ricknmortykmm.shared.domain.Executor
