@@ -24,10 +24,4 @@ val apiCharacterMapper: ApiCharacterMapper = ApiCharacterMapper()
 
 val executor: Executor = Executor()
 
-/* USE CASES */
-
-
-
-/* PRESENTERS */
-
 
