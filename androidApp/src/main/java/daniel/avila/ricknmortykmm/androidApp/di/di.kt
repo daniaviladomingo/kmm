@@ -5,6 +5,7 @@ import daniel.avila.ricknmortykmm.shared.data_cache.CacheDataImp
 import daniel.avila.ricknmortykmm.shared.data_cache.sqldelight.DatabaseDriverFactory
 import daniel.avila.ricknmortykmm.shared.data_remote.RemoteDataImp
 import daniel.avila.ricknmortykmm.shared.di.END_POINT
+import daniel.avila.ricknmortykmm.shared.di.executor
 import daniel.avila.ricknmortykmm.shared.di.httpClient
 import daniel.avila.ricknmortykmm.shared.domain.Executor
 import daniel.avila.ricknmortykmm.shared.domain.IRepository
@@ -42,7 +43,7 @@ val presenterModule = module {
 }
 
 val executorModule = module {
-    single { Executor() }
+    single { executor }
 }
 
 val useCaseModule = module {

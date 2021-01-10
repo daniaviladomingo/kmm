@@ -24,7 +24,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2")
 
     // Koin
-//    implementation("org.koin:koin-android-viewmodel:2.0.0-rc-2")
     implementation("org.koin:koin-android:2.2.0")
     implementation("org.koin:koin-core:2.2.0")
 
@@ -35,7 +34,6 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.11.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
     kapt("com.github.bumptech.glide:compiler:4.11.0")
 }
 

@@ -25,7 +25,6 @@ class CharacterFavoritesViewController: BaseViewController<CharactersFavoritesPr
         characterDetailViewController.character = character
               
         appDelegate.nvc.pushViewController(characterDetailViewController, animated: true)
-//        appDelegate.nvc.viewControllers = [characterDetailViewController]
     }
     
     private let tableView = UITableView()
@@ -79,10 +78,6 @@ extension CharacterFavoritesViewController: UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CharacterViewCell
         
         cell.character = character
-        
-//        if indexPath.row == characters.count-1 {
-//            presenter?.loadCharacters()
-//        }
                 
         return cell
     }

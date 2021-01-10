@@ -4,7 +4,6 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     id("com.android.library")
-    id("kotlin-android-extensions")
     id("com.squareup.sqldelight")
 }
 group = "daniel.avila.ricknmortykmm"
@@ -28,8 +27,6 @@ kotlin {
 
     val ktorVersion = "1.4.0"
     val sqlDelightVersion = "1.4.2"
-    val koinVersion= "2.2.1"
-
 
     sourceSets {
 
@@ -43,8 +40,6 @@ kotlin {
 
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt")
-
-//                api("org.koin:koin-core:$koinVersion")
             }
         }
         val commonTest by getting {

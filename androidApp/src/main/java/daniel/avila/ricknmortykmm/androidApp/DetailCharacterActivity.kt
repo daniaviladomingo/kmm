@@ -1,5 +1,6 @@
 package daniel.avila.ricknmortykmm.androidApp
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +11,8 @@ import daniel.avila.ricknmortykmm.androidApp.model.CharacterParcelable
 import daniel.avila.ricknmortykmm.androidApp.model.mapper.CharacterMapper
 import daniel.avila.ricknmortykmm.shared.base.IBasePresenter
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
+import daniel.avila.ricknmortykmm.shared.domain.model.Status
+import daniel.avila.ricknmortykmm.shared.domain.model.Status.*
 import daniel.avila.ricknmortykmm.shared.features.detail.ICharacterDetailPresenter
 import daniel.avila.ricknmortykmm.shared.features.detail.ICharacterDetailView
 import org.koin.android.ext.android.inject
@@ -43,6 +46,11 @@ class DetailCharacterActivity : BaseActivity(), ICharacterDetailView {
                 originSpecies.text =
                     "${character.origin}, ${character.species}"
                 status.text = character.status.name
+                status.setTextColor(when(character.status){
+                    ALIVE -> Color.GREEN
+                    DEAD -> Color.RED
+                    UNKNOWN -> Color.YELLOW
+                })
             }
         }
     }
