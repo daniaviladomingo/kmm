@@ -7,11 +7,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let getCharactersUseCase = GetCharactersUseCase(repository: appDelegate.repository)
-        
+                
         let charactersViewController = CharactersViewController()
-        let characterPresenter = CharactersPresenter(getCharactersUseCase: getCharactersUseCase, navigator: charactersViewController, executor: DiKt.executor)
+        let characterPresenter = CharactersPresenter(navigator: charactersViewController)
         
         charactersViewController.presenter = characterPresenter
         

@@ -2,23 +2,18 @@ package daniel.avila.ricknmortykmm.androidApp
 
 import android.app.Application
 import daniel.avila.ricknmortykmm.androidApp.di.*
+import daniel.avila.ricknmortykmm.shared.di.initKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
 
 class KmmApplication: Application() {
     override fun onCreate() {
         super.onCreate()
-        startKoin {
-            androidContext(this@KmmApplication)
+
+        initKoin {
             androidLogger()
-            modules(
-                presenterModule,
-                executorModule,
-                useCaseModule,
-                repositoryModule,
-                mapperModule,
-            )
+            androidContext(this@KmmApplication)
+            modules(mapperModule)
         }
     }
 }
