@@ -4,6 +4,7 @@
 * Coroutines [Flow]
 * [Sqldelight]
 * [Ktor]
+* [Koin]
 
 ## Architecture
 
@@ -24,3 +25,4 @@
 [Ktor]: https://ktor.io/
 [The Rick and Morty Api]: https://rickandmortyapi.com/
 [Alex Fuhrmann]: https://axelfuhrmann.com/
+[Koin]: https://insert-koin.io/docs/setup/v3
