@@ -12,29 +12,19 @@ import shared
 class CharactersViewController: BaseViewController<CharactersPresenter>, ICharactersView, INavigatorCharacters {
     func navigateToDetail(character: Character) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let characterDetailPresenter = CharacterDetailPresenter(
-            isCharacterFavoriteUseCase: IsCharacterFavoriteUseCase(repository: appDelegate.repository),
-            addCharacterToFavoritesUseCase: AddCharacterToFavoritesUseCase(repository: appDelegate.repository),
-            removeCharacterFromFavoritesUseCase: RemoveCharacterFromFavoritesUseCase(repository: appDelegate.repository),
-            executor: DiKt.executor
-        )
-        
+                
         let characterDetailViewController = CharacterDetailViewController()
-        characterDetailViewController.presenter = characterDetailPresenter
+        characterDetailViewController.presenter = CharacterDetailPresenter()
         characterDetailViewController.character = character
               
         appDelegate.nvc.pushViewController(characterDetailViewController, animated: true)
-//        appDelegate.nvc.viewControllers = [characterDetailViewController]
     }
     
     func navigateToFavorites() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let getCharactersFavoritesUseCase = GetCharactersFavoritesUseCase(repository: appDelegate.repository)
-        
+
         let charactersFavoritesViewController = CharacterFavoritesViewController()
-        let characterPresenter = CharactersFavoritesPresenter(getCharactersFavoritesUseCase: getCharactersFavoritesUseCase, navigator: charactersFavoritesViewController, executor: DiKt.executor)
+        let characterPresenter = CharactersFavoritesPresenter(navigator: charactersFavoritesViewController)
         
         charactersFavoritesViewController.presenter = characterPresenter
         appDelegate.nvc.pushViewController(charactersFavoritesViewController, animated: true)

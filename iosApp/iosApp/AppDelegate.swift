@@ -5,13 +5,11 @@ import shared
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     let nvc: UINavigationController = UINavigationController()
-    var repository: IRepository!
     
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let cacheData: ICacheData = CacheDataImp(databaseDriverFactory: DatabaseDriverFactory())
-        repository = RepositoryImp(cacheData: cacheData, remoteData: DiKt.dataRemote, apiCharacterMapper: DiKt.apiCharacterMapper)
+        KoinKt.doInitKoin()
         return true
     }
 
