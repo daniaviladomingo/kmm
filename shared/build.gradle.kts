@@ -40,6 +40,8 @@ kotlin {
 
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3-native-mt")
+
+                implementation("io.insert-koin:koin-core:3.0.1")
             }
         }
         val commonTest by getting {

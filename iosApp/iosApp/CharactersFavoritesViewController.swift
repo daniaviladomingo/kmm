@@ -12,16 +12,9 @@ import shared
 class CharacterFavoritesViewController: BaseViewController<CharactersFavoritesPresenter>, ICharactersFavoritesView, INavigatorCharactersFavorites {
     func navigateToDetail(character: Character) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let characterDetailPresenter = CharacterDetailPresenter(
-            isCharacterFavoriteUseCase: IsCharacterFavoriteUseCase(repository: appDelegate.repository),
-            addCharacterToFavoritesUseCase: AddCharacterToFavoritesUseCase(repository: appDelegate.repository),
-            removeCharacterFromFavoritesUseCase: RemoveCharacterFromFavoritesUseCase(repository: appDelegate.repository),
-            executor: DiKt.executor
-        )
-        
+                
         let characterDetailViewController = CharacterDetailViewController()
-        characterDetailViewController.presenter = characterDetailPresenter
+        characterDetailViewController.presenter = CharacterDetailPresenter()
         characterDetailViewController.character = character
               
         appDelegate.nvc.pushViewController(characterDetailViewController, animated: true)
@@ -41,9 +34,8 @@ class CharacterFavoritesViewController: BaseViewController<CharactersFavoritesPr
     
     func displayCharacters(characters: [Character]) {
         self.characters = characters
-        characters.forEach{ character in
+        characters.forEach { character in
             print(character)
-            
         }
         tableView.reloadData()
     }
