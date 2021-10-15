@@ -1,7 +1,9 @@
 # Rick & Morty KMM
 
 * Kotlin Multiplatform Mobile [KMM]
-* Coroutines [Flow]
+* [Compose] / [SwiftUI]
+* [MVI]
+* [Flow]
 * [Sqldelight]
 * [Ktor]
 * [Koin]
@@ -18,7 +20,6 @@
 
 * [Alex Fuhrmann] for his fantastic job: [The Rick and Morty Api]
 
-
 [KMM]: https://kotlinlang.org/lp/mobile/
 [Flow]: https://github.com/Kotlin/kotlinx.coroutines
 [Sqldelight]: https://cashapp.github.io/sqldelight/
@@ -26,3 +27,6 @@
 [The Rick and Morty Api]: https://rickandmortyapi.com/
 [Alex Fuhrmann]: https://axelfuhrmann.com/
 [Koin]: https://insert-koin.io/docs/setup/v3
+[Compose]: https://developer.android.com/jetpack/compose
+[SwiftUI]: https://developer.apple.com/xcode/swiftui/
+[MVI]: https://abhiappmobiledeveloper.medium.com/android-mvi-reactive-architecture-pattern-74e5f1300a87

@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="daniel.avila.ricknmortykmm.androidApp">
+    package="daniel.avila.ricknmortykmm.android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="false"
-        android:label="Kotlin Multiplatform Mobile"
-        android:supportsRtl="true"
         android:name=".KmmApplication"
+        android:allowBackup="false"
+        android:supportsRtl="true"
+        android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DetailCharacterActivity"
+            android:name=".features.CharacterDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".CharactersFavoriteActivity"
+            android:name=".features.CharactersFavoriteActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".CharactersActivity"
+            android:name=".features.CharactersActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,5 +28,4 @@
             </intent-filter>
         </activity>
     </application>
-
-</manifest>
+</manifest> 

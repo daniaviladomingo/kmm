@@ -4,9 +4,9 @@ import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import kotlinx.coroutines.flow.Flow
 
 interface IRepository {
-    suspend fun getCharacters(): Flow<List<Character>>
-    suspend fun getCharactersFavorites(): Flow<List<Character>>
-    suspend fun addCharacterToFavorites(character: Character): Flow<Unit>
-    suspend fun removeCharacterFromFavorite(idCharacter: Int): Flow<Unit>
-    suspend fun isCharacterFavorite(idCharacter: Int): Flow<Boolean>
+    fun getCharacters(): Flow<List<Character>>
+    fun getCharactersFavorites(): Flow<List<Character>>
+    fun addCharacterToFavorites(character: Character): Flow<Unit>
+    fun removeCharacterFromFavorite(idCharacter: Int): Flow<Unit>
+    fun isCharacterFavorite(idCharacter: Int): Flow<Boolean>
 }

@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 class IsCharacterFavoriteUseCase(
     private val repository: IRepository
 ): UseCaseInOut<Int, Boolean> {
-    override suspend fun execute(param: Int): Flow<Boolean> = repository.isCharacterFavorite(param)
+    override fun execute(param: Int): Flow<Boolean> = repository.isCharacterFavorite(param)
 }

@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 class GetCharactersFavoritesUseCase(
     private val repository: IRepository
 ): UseCaseOut<List<Character>> {
-    override suspend fun execute(): Flow<List<Character>> = repository.getCharactersFavorites()
+    override fun execute(): Flow<List<Character>> = repository.getCharactersFavorites()
 }

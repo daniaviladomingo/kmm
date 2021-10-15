@@ -2,46 +2,42 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     kotlin("plugin.serialization")
     id("com.android.library")
     id("com.squareup.sqldelight")
 }
-group = "daniel.avila.ricknmortykmm"
-version = "1.0-SNAPSHOT"
 
-repositories {
-    gradlePluginPortal()
-    google()
-    jcenter()
-    mavenCentral()
-}
+version = "1.0"
+
 kotlin {
     android()
-    ios {
-        binaries {
-            framework {
-                baseName = "shared"
-            }
-        }
+
+    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget = when {
+        System.getenv("SDK_NAME")?.startsWith("iphoneos") == true -> ::iosArm64
+        System.getenv("NATIVE_ARCH")?.startsWith("arm") == true -> ::iosSimulatorArm64
+        else -> ::iosX64
     }
 
-    val ktorVersion = "1.5.3"
-    val sqlDelightVersion = "1.4.3"
+    iosTarget("ios") {}
+
+    cocoapods {
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        ios.deploymentTarget = "14.1"
+        frameworkName = "shared"
+        podfile = project.file("../iosApp/Podfile")
+    }
 
     sourceSets {
-
-        // COMMON
         val commonMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-
-                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
-
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3-native-mt")
-
-                implementation("io.insert-koin:koin-core:3.0.1")
+                implementation(Libraries.ktorCore)
+                implementation(Libraries.ktorSerialization)
+                implementation(Libraries.Common.sqlDelight)
+                implementation(Libraries.Common.kotlinxSerializationCore)
+                implementation(Libraries.Common.kotlinxCoroutinesCore)
+                implementation(Libraries.koinCore)
             }
         }
         val commonTest by getting {
@@ -50,45 +46,35 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-
-        // ANDROID
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
-                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
+                implementation(Libraries.Android.sqlDelight)
+                implementation(Libraries.ktorAndroid)
+                implementation(Libraries.coroutinesAndroid)
             }
         }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.12")
+                implementation("junit:junit:4.13.2")
             }
         }
-
-        // IOS
         val iosMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-ios:$ktorVersion")
-                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
+                implementation(Libraries.IOs.ktorClient)
+                implementation(Libraries.IOs.sqlDelight)
             }
         }
         val iosTest by getting
     }
 }
+
 android {
-    compileSdkVersion(30)
+    compileSdk = Versions.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(24)
-        targetSdkVersion(30)
-        versionCode = 1
-        versionName = "1.0"
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
+        minSdk = Versions.minSdk
+        targetSdk = Versions.targetSdk
     }
 }
 
@@ -98,18 +84,3 @@ sqldelight {
         sourceFolders = listOf("kotlin")
     }
 }
-
-val packForXcode by tasks.creating(Sync::class) {
-    group = "build"
-    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
-    val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
-    val framework = kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
-    inputs.property("mode", mode)
-    dependsOn(framework.linkTask)
-    val targetDir = File(buildDir, "xcode-frameworks")
-    from({ framework.outputDirectory })
-    into(targetDir)
-}
-
-tasks.getByName("build").dependsOn(packForXcode)
