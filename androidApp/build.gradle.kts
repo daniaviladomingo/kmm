@@ -22,6 +22,14 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.compose
+        kotlinCompilerVersion = Versions.kotlin
+    }
 }
 
 dependencies {
@@ -39,5 +47,10 @@ dependencies {
     implementation(Libraries.ktorSerialization)
     implementation(Libraries.ktorAndroid)
     implementation(Libraries.glide)
+
+    implementation(Libraries.Compose.ui)
+    implementation(Libraries.Compose.material)
+    implementation(Libraries.Compose.uiToolingPreview)
+
     kapt(Libraries.glideCompiler)
 }
