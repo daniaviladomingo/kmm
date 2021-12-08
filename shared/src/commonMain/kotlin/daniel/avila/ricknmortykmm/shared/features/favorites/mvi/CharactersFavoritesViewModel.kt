@@ -10,6 +10,10 @@ open class CharactersFavoritesViewModel :
     BaseViewModel<CharactersFavoritesContract.Event, CharactersFavoritesContract.State, UiEffect>() {
     private val getCharactersFavoritesUseCase: GetCharactersFavoritesUseCase by inject()
 
+    init {
+        getCharactersFavorites()
+    }
+
     override fun createInitialState(): CharactersFavoritesContract.State =
         CharactersFavoritesContract.State(charactersFavorites = BasicUiState.None)
 

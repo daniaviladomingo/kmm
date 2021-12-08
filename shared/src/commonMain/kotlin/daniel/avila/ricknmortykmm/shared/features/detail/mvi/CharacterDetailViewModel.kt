@@ -3,6 +3,7 @@ package daniel.avila.ricknmortykmm.shared.features.detail.mvi
 import daniel.avila.ricknmortykmm.shared.base.mvi.BaseViewModel
 import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
 import daniel.avila.ricknmortykmm.shared.domain.interactors.AddCharacterToFavoritesUseCase
+import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharacterUseCase
 import daniel.avila.ricknmortykmm.shared.domain.interactors.IsCharacterFavoriteUseCase
 import daniel.avila.ricknmortykmm.shared.domain.interactors.RemoveCharacterFromFavoritesUseCase
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
@@ -10,19 +11,31 @@ import org.koin.core.component.inject
 
 open class CharacterDetailViewModel :
     BaseViewModel<CharacterDetailContract.Event, CharacterDetailContract.State, CharacterDetailContract.Effect>() {
+    private val getCharacterUseCase: GetCharacterUseCase by inject()
     private val isCharacterFavoriteUseCase: IsCharacterFavoriteUseCase by inject()
     private val addCharacterToFavoritesUseCase: AddCharacterToFavoritesUseCase by inject()
     private val removeCharacterFromFavoritesUseCase: RemoveCharacterFromFavoritesUseCase by inject()
 
+
     override fun createInitialState(): CharacterDetailContract.State =
-        CharacterDetailContract.State(BasicUiState.None)
+        CharacterDetailContract.State(BasicUiState.None, BasicUiState.None)
 
     override fun handleEvent(event: CharacterDetailContract.Event) {
         when (event) {
+            is CharacterDetailContract.Event.GetCharacter -> getCharacter(event.idCharacter)
             is CharacterDetailContract.Event.CheckIfIsFavorite -> checkIfIsFavorite(event.idCharacter)
             is CharacterDetailContract.Event.OnAddCharacterToFavorite -> addToFavorite(event.character)
             is CharacterDetailContract.Event.RemoveCharacterToFavorite -> removeFromFavorite(event.idCharacter)
         }
+    }
+
+    private fun getCharacter(idCharacter: Int) {
+        setState { copy(character = BasicUiState.Loading) }
+        launch(getCharacterUseCase.execute(idCharacter), { character ->
+            setState { copy(character = BasicUiState.Success(character)) }
+        }, {
+            setState { copy(character = BasicUiState.Error()) }
+        })
     }
 
     private fun checkIfIsFavorite(idCharacter: Int) {

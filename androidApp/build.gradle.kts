@@ -51,6 +51,9 @@ dependencies {
     implementation(Libraries.Compose.ui)
     implementation(Libraries.Compose.material)
     implementation(Libraries.Compose.uiToolingPreview)
+    implementation(Libraries.Compose.coil)
+    implementation(Libraries.Compose.activity)
+    implementation(Libraries.Compose.navigation)
 
     kapt(Libraries.glideCompiler)
 }

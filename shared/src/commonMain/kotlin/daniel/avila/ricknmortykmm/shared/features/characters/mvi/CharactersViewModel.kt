@@ -6,10 +6,17 @@ import daniel.avila.ricknmortykmm.shared.base.mvi.UiEffect
 import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersUseCase
 import org.koin.core.component.inject
 
-open class CharactersViewModel : BaseViewModel<CharactersContract.Event, CharactersContract.State, UiEffect>() {
+open class CharactersViewModel :
+    BaseViewModel<CharactersContract.Event, CharactersContract.State, UiEffect>() {
     private val getCharactersUseCase: GetCharactersUseCase by inject()
 
-    override fun createInitialState(): CharactersContract.State = CharactersContract.State(characters = BasicUiState.None)
+
+    init {
+        getCharacters()
+    }
+
+    override fun createInitialState(): CharactersContract.State =
+        CharactersContract.State(characters = BasicUiState.None)
 
     override fun handleEvent(event: CharactersContract.Event) {
         when (event) {

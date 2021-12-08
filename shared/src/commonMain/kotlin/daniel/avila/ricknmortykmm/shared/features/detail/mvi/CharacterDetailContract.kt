@@ -8,12 +8,14 @@ import daniel.avila.ricknmortykmm.shared.domain.model.Character
 
 interface CharacterDetailContract {
     sealed class Event : UiEvent {
+        data class GetCharacter(val idCharacter: Int): Event()
         data class CheckIfIsFavorite(val idCharacter: Int) : Event()
         data class OnAddCharacterToFavorite(val character: Character) : Event()
         data class RemoveCharacterToFavorite(val idCharacter: Int) : Event()
     }
 
     data class State(
+        val character: BasicUiState<Character>,
         val isFavorite: BasicUiState<Boolean>
     ) : UiState
 

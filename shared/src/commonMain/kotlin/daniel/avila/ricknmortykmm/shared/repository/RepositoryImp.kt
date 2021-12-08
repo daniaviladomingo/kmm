@@ -20,6 +20,10 @@ class RepositoryImp(
         emit(cacheData.getAllCharacterFavorites())
     }
 
+    override fun getCharacter(id: Int): Flow<Character> = flow {
+        emit(apiCharacterMapper.map(remoteData.getCharacterFromApi(id)))
+    }
+
     override fun addCharacterToFavorites(character: Character): Flow<Unit> = flow {
         cacheData.addCharacterToFavorite(character)
         emit(Unit)
