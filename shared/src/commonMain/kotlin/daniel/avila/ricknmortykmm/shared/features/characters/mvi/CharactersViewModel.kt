@@ -10,7 +10,6 @@ open class CharactersViewModel :
     BaseViewModel<CharactersContract.Event, CharactersContract.State, UiEffect>() {
     private val getCharactersUseCase: GetCharactersUseCase by inject()
 
-
     init {
         getCharacters()
     }
@@ -26,8 +25,16 @@ open class CharactersViewModel :
 
     private fun getCharacters() {
         setState { copy(characters = BasicUiState.Loading) }
-        launch(getCharactersUseCase.execute(), { data ->
-            setState { copy(characters = BasicUiState.Success(data)) }
+        launch(getCharactersUseCase.execute(), { characters ->
+            setState {
+                copy(
+                    characters =
+                    if (characters.isEmpty())
+                        BasicUiState.Empty
+                    else
+                        BasicUiState.Success(characters)
+                )
+            }
         }, {
             setState { copy(characters = BasicUiState.Error()) }
         })

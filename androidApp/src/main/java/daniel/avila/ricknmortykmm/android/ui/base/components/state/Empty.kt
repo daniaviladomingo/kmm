@@ -1,4 +1,4 @@
-package daniel.avila.ricknmortykmm.android.ui.base.components
+package daniel.avila.ricknmortykmm.android.ui.base.components.state
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme

@@ -7,11 +7,11 @@ import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavori
 import org.koin.dsl.module
 
 val mapperModule = module {
-    factory { CharacterMapper() }
+    single { CharacterMapper() }
 }
 
 val viewModelModule = module {
-    factory { CharactersViewModel() }
-    factory { CharactersFavoritesViewModel() }
-    factory { CharacterDetailViewModel() }
+    single { CharactersViewModel() }
+    single { CharactersFavoritesViewModel() }
+    single { idCharacter -> CharacterDetailViewModel() }
 }

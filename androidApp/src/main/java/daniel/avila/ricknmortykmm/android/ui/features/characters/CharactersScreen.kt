@@ -13,9 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import coil.annotation.ExperimentalCoilApi
 import daniel.avila.ricknmortykmm.android.ui.base.components.CharacterItem
-import daniel.avila.ricknmortykmm.android.ui.base.components.Empty
-import daniel.avila.ricknmortykmm.android.ui.base.components.Error
-import daniel.avila.ricknmortykmm.android.ui.base.components.Loading
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.Empty
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.Error
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.Loading
 import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.features.characters.mvi.CharactersContract
@@ -26,16 +26,16 @@ import org.koin.java.KoinJavaComponent.get
 @Composable
 fun CharactersScreen(
     onCharacterClick: (Int) -> Unit,
-    actionFavorite: () -> Unit,
+    navigateToFavorite: () -> Unit,
     viewModel: CharactersViewModel = get(CharactersViewModel::class.java)
 ) {
     val state by viewModel.uiState.collectAsState()
 
     Scaffold(
-        topBar = { ActionBar(actionFavorite) }
+        topBar = { ActionBar(navigateToFavorite) }
     ) { padding ->
         Box(
-            contentAlignment = Alignment.Center,
+            contentAlignment = if (state.characters is BasicUiState.Success) Alignment.TopCenter else Alignment.Center,
             modifier = Modifier
                 .padding(padding)
                 .fillMaxSize()
@@ -55,7 +55,6 @@ fun CharactersScreen(
                     Loading()
                 }
                 BasicUiState.None -> {
-
                 }
                 is BasicUiState.Success -> {
                     CharactersList(

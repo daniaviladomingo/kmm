@@ -56,9 +56,9 @@ struct CharacterDetailView: View {
         }
         .navigationBarItems(trailing: Button(action: {
             if (viewModel.isFavorite) {
-                viewModel.setEvent(event: CharacterDetailContractEvent.RemoveCharacterToFavorite(idCharacter: character.id))
+                viewModel.setEvent(event: CharacterDetailContractEvent.RemoveCharacterToFavorite)
             } else {
-                viewModel.setEvent(event: CharacterDetailContractEvent.OnAddCharacterToFavorite(character: character))
+                viewModel.setEvent(event: CharacterDetailContractEvent.AddCharacterToFavorite)
             }
         }, label: {
             Image(systemName: viewModel.isFavorite ? "star.fill" : "star")

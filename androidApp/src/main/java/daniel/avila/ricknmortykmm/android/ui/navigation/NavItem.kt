@@ -4,8 +4,8 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
 sealed class NavItem(
-    val baseRoute: String,
-    val navArgs: List<NavArg> = emptyList()
+    private val baseRoute: String,
+    private val navArgs: List<NavArg> = emptyList()
 ) {
     val route = run {
         val argKeys = navArgs.map { "{${it.key}}" }
@@ -19,19 +19,21 @@ sealed class NavItem(
     }
 
     object Characters : NavItem("characters")
-    object Detail : NavItem(
-        "detail",
-        listOf(
-            NavArg.CharacterId
-        )
-    ) {
-        fun createNavRoute(characterId: Int) = "$baseRoute/$characterId"
-    }
-
     object Favorites : NavItem("favorites")
+    object Detail : NavItem("detail")
+
+//    object Detail : NavItem(
+//        "detail",
+//        listOf(
+//            NavArg.CharacterId
+//        )
+//    ) {
+//        fun createNavRoute(characterId: Int) = "$baseRoute/$characterId"
+//    }
+
 }
 
 enum class NavArg(val key: String, val navType: NavType<*>) {
-    CharacterId("id", NavType.IntType)
+    IdCharacter("id", NavType.IntType)
 
 }

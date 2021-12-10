@@ -16,45 +16,51 @@ open class CharacterDetailViewModel :
     private val addCharacterToFavoritesUseCase: AddCharacterToFavoritesUseCase by inject()
     private val removeCharacterFromFavoritesUseCase: RemoveCharacterFromFavoritesUseCase by inject()
 
+    private var characterId: Int? = null
+    private lateinit var character: Character
 
     override fun createInitialState(): CharacterDetailContract.State =
-        CharacterDetailContract.State(BasicUiState.None, BasicUiState.None)
+        CharacterDetailContract.State(BasicUiState.None, false)
 
     override fun handleEvent(event: CharacterDetailContract.Event) {
         when (event) {
             is CharacterDetailContract.Event.GetCharacter -> getCharacter(event.idCharacter)
-            is CharacterDetailContract.Event.CheckIfIsFavorite -> checkIfIsFavorite(event.idCharacter)
-            is CharacterDetailContract.Event.OnAddCharacterToFavorite -> addToFavorite(event.character)
-            is CharacterDetailContract.Event.RemoveCharacterToFavorite -> removeFromFavorite(event.idCharacter)
+            CharacterDetailContract.Event.AddCharacterToFavorite -> addToFavorite()
+            CharacterDetailContract.Event.RemoveCharacterToFavorite -> removeFromFavorite()
+            CharacterDetailContract.Event.Retry -> characterId?.let { getCharacter(it) }
         }
     }
 
-    private fun getCharacter(idCharacter: Int) {
+    private fun getCharacter(characterId: Int) {
+        this.characterId = characterId
         setState { copy(character = BasicUiState.Loading) }
-        launch(getCharacterUseCase.execute(idCharacter), { character ->
+        launch(getCharacterUseCase.execute(characterId), { character ->
             setState { copy(character = BasicUiState.Success(character)) }
+            this.character = character
+            checkIfIsFavorite(character.id)
         }, {
             setState { copy(character = BasicUiState.Error()) }
         })
     }
 
     private fun checkIfIsFavorite(idCharacter: Int) {
-        setState { copy(isFavorite = BasicUiState.Loading) }
-        launch(isCharacterFavoriteUseCase.execute(idCharacter), { data ->
-            setState { copy(isFavorite = BasicUiState.Success(data)) }
+        launch(isCharacterFavoriteUseCase.execute(idCharacter), { isFavorite ->
+            setState { copy(isFavorite = isFavorite) }
         }, {
-            setState { copy(isFavorite = BasicUiState.Error()) }
+            setState { copy(character = BasicUiState.Error()) }
         })
     }
 
-    private fun addToFavorite(character: Character) {
+    private fun addToFavorite() {
         launch(addCharacterToFavoritesUseCase.execute(character), {
+            setState { copy(isFavorite = true) }
             setEffect { CharacterDetailContract.Effect.CharacterAdded }
         })
     }
 
-    private fun removeFromFavorite(idCharacter: Int) {
-        launch(removeCharacterFromFavoritesUseCase.execute(idCharacter), {
+    private fun removeFromFavorite() {
+        launch(removeCharacterFromFavoritesUseCase.execute(character.id), {
+            setState { copy(isFavorite = false) }
             setEffect { CharacterDetailContract.Effect.CharacterRemoved }
         })
     }

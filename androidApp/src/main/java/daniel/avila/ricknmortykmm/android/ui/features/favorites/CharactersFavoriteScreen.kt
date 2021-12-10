@@ -10,22 +10,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import coil.annotation.ExperimentalCoilApi
-import daniel.avila.ricknmortykmm.android.ui.base.components.Empty
-import daniel.avila.ricknmortykmm.android.ui.base.components.Error
-import daniel.avila.ricknmortykmm.android.ui.base.components.Loading
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.Empty
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.Error
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.Loading
 import daniel.avila.ricknmortykmm.android.ui.features.characters.CharactersList
 import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesContract
 import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesViewModel
-import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.get
 
 @ExperimentalCoilApi
 @Composable
 fun CharactersFavoriteScreen(
     onCharacterClick: (Int) -> Unit,
     onBackPressed: () -> Unit,
-    viewModel: CharactersFavoritesViewModel = KoinJavaComponent.get(CharactersFavoritesViewModel::class.java)
+    viewModel: CharactersFavoritesViewModel = get(CharactersFavoritesViewModel::class.java)
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -33,7 +33,7 @@ fun CharactersFavoriteScreen(
         topBar = { ActionBar(onBackPressed = onBackPressed) }
     ) { padding ->
         Box(
-            contentAlignment = Alignment.Center,
+            contentAlignment = if (state.charactersFavorites is BasicUiState.Success) Alignment.TopCenter else Alignment.Center,
             modifier = Modifier
                 .padding(padding)
                 .fillMaxSize()

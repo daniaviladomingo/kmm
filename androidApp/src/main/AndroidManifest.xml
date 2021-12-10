@@ -10,13 +10,6 @@
         android:supportsRtl="true"
         android:label="@string/app_name"
         android:theme="@style/Theme.ComposeTesting">
-        <activity
-            android:name=".features.CharacterDetailActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".features.CharactersFavoriteActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:exported="true"

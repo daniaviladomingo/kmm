@@ -8,19 +8,26 @@ import daniel.avila.ricknmortykmm.shared.domain.model.Character
 
 interface CharacterDetailContract {
     sealed class Event : UiEvent {
-        data class GetCharacter(val idCharacter: Int): Event()
-        data class CheckIfIsFavorite(val idCharacter: Int) : Event()
-        data class OnAddCharacterToFavorite(val character: Character) : Event()
-        data class RemoveCharacterToFavorite(val idCharacter: Int) : Event()
+        data class GetCharacter(val idCharacter: Int) : Event()
+        object AddCharacterToFavorite : Event()
+        object RemoveCharacterToFavorite : Event()
+        object Retry : Event()
     }
 
     data class State(
         val character: BasicUiState<Character>,
-        val isFavorite: BasicUiState<Boolean>
+        val isFavorite: Boolean,
+//        val requestState: RequestState
     ) : UiState
 
+    sealed class RequestState {
+        object Loading : RequestState()
+        data class Error(val message: String? = null) : RequestState()
+        data class Empty(val message: String? = null) : RequestState()
+    }
+
     sealed class Effect : UiEffect {
-        object CharacterAdded: Effect()
-        object CharacterRemoved: Effect()
+        object CharacterAdded : Effect()
+        object CharacterRemoved : Effect()
     }
 }

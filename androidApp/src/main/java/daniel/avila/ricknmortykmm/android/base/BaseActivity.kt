@@ -1,5 +1,7 @@
 package daniel.avila.ricknmortykmm.android.base
 
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import daniel.avila.ricknmortykmm.shared.base.IBaseView
@@ -22,16 +24,17 @@ abstract class BaseActivity: AppCompatActivity(), CoroutineScope, IBaseView, Koi
 
     abstract fun executor(): IExecutorScope
 
-    override fun onStart() {
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
         job = SupervisorJob()
         executor().attach()
         super.onStart()
     }
 
-    override fun onStop() {
+    override fun onDestroy() {
         job.cancel()
         executor().detach()
-        super.onStop()
+        super.onDestroy()
     }
 
     override fun <T> managementResourceState(

@@ -2,12 +2,8 @@ package daniel.avila.ricknmortykmm.android.ui.features.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,31 +11,49 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import daniel.avila.ricknmortykmm.android.ui.base.components.Empty
-import daniel.avila.ricknmortykmm.android.ui.base.components.Error
-import daniel.avila.ricknmortykmm.android.ui.base.components.Loading
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.Empty
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.Error
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.Loading
 import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.domain.model.Status
 import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailContract
-import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailViewModel
-import org.koin.java.KoinJavaComponent.get
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+
 
 @ExperimentalCoilApi
 @Composable
 fun CharacterDetailScreen(
-    idCharacter: Int,
+    state: State<CharacterDetailContract.State>,
+    effect: Flow<CharacterDetailContract.Effect>,
     onBackPressed: () -> Unit,
-    viewModel: CharacterDetailViewModel = get(CharacterDetailViewModel::class.java),
+    addFavorite: () -> Unit,
+    removeFavorite: () -> Unit,
+    retry: () -> Unit
 ) {
-    val state by viewModel.uiState.collectAsState()
+    var name by remember { mutableStateOf("") }
+    val scaffoldState: ScaffoldState = rememberScaffoldState()
 
-    viewModel.setEvent(CharacterDetailContract.Event.GetCharacter(idCharacter))
+    LaunchedEffect(key1 = true) {
+        effect.collectLatest { effect ->
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = when (effect) {
+                    CharacterDetailContract.Effect.CharacterAdded -> "Character added to favorites"
+                    CharacterDetailContract.Effect.CharacterRemoved -> "Character removed from favorites"
+                }
+            )
+        }
+    }
 
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             ActionBar(
-                actionFavorite = {},
+                name = name,
+                isFavorite = state.value.isFavorite,
+                actionAddFavorite = addFavorite,
+                actionRemoveFavorite = removeFavorite,
                 onBackPressed = onBackPressed
             )
         }
@@ -50,15 +64,15 @@ fun CharacterDetailScreen(
                 .padding(padding)
                 .fillMaxSize()
         ) {
-            when (state.character) {
+            when (state.value.character) {
                 BasicUiState.Empty -> {
                     Empty {
-                        viewModel.setEvent(CharacterDetailContract.Event.GetCharacter(idCharacter = idCharacter))
+                        retry()
                     }
                 }
                 is BasicUiState.Error -> {
                     Error {
-                        viewModel.setEvent(CharacterDetailContract.Event.GetCharacter(idCharacter = idCharacter))
+                        retry()
                     }
                 }
                 BasicUiState.Loading -> {
@@ -68,7 +82,9 @@ fun CharacterDetailScreen(
 
                 }
                 is BasicUiState.Success -> {
-                    CharacterDetail((state.character as BasicUiState.Success<Character>).data)
+                    val character = (state.value.character as BasicUiState.Success<Character>).data
+                    CharacterDetail(character)
+                    name = character.name
                 }
             }
         }

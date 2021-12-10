@@ -25,8 +25,16 @@ open class CharactersFavoritesViewModel :
 
     private fun getCharactersFavorites() {
         setState { copy(charactersFavorites = BasicUiState.Loading) }
-        launch(getCharactersFavoritesUseCase.execute(), { data ->
-            setState { copy(charactersFavorites = BasicUiState.Success(data)) }
+        launch(getCharactersFavoritesUseCase.execute(), { favorites ->
+            setState {
+                copy(
+                    charactersFavorites =
+                    if (favorites.isEmpty())
+                        BasicUiState.Empty
+                    else
+                        BasicUiState.Success(favorites)
+                )
+            }
         }, {
             setState { copy(charactersFavorites = BasicUiState.Error()) }
         })
