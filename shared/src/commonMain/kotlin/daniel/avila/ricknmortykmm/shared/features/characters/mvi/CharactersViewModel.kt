@@ -1,7 +1,7 @@
 package daniel.avila.ricknmortykmm.shared.features.characters.mvi
 
 import daniel.avila.ricknmortykmm.shared.base.mvi.BaseViewModel
-import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
+import daniel.avila.ricknmortykmm.shared.base.mvi.StateRequest
 import daniel.avila.ricknmortykmm.shared.base.mvi.UiEffect
 import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersUseCase
 import org.koin.core.component.inject
@@ -15,7 +15,7 @@ open class CharactersViewModel :
     }
 
     override fun createInitialState(): CharactersContract.State =
-        CharactersContract.State(characters = BasicUiState.None)
+        CharactersContract.State(characters = emptyList(), stateRequest = StateRequest.Idle)
 
     override fun handleEvent(event: CharactersContract.Event) {
         when (event) {
@@ -24,19 +24,19 @@ open class CharactersViewModel :
     }
 
     private fun getCharacters() {
-        setState { copy(characters = BasicUiState.Loading) }
+        setState { copy(stateRequest = StateRequest.Loading) }
         launch(getCharactersUseCase.execute(), { characters ->
             setState {
                 copy(
-                    characters =
-                    if (characters.isEmpty())
-                        BasicUiState.Empty
+                    characters = characters,
+                    stateRequest = if (characters.isEmpty())
+                        StateRequest.Empty()
                     else
-                        BasicUiState.Success(characters)
+                        StateRequest.Success
                 )
             }
         }, {
-            setState { copy(characters = BasicUiState.Error()) }
+            setState { copy(stateRequest = StateRequest.Error()) }
         })
     }
 }

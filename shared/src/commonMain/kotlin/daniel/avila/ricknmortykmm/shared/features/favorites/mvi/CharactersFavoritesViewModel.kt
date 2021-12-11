@@ -1,7 +1,7 @@
 package daniel.avila.ricknmortykmm.shared.features.favorites.mvi
 
 import daniel.avila.ricknmortykmm.shared.base.mvi.BaseViewModel
-import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
+import daniel.avila.ricknmortykmm.shared.base.mvi.StateRequest
 import daniel.avila.ricknmortykmm.shared.base.mvi.UiEffect
 import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersFavoritesUseCase
 import org.koin.core.component.inject
@@ -15,7 +15,10 @@ open class CharactersFavoritesViewModel :
     }
 
     override fun createInitialState(): CharactersFavoritesContract.State =
-        CharactersFavoritesContract.State(charactersFavorites = BasicUiState.None)
+        CharactersFavoritesContract.State(
+            charactersFavorites = emptyList(),
+            stateRequest = StateRequest.Idle
+        )
 
     override fun handleEvent(event: CharactersFavoritesContract.Event) {
         when (event) {
@@ -24,19 +27,20 @@ open class CharactersFavoritesViewModel :
     }
 
     private fun getCharactersFavorites() {
-        setState { copy(charactersFavorites = BasicUiState.Loading) }
+        setState { copy(stateRequest = StateRequest.Loading) }
         launch(getCharactersFavoritesUseCase.execute(), { favorites ->
             setState {
                 copy(
-                    charactersFavorites =
+                    charactersFavorites = favorites,
+                    stateRequest =
                     if (favorites.isEmpty())
-                        BasicUiState.Empty
+                        StateRequest.Empty()
                     else
-                        BasicUiState.Success(favorites)
+                        StateRequest.Success
                 )
             }
         }, {
-            setState { copy(charactersFavorites = BasicUiState.Error()) }
+            setState { copy(stateRequest = StateRequest.Error()) }
         })
     }
 }

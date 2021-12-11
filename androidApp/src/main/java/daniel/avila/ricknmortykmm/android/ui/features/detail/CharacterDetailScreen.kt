@@ -11,36 +11,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import daniel.avila.ricknmortykmm.android.ui.base.components.state.Empty
-import daniel.avila.ricknmortykmm.android.ui.base.components.state.Error
-import daniel.avila.ricknmortykmm.android.ui.base.components.state.Loading
-import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.ManagementStateRequest
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.domain.model.Status
 import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailContract
-import kotlinx.coroutines.flow.Flow
+import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 
 @ExperimentalCoilApi
 @Composable
 fun CharacterDetailScreen(
-    state: State<CharacterDetailContract.State>,
-    effect: Flow<CharacterDetailContract.Effect>,
     onBackPressed: () -> Unit,
-    addFavorite: () -> Unit,
-    removeFavorite: () -> Unit,
-    retry: () -> Unit
+    onRemoveFavorite: () -> Unit,
+    viewModel: CharacterDetailViewModel
 ) {
     var name by remember { mutableStateOf("") }
+    val state by viewModel.uiState.collectAsState()
     val scaffoldState: ScaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = true) {
-        effect.collectLatest { effect ->
+        viewModel.effect.collectLatest { effect ->
             scaffoldState.snackbarHostState.showSnackbar(
                 message = when (effect) {
                     CharacterDetailContract.Effect.CharacterAdded -> "Character added to favorites"
-                    CharacterDetailContract.Effect.CharacterRemoved -> "Character removed from favorites"
+                    CharacterDetailContract.Effect.CharacterRemoved -> {
+                        onRemoveFavorite()
+                        "Character removed from favorites"
+                    }
                 }
             )
         }
@@ -51,43 +49,24 @@ fun CharacterDetailScreen(
         topBar = {
             ActionBar(
                 name = name,
-                isFavorite = state.value.isFavorite,
-                actionAddFavorite = addFavorite,
-                actionRemoveFavorite = removeFavorite,
+                isFavorite = state.isFavorite,
+                actionAddFavorite = { viewModel.setEvent(CharacterDetailContract.Event.AddCharacterToFavorite) },
+                actionRemoveFavorite = { viewModel.setEvent(CharacterDetailContract.Event.RemoveCharacterToFavorite) },
                 onBackPressed = onBackPressed
             )
         }
     ) { padding ->
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-        ) {
-            when (state.value.character) {
-                BasicUiState.Empty -> {
-                    Empty {
-                        retry()
-                    }
-                }
-                is BasicUiState.Error -> {
-                    Error {
-                        retry()
-                    }
-                }
-                BasicUiState.Loading -> {
-                    Loading()
-                }
-                BasicUiState.None -> {
-
-                }
-                is BasicUiState.Success -> {
-                    val character = (state.value.character as BasicUiState.Success<Character>).data
-                    CharacterDetail(character)
-                    name = character.name
-                }
-            }
-        }
+        ManagementStateRequest(
+            stateRequest = state.stateRequest,
+            successView = {
+                val character = state.character!!
+                CharacterDetail(character)
+                name = character.name
+            },
+            onTryAgain = { viewModel.setEvent(CharacterDetailContract.Event.Retry) },
+            onCheckAgain = { viewModel.setEvent(CharacterDetailContract.Event.Retry) },
+            modifier = Modifier.padding(padding)
+        )
     }
 }
 
@@ -96,7 +75,9 @@ fun CharacterDetailScreen(
 fun CharacterDetail(character: Character) {
     val status = character.status
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
     ) {
         Text(
             text = character.name,

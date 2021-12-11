@@ -11,7 +11,7 @@ fun ActionBar(
     onBackPressed: () -> Unit
 ) {
     TopAppBar(
-        title = { Text(text = "Rick & Morty KMM") },
+        title = { Text(text = "Characters Favorites") },
         navigationIcon = { ArrowBackIcon(onBackPressed) }
     )
 }

@@ -1,9 +1,6 @@
 package daniel.avila.ricknmortykmm.shared.features.detail.mvi
 
-import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
-import daniel.avila.ricknmortykmm.shared.base.mvi.UiEffect
-import daniel.avila.ricknmortykmm.shared.base.mvi.UiEvent
-import daniel.avila.ricknmortykmm.shared.base.mvi.UiState
+import daniel.avila.ricknmortykmm.shared.base.mvi.*
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 
 interface CharacterDetailContract {
@@ -15,16 +12,10 @@ interface CharacterDetailContract {
     }
 
     data class State(
-        val character: BasicUiState<Character>,
+        val character: Character?,
         val isFavorite: Boolean,
-//        val requestState: RequestState
+        override val stateRequest: StateRequest
     ) : UiState
-
-    sealed class RequestState {
-        object Loading : RequestState()
-        data class Error(val message: String? = null) : RequestState()
-        data class Empty(val message: String? = null) : RequestState()
-    }
 
     sealed class Effect : UiEffect {
         object CharacterAdded : Effect()

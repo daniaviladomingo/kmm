@@ -1,7 +1,6 @@
 package daniel.avila.ricknmortykmm.android.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
@@ -23,8 +22,7 @@ fun Navigation() {
     val navController = rememberNavController()
 
     val vmCharacterDetail: CharacterDetailViewModel = get(CharacterDetailViewModel::class.java)
-    val vmCharactersFavorites: CharactersFavoritesViewModel =
-        get(CharactersFavoritesViewModel::class.java)
+    val vmCharactersFavorites: CharactersFavoritesViewModel = get(CharactersFavoritesViewModel::class.java)
 
     NavHost(
         navController = navController,
@@ -49,22 +47,9 @@ fun Navigation() {
         composable(NavItem.Detail) {
 //            backStackEntry.findArg(NavArg.CharacterId.key)
             CharacterDetailScreen(
-                state = vmCharacterDetail.uiState.collectAsState(),
-                effect = vmCharacterDetail.effect,
-                onBackPressed = {
-                    navController.popBackStack()
-                },
-                addFavorite = {
-                    vmCharacterDetail.setEvent(CharacterDetailContract.Event.AddCharacterToFavorite)
-                    vmCharactersFavorites.setEvent(CharactersFavoritesContract.Event.OnGetCharactersFavorites)
-                },
-                removeFavorite = {
-                    vmCharacterDetail.setEvent(CharacterDetailContract.Event.RemoveCharacterToFavorite)
-                    vmCharactersFavorites.setEvent(CharactersFavoritesContract.Event.OnGetCharactersFavorites)
-                },
-                retry = {
-                    vmCharacterDetail.setEvent(CharacterDetailContract.Event.Retry)
-                }
+                onBackPressed = { navController.popBackStack() },
+                onRemoveFavorite = { vmCharactersFavorites.setEvent(CharactersFavoritesContract.Event.OnGetCharactersFavorites) },
+                viewModel = vmCharacterDetail
             )
         }
         composable(NavItem.Favorites) {
@@ -77,9 +62,8 @@ fun Navigation() {
                         )
                     )
                 },
-                onBackPressed = {
-                    navController.popBackStack()
-                }
+                onBackPressed = { navController.popBackStack() },
+                viewModel = vmCharactersFavorites
             )
         }
     }

@@ -1,7 +1,7 @@
 package daniel.avila.ricknmortykmm.shared.features.detail.mvi
 
 import daniel.avila.ricknmortykmm.shared.base.mvi.BaseViewModel
-import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
+import daniel.avila.ricknmortykmm.shared.base.mvi.StateRequest
 import daniel.avila.ricknmortykmm.shared.domain.interactors.AddCharacterToFavoritesUseCase
 import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharacterUseCase
 import daniel.avila.ricknmortykmm.shared.domain.interactors.IsCharacterFavoriteUseCase
@@ -20,7 +20,11 @@ open class CharacterDetailViewModel :
     private lateinit var character: Character
 
     override fun createInitialState(): CharacterDetailContract.State =
-        CharacterDetailContract.State(BasicUiState.None, false)
+        CharacterDetailContract.State(
+            character = null,
+            isFavorite = false,
+            stateRequest = StateRequest.Idle
+        )
 
     override fun handleEvent(event: CharacterDetailContract.Event) {
         when (event) {
@@ -33,13 +37,13 @@ open class CharacterDetailViewModel :
 
     private fun getCharacter(characterId: Int) {
         this.characterId = characterId
-        setState { copy(character = BasicUiState.Loading) }
+        setState { copy(stateRequest = StateRequest.Loading) }
         launch(getCharacterUseCase.execute(characterId), { character ->
-            setState { copy(character = BasicUiState.Success(character)) }
+            setState { copy(character = character, stateRequest = StateRequest.Success) }
             this.character = character
             checkIfIsFavorite(character.id)
         }, {
-            setState { copy(character = BasicUiState.Error()) }
+            setState { copy(stateRequest = StateRequest.Error()) }
         })
     }
 
@@ -47,7 +51,7 @@ open class CharacterDetailViewModel :
         launch(isCharacterFavoriteUseCase.execute(idCharacter), { isFavorite ->
             setState { copy(isFavorite = isFavorite) }
         }, {
-            setState { copy(character = BasicUiState.Error()) }
+            setState { copy(stateRequest = StateRequest.Error()) }
         })
     }
 
