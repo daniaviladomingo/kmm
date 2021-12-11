@@ -6,7 +6,7 @@ object App {
 object Versions {
     const val kotlin         = "1.5.31"
     const val gradle         = "7.0.2"
-    const val sqlDelight     = "1.5.1"
+    const val sqlDelight     = "1.5.3"
 
     const val compose         = "1.1.0-beta03"
     const val coil            = "1.3.2"
