@@ -1,7 +1,7 @@
 # Rick & Morty KMM
 
 * Kotlin Multiplatform Mobile [KMM]
-* [Compose] Coming soon / [SwiftUI]
+* [Compose] / [SwiftUI]
 * [MVI]
 * [Flow]
 * [Sqldelight]
