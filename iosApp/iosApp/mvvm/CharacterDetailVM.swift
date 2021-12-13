@@ -7,9 +7,9 @@
 //
 
 import shared
-import Darwin
 
 class CharacterDetailVM : CharacterDetailViewModel, ObservableObject {
+    @Published var character: Character = Character(id: 1, name: "", status: Status.alive, species: "", gender: Gender.female, origin: "", location: "", image: "")
     @Published var isFavorite: Bool = false
     @Published var showAlert: Bool = false
     
@@ -17,11 +17,14 @@ class CharacterDetailVM : CharacterDetailViewModel, ObservableObject {
         super.init()
         
         collect(flow: uiState, collect: { data in
-            let state = (((data as! CharacterDetailContractState).isFavorite) as BasicUiState)
+            let uiState = data as! CharacterDetailContractState
+            let stateRequest = uiState.stateRequest
             
-            switch state {
-            case let success as BasicUiStateSuccess<KotlinBoolean>:
-                self.isFavorite = success.data as! Bool
+            self.isFavorite = uiState.isFavorite
+            
+            switch stateRequest {
+            case _ as StateRequest.Success:
+                self.character = uiState.character!
             default:
                 break
             }

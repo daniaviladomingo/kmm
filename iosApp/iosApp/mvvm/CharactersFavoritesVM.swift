@@ -13,13 +13,14 @@ class CharactersFavoritesVM : CharactersFavoritesViewModel, ObservableObject {
         
     override init() {
         super.init()
-
+        
         collect(flow: uiState, collect: { data in
-            let state = (((data as! CharactersFavoritesContractState).charactersFavorites) as BasicUiState<NSArray>)
+            let uiState = data as! CharactersFavoritesContractState
+            let stateRequest = uiState.stateRequest
             
-            switch state {
-            case let success as BasicUiStateSuccess<NSArray>:
-                self.listCharactersFavorites = success.data as! [Character]
+            switch stateRequest {
+            case _ as StateRequest.Success:
+                self.listCharactersFavorites = uiState.charactersFavorites
             default:
                 break
             }
