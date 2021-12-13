@@ -78,13 +78,6 @@ kotlin {
             iosArm64Test.dependsOn(this)
             //iosSimulatorArm64Test.dependsOn(this)
         }
-//        val iosMain by getting {
-//            dependencies {
-//                implementation(Libraries.IOs.ktorClient)
-//                implementation(Libraries.IOs.sqlDelight)
-//            }
-//        }
-//        val iosTest by getting
     }
 }
 
