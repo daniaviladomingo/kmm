@@ -1,13 +1,11 @@
 package daniel.avila.ricknmortykmm.shared.data_remote
 
+import daniel.avila.ricknmortykmm.shared.data_remote.model.ApiCharacter
 import daniel.avila.ricknmortykmm.shared.data_remote.model.ApiCharactersResponse
 import daniel.avila.ricknmortykmm.shared.repository.IRemoteData
+import io.ktor.client.*
 import io.ktor.client.request.*
-import io.ktor.client.HttpClient
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.http.*
-import kotlinx.serialization.json.Json
 
 class RemoteDataImp(
     private val endPoint: String,
@@ -15,6 +13,9 @@ class RemoteDataImp(
 ) : IRemoteData {
     override suspend fun getCharactersFromApi(): ApiCharactersResponse =
         httpClient.get { apiUrl("/api/character") }
+
+    override suspend fun getCharacterFromApi(id: Int): ApiCharacter =
+        httpClient.get { apiUrl("/api/character/$id") }
 
     private fun HttpRequestBuilder.apiUrl(path: String) {
         url {

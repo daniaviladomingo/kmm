@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:context=".features.CharactersActivity" />
+        tools:context=".ui.MainActivity" />
 
     <TextView
         android:id="@+id/noFavorites"

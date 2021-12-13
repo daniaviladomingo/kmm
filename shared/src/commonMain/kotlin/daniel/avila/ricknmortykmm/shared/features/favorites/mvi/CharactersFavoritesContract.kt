@@ -1,8 +1,6 @@
 package daniel.avila.ricknmortykmm.shared.features.favorites.mvi
 
-import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
-import daniel.avila.ricknmortykmm.shared.base.mvi.UiEvent
-import daniel.avila.ricknmortykmm.shared.base.mvi.UiState
+import daniel.avila.ricknmortykmm.shared.base.mvi.*
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 
 interface CharactersFavoritesContract {
@@ -11,6 +9,7 @@ interface CharactersFavoritesContract {
     }
 
     data class State(
-        val charactersFavorites: BasicUiState<List<Character>>
+        val charactersFavorites: List<Character>,
+        override val stateRequest: StateRequest
     ) : UiState
 }

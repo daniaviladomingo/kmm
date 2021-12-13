@@ -3,11 +3,15 @@ object App {
     const val versionName = "1.0.0"
 }
 
-
 object Versions {
-    const val kotlin         = "1.5.30"
-    const val gradle         = "7.0.2"
-    const val sqlDelight     = "1.5.1"
+    const val kotlin         = "1.6.0"
+    const val gradle         = "7.0.4"
+    const val sqlDelight     = "1.5.3"
+
+    const val compose         = "1.1.0-beta04"
+    const val coil            = "1.3.2"
+    const val activityCompose = "1.4.0"
+    const val navigation      = "2.4.0-beta02"
 
     const val material         = "1.4.0"
     const val appcompat        = "1.3.1"
@@ -19,8 +23,8 @@ object Versions {
     const val glide      = "4.12.0"
 
     const val minSdk     = 23
-    const val compileSdk = 30
-    const val targetSdk  = 30
+    const val compileSdk = 31
+    const val targetSdk  = 31
 
     const val kotlinxSerializationCore = "1.2.2"
     const val kotlinxCoroutinesCore    = "1.5.2-native-mt"
@@ -41,6 +45,15 @@ object Libraries {
     const val ktorAndroid       = "io.ktor:ktor-client-android:${Versions.ktor}"
     const val glide             = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val glideCompiler     = "com.github.bumptech.glide:compiler:${Versions.glide}"
+
+    object Compose {
+        const val activity         = "androidx.activity:activity-compose:${Versions.activityCompose}"
+        const val ui               = "androidx.compose.ui:ui:${Versions.compose}"
+        const val material         = "androidx.compose.material:material:${Versions.compose}"
+        const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
+        const val navigation       = "androidx.navigation:navigation-compose:${Versions.navigation}"
+        const val coil             = "io.coil-kt:coil-compose:${Versions.coil}"
+    }
 
     object Common {
         const val sqlDelight               = "com.squareup.sqldelight:runtime:${Versions.sqlDelight}"

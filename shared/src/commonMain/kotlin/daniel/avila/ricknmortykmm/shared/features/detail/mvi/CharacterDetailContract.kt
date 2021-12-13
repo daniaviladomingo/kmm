@@ -1,24 +1,24 @@
 package daniel.avila.ricknmortykmm.shared.features.detail.mvi
 
-import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
-import daniel.avila.ricknmortykmm.shared.base.mvi.UiEffect
-import daniel.avila.ricknmortykmm.shared.base.mvi.UiEvent
-import daniel.avila.ricknmortykmm.shared.base.mvi.UiState
+import daniel.avila.ricknmortykmm.shared.base.mvi.*
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 
 interface CharacterDetailContract {
     sealed class Event : UiEvent {
-        data class CheckIfIsFavorite(val idCharacter: Int) : Event()
-        data class OnAddCharacterToFavorite(val character: Character) : Event()
-        data class RemoveCharacterToFavorite(val idCharacter: Int) : Event()
+        data class GetCharacter(val idCharacter: Int) : Event()
+        object AddCharacterToFavorite : Event()
+        object RemoveCharacterToFavorite : Event()
+        object Retry : Event()
     }
 
     data class State(
-        val isFavorite: BasicUiState<Boolean>
+        val character: Character?,
+        val isFavorite: Boolean,
+        override val stateRequest: StateRequest
     ) : UiState
 
     sealed class Effect : UiEffect {
-        object CharacterAdded: Effect()
-        object CharacterRemoved: Effect()
+        object CharacterAdded : Effect()
+        object CharacterRemoved : Effect()
     }
 }

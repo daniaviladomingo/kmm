@@ -53,6 +53,7 @@ val repositoryModule = module {
 val useCasesModule: Module = module {
     factory { GetCharactersUseCase(get()) }
     factory { GetCharactersFavoritesUseCase(get()) }
+    factory { GetCharacterUseCase(get()) }
     factory { AddCharacterToFavoritesUseCase(get()) }
     factory { RemoveCharacterFromFavoritesUseCase(get()) }
     factory { IsCharacterFavoriteUseCase(get()) }

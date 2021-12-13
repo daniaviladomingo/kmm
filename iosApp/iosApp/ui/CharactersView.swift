@@ -20,7 +20,7 @@ struct CharactersView: View {
         NavigationView {
             List {
                 ForEach(viewModel.listCharacters, id: \.self) { character in
-                    NavigationLink(destination: CharacterDetailView(character: character)) {
+                    NavigationLink(destination: CharacterDetailView(characterId: Int(character.id))) {
                         ItemCharacterView(character: character)
                     }
                 }

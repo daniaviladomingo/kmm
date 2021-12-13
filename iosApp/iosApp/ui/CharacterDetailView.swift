@@ -11,20 +11,20 @@ import shared
 
 struct CharacterDetailView: View {
     
-    var character: Character
+    var characterId: Int
     
     @ObservedObject var viewModel: CharacterDetailVM = CharacterDetailVM()
     
-    init(character: Character) {
-        self.character = character
+    init(characterId: Int) {
+        self.characterId = characterId
     }
 
     var body: some View {
         VStack {
-            Text(character.name)
+            Text(viewModel.character.name)
                 .font(.title)
                 .bold()
-            AsyncImage(url: URL(string: character.image))
+            AsyncImage(url: URL(string: viewModel.character.image))
             { image in
                 image
                     .cornerRadius(20)
@@ -32,10 +32,10 @@ struct CharacterDetailView: View {
                 ProgressView().frame(width: 100, height: 100, alignment: .center)
             }
             
-            Text(character.location)
+            Text(viewModel.character.location)
                 .padding(.top, 5)
             
-            switch character.status {
+            switch viewModel.character.status {
             case Status.alive:
                 Text("Alive")
                     .foregroundColor(.green)
@@ -56,9 +56,9 @@ struct CharacterDetailView: View {
         }
         .navigationBarItems(trailing: Button(action: {
             if (viewModel.isFavorite) {
-                viewModel.setEvent(event: CharacterDetailContractEvent.RemoveCharacterToFavorite(idCharacter: character.id))
+                viewModel.setEvent(event: CharacterDetailContractEvent.RemoveCharacterToFavorite.shared)
             } else {
-                viewModel.setEvent(event: CharacterDetailContractEvent.OnAddCharacterToFavorite(character: character))
+                viewModel.setEvent(event: CharacterDetailContractEvent.AddCharacterToFavorite.shared)
             }
         }, label: {
             Image(systemName: viewModel.isFavorite ? "star.fill" : "star")
@@ -67,13 +67,13 @@ struct CharacterDetailView: View {
             return Alert(title: Text(viewModel.isFavorite ? "Character added to favorite" : "Character removed to favorite"))
         })
         .onAppear(perform: {
-            viewModel.setEvent(event: CharacterDetailContractEvent.CheckIfIsFavorite(idCharacter: character.id))
+            viewModel.setEvent(event: CharacterDetailContractEvent.GetCharacter(idCharacter: Int32(characterId)))
         })
     }
 }
 
 struct CharacterDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        CharacterDetailView(character: Character(id: 0, name: "Daniel", status: Status.alive, species: "Human", gender: Gender.male, origin: "Belmonte de Tajo", location: "Iceland", image: ""))
+        CharacterDetailView(characterId: 0)
     }
 }

@@ -17,7 +17,7 @@ struct CharactersFavoritesView: View {
             if (!viewModel.listCharactersFavorites.isEmpty) {
                 List {
                     ForEach(viewModel.listCharactersFavorites, id: \.self) { character in
-                        NavigationLink(destination: CharacterDetailView(character: character)) {
+                        NavigationLink(destination: CharacterDetailView(characterId: Int(character.id))) {
                             ItemCharacterView(character: character)
                         }
                     }
