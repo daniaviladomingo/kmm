@@ -7,7 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import coil.annotation.ExperimentalCoilApi
-import daniel.avila.ricknmortykmm.android.ui.base.components.state.ManagementStateRequest
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.ManagementResourceState
 import daniel.avila.ricknmortykmm.android.ui.features.characters.CharactersList
 import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesContract
 import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesViewModel
@@ -24,11 +24,12 @@ fun CharactersFavoriteScreen(
     Scaffold(
         topBar = { ActionBar(onBackPressed = onBackPressed) }
     ) { padding ->
-        ManagementStateRequest(
-            stateRequest = state.stateRequest,
-            successView = {
+        ManagementResourceState(
+            resourceState = state.charactersFavorites,
+            successView = { favorites ->
+                checkNotNull(favorites)
                 CharactersList(
-                    characters = state.charactersFavorites,
+                    characters = favorites,
                     onCharacterClick = onCharacterClick
                 )
             },

@@ -9,7 +9,6 @@ interface CharactersFavoritesContract {
     }
 
     data class State(
-        val charactersFavorites: List<Character>,
-        override val stateRequest: StateRequest
+        val charactersFavorites: BasicUiState<List<Character>>,
     ) : UiState
 }
