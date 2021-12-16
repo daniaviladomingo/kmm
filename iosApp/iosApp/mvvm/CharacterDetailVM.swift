@@ -17,18 +17,18 @@ class CharacterDetailVM : CharacterDetailViewModel, ObservableObject {
         super.init()
         
         collect(flow: uiState, collect: { data in
-            let uiState = data as! CharacterDetailContractState
-            let stateRequest = uiState.stateRequest
+            let state = data as! CharacterDetailContractState
             
-            self.isFavorite = uiState.isFavorite
+            self.isFavorite = state.isFavorite
             
-            switch stateRequest {
-            case _ as StateRequest.Success:
-                self.character = uiState.character!
-            default:
-                break
+            switch state.character {
+                case let success as BasicUiStateSuccess<Character>:
+                    self.character = success.data!
+                default:
+                    break
+                }
             }
-        })
+        )
         
         collect(flow: effect) { uiEffect in
             let effect = (uiEffect as! CharacterDetailContractEffect)

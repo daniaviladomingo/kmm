@@ -30,7 +30,7 @@ struct CharactersFavoritesView: View {
         }
         .navigationTitle(Text("Characters Favorites"))
         .onAppear(perform: {
-            viewModel.setEvent(event: CharactersFavoritesContractEvent.OnGetCharactersFavorites.shared)
+            viewModel.setEvent(event:CharactersFavoritesContractEvent.OnGetCharactersFavorites.shared)
         })
     }
 }

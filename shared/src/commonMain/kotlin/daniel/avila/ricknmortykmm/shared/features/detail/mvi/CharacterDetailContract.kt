@@ -12,9 +12,8 @@ interface CharacterDetailContract {
     }
 
     data class State(
-        val character: Character?,
+        val character: BasicUiState<Character>,
         val isFavorite: Boolean,
-        override val stateRequest: StateRequest
     ) : UiState
 
     sealed class Effect : UiEffect {

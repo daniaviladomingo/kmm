@@ -15,15 +15,15 @@ class CharactersVM: CharactersViewModel, ObservableObject {
         super.init()
 
         collect(flow: uiState, collect: { data in
-            let uiState = data as! CharactersContractState
-            let stateRequest = uiState.stateRequest
-            
-            switch stateRequest {
-            case _ as StateRequest.Success:
-                self.listCharacters = uiState.characters
-            default:
-                break
+            let state = (((data as! CharactersContractState).characters) as BasicUiState<NSArray>)
+                    
+            switch state {
+                case let success as BasicUiStateSuccess<NSArray>:
+                    self.listCharacters = success.data as! [Character]
+                default:
+                    break
+                }
             }
-        })
+        )
     }
 }

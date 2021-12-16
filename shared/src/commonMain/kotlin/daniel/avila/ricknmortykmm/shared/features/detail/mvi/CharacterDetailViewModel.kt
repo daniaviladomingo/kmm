@@ -1,7 +1,7 @@
 package daniel.avila.ricknmortykmm.shared.features.detail.mvi
 
 import daniel.avila.ricknmortykmm.shared.base.mvi.BaseViewModel
-import daniel.avila.ricknmortykmm.shared.base.mvi.StateRequest
+import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
 import daniel.avila.ricknmortykmm.shared.domain.interactors.AddCharacterToFavoritesUseCase
 import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharacterUseCase
 import daniel.avila.ricknmortykmm.shared.domain.interactors.IsCharacterFavoriteUseCase
@@ -21,9 +21,8 @@ open class CharacterDetailViewModel :
 
     override fun createInitialState(): CharacterDetailContract.State =
         CharacterDetailContract.State(
-            character = null,
+            character = BasicUiState.Idle,
             isFavorite = false,
-            stateRequest = StateRequest.Idle
         )
 
     override fun handleEvent(event: CharacterDetailContract.Event) {
@@ -37,13 +36,13 @@ open class CharacterDetailViewModel :
 
     private fun getCharacter(characterId: Int) {
         this.characterId = characterId
-        setState { copy(stateRequest = StateRequest.Loading) }
+        setState { copy(character = BasicUiState.Loading) }
         launch(getCharacterUseCase.execute(characterId), { character ->
-            setState { copy(character = character, stateRequest = StateRequest.Success) }
+            setState { copy(character = BasicUiState.Success(character)) }
             this.character = character
             checkIfIsFavorite(character.id)
         }, {
-            setState { copy(stateRequest = StateRequest.Error()) }
+            setState { copy(character = BasicUiState.Error()) }
         })
     }
 
@@ -51,7 +50,7 @@ open class CharacterDetailViewModel :
         launch(isCharacterFavoriteUseCase.execute(idCharacter), { isFavorite ->
             setState { copy(isFavorite = isFavorite) }
         }, {
-            setState { copy(stateRequest = StateRequest.Error()) }
+            setState { copy(character = BasicUiState.Error()) }
         })
     }
 

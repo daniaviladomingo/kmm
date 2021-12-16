@@ -12,7 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import coil.annotation.ExperimentalCoilApi
 import daniel.avila.ricknmortykmm.android.ui.base.components.CharacterItem
-import daniel.avila.ricknmortykmm.android.ui.base.components.state.ManagementStateRequest
+import daniel.avila.ricknmortykmm.android.ui.base.components.state.ManagementResourceState
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.features.characters.mvi.CharactersContract
 import daniel.avila.ricknmortykmm.shared.features.characters.mvi.CharactersViewModel
@@ -30,11 +30,12 @@ fun CharactersScreen(
     Scaffold(
         topBar = { ActionBar(navigateToFavorite) }
     ) { padding ->
-        ManagementStateRequest(
-            stateRequest = state.stateRequest,
-            successView = {
+        ManagementResourceState(
+            resourceState = state.characters,
+            successView = { characters ->
+                checkNotNull(characters)
                 CharactersList(
-                    characters = state.characters,
+                    characters = characters,
                     onCharacterClick = onCharacterClick
                 )
             },
