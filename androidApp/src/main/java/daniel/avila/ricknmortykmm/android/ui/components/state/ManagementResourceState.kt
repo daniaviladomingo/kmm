@@ -1,4 +1,4 @@
-package daniel.avila.ricknmortykmm.android.ui.base.components.state
+package daniel.avila.ricknmortykmm.android.ui.components.state
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,10 +23,8 @@ fun <T> ManagementResourceState(
             is BasicUiState.Empty -> Empty(onCheckAgain = onCheckAgain)
             is BasicUiState.Error -> Error(onTryAgain = onTryAgain)
             BasicUiState.Loading -> Loading()
+            is BasicUiState.Success -> successView(resourceState.data)
             BasicUiState.Idle -> Unit
-            is BasicUiState.Success -> {
-                successView(resourceState.data)
-            }
         }
     }
 }

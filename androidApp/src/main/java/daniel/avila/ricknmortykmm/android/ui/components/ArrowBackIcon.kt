@@ -1,4 +1,4 @@
-package daniel.avila.ricknmortykmm.android.ui.base.components
+package daniel.avila.ricknmortykmm.android.ui.components
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton

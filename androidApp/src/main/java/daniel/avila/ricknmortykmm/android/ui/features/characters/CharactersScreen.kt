@@ -11,8 +11,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import coil.annotation.ExperimentalCoilApi
-import daniel.avila.ricknmortykmm.android.ui.base.components.CharacterItem
-import daniel.avila.ricknmortykmm.android.ui.base.components.state.ManagementResourceState
+import daniel.avila.ricknmortykmm.android.ui.components.CharacterItem
+import daniel.avila.ricknmortykmm.android.ui.components.state.ManagementResourceState
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.features.characters.mvi.CharactersContract
 import daniel.avila.ricknmortykmm.shared.features.characters.mvi.CharactersViewModel

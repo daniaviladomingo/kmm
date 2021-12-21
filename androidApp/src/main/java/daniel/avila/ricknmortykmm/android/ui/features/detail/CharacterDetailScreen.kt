@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import daniel.avila.ricknmortykmm.android.ui.base.components.state.ManagementResourceState
+import daniel.avila.ricknmortykmm.android.ui.components.state.ManagementResourceState
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.domain.model.Status
 import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailContract
