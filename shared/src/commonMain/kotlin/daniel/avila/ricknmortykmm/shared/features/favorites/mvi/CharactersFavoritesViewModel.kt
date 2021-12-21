@@ -21,6 +21,7 @@ open class CharactersFavoritesViewModel :
 
     override fun handleEvent(event: CharactersFavoritesContract.Event) {
         when (event) {
+            // Hola
             CharactersFavoritesContract.Event.OnGetCharactersFavorites -> getCharactersFavorites()
         }
     }
