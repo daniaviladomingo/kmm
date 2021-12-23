@@ -7,7 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import coil.annotation.ExperimentalCoilApi
-import daniel.avila.ricknmortykmm.android.ui.base.components.state.ManagementResourceState
+import daniel.avila.ricknmortykmm.android.ui.components.state.ManagementResourceState
 import daniel.avila.ricknmortykmm.android.ui.features.characters.CharactersList
 import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesContract
 import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesViewModel

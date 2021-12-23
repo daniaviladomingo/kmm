@@ -4,8 +4,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import daniel.avila.ricknmortykmm.android.R
-import daniel.avila.ricknmortykmm.android.ui.base.components.ActionBarIcon
-import daniel.avila.ricknmortykmm.android.ui.base.components.ArrowBackIcon
+import daniel.avila.ricknmortykmm.android.ui.components.ActionBarIcon
+import daniel.avila.ricknmortykmm.android.ui.components.ArrowBackIcon
 
 @Composable
 fun ActionBar(

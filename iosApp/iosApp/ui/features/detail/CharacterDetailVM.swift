@@ -8,7 +8,7 @@
 
 import shared
 
-class CharacterDetailVM : CharacterDetailViewModel, ObservableObject {
+class CharacterDetailVM : CharacterDetailViewModel, ManagementResourceState {
     @Published var character: Character = Character(id: 1, name: "", status: Status.alive, species: "", gender: Gender.female, origin: "", location: "", image: "")
     @Published var isFavorite: Bool = false
     @Published var showAlert: Bool = false
@@ -16,30 +16,29 @@ class CharacterDetailVM : CharacterDetailViewModel, ObservableObject {
     override init() {
         super.init()
         
-        collect(flow: uiState, collect: { data in
+        collect(flow: uiState, collect: { data in            
             let state = data as! CharacterDetailContractState
             
             self.isFavorite = state.isFavorite
             
-            switch state.character {
-                case let success as BasicUiStateSuccess<Character>:
-                    self.character = success.data!
-                default:
-                    break
+            self.managementResourceState(
+                resourceState: state.character,
+                successClosure: { data in
+                    self.character = data!
                 }
-            }
-        )
+            )
+        })
         
         collect(flow: effect) { uiEffect in
             let effect = (uiEffect as! CharacterDetailContractEffect)
             
             switch effect {
-            case CharacterDetailContractEffect.CharacterAdded.shared:
-                self.isFavorite = true
-            case CharacterDetailContractEffect.CharacterRemoved.shared:
-                self.isFavorite = false
-            default:
-                break
+                case CharacterDetailContractEffect.CharacterAdded.shared:
+                    self.isFavorite = true
+                case CharacterDetailContractEffect.CharacterRemoved.shared:
+                    self.isFavorite = false
+                default:
+                    break
             }
             
             self.showAlert = true

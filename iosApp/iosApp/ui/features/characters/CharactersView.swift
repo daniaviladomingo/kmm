@@ -11,11 +11,7 @@ import shared
 
 struct CharactersView: View {    
     @ObservedObject var viewModel: CharactersVM = CharactersVM()
-    
-    init() {
-        viewModel.setEvent(event: CharactersContractEvent.OnGetCharacters.shared)
-    }
-
+   
     var body: some View {
         NavigationView {
             List {
