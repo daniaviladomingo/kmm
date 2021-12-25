@@ -20,6 +20,7 @@
 		A451DFEA2771CF9C00877D2B /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A451DFE92771CF9C00877D2B /* EmptyView.swift */; };
 		A451DFEC2771CFAE00877D2B /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A451DFEB2771CFAE00877D2B /* ErrorView.swift */; };
 		A451DFEE2771CFEE00877D2B /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A451DFED2771CFEE00877D2B /* LoadingView.swift */; };
+		A46E60DF2777AB3100457373 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46E60DE2777AB3100457373 /* BaseView.swift */; };
 		CDC0A0F0B8197EA7F59511A3 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2274FF3E7A4A32AE3630EAD1 /* Pods_iosApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		A451DFE92771CF9C00877D2B /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		A451DFEB2771CFAE00877D2B /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		A451DFED2771CFEE00877D2B /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		A46E60DE2777AB3100457373 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		C475CE2928823A4A4C7558DF /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		F202A4730CE5588E450A0D5F /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,6 +73,7 @@
 			children = (
 				A451DFE82771CF7E00877D2B /* state */,
 				70B7C0B926F1EAE8001C8A2D /* ItemCharacterView.swift */,
+				A46E60DE2777AB3100457373 /* BaseView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70862B23270DF6E30089402B /* CharactersVM.swift in Sources */,
+				A46E60DF2777AB3100457373 /* BaseView.swift in Sources */,
 				70B7C0B826F1EAD2001C8A2D /* CharacterDetailView.swift in Sources */,
 				7061846126F1F4F2009F6246 /* CharactersFavoritesView.swift in Sources */,
 				70862B2E271588FD0089402B /* CharacterDetailVM.swift in Sources */,
