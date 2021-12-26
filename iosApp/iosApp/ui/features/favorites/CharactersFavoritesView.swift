@@ -13,21 +13,15 @@ struct CharactersFavoritesView: View {
     @ObservedObject var viewModel: CharactersFavoritesVM = CharactersFavoritesVM()
     
     var body: some View {
-        VStack {
-            if (!viewModel.listCharactersFavorites.isEmpty) {
-                List {
-                    ForEach(viewModel.listCharactersFavorites, id: \.self) { character in
-                        NavigationLink(destination: CharacterDetailView(characterId: Int(character.id))) {
-                            ItemCharacterView(character: character)
-                        }
-                    }
-                }
-            } else {
-                Text("You don't favorite characters yet")
-                    .bold()
-                    .frame(alignment: .init(horizontal: .center, vertical: .center))
-            }
-        }
+        ManagementResourceState(
+            resourceState: viewModel.state.charactersFavorites,
+            successView: { charactersFavorites in
+                CharactersListView(characters: charactersFavorites as! [Character])
+            },
+            onTryAgain: { viewModel.setEvent(event: CharactersFavoritesContractEvent.OnGetCharactersFavorites.shared) },
+            onCheckAgain: { viewModel.setEvent(event: CharactersFavoritesContractEvent.OnGetCharactersFavorites.shared) },
+            msgCheckAgain: "You don't favorite characters yet"
+        )
         .navigationTitle(Text("Characters Favorites"))
         .onAppear(perform: {
             viewModel.setEvent(event:CharactersFavoritesContractEvent.OnGetCharactersFavorites.shared)

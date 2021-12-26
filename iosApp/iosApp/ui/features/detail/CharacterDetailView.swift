@@ -20,11 +20,46 @@ struct CharacterDetailView: View {
     }
 
     var body: some View {
+        ManagementResourceState(
+            resourceState: viewModel.state.character,
+            successView: { character in
+                CharacterView(character: character!)
+            },
+            onTryAgain: { viewModel.setEvent(event: CharacterDetailContractEvent.Retry.shared) },
+            onCheckAgain: { viewModel.setEvent(event: CharacterDetailContractEvent.Retry.shared) }
+        )
+        .navigationBarItems(trailing: Button(action: {
+            if (viewModel.state.isFavorite) {
+                viewModel.setEvent(event: CharacterDetailContractEvent.RemoveCharacterToFavorite.shared)
+            } else {
+                viewModel.setEvent(event: CharacterDetailContractEvent.AddCharacterToFavorite.shared)
+            }
+        }, label: {
+            Image(systemName: viewModel.state.isFavorite ? "star.fill" : "star")
+        }))
+        .alert(isPresented: $viewModel.showAlert, content: {
+            return Alert(title: Text(viewModel.state.isFavorite ? "Character added to favorite" : "Character removed to favorite"))
+            })
+        .onAppear(perform: {
+            viewModel.setEvent(event: CharacterDetailContractEvent.GetCharacter(idCharacter: Int32(characterId)))
+        })
+    }
+}
+
+struct CharacterView: View {
+    
+    private let character: Character
+    
+    init(character: Character) {
+        self.character = character
+    }
+    
+    var body: some View {
         VStack {
-            Text(viewModel.character.name)
+            Text(self.character.name)
                 .font(.title)
                 .bold()
-            AsyncImage(url: URL(string: viewModel.character.image))
+            AsyncImage(url: URL(string: self.character.image))
             { image in
                 image
                     .cornerRadius(20)
@@ -32,10 +67,10 @@ struct CharacterDetailView: View {
                 ProgressView().frame(width: 100, height: 100, alignment: .center)
             }
             
-            Text(viewModel.character.location)
+            Text(self.character.location)
                 .padding(.top, 5)
             
-            switch viewModel.character.status {
+            switch self.character.status {
             case Status.alive:
                 Text("Alive")
                     .foregroundColor(.green)
@@ -54,21 +89,6 @@ struct CharacterDetailView: View {
                     .padding(.top, 5)
             }
         }
-        .navigationBarItems(trailing: Button(action: {
-            if (viewModel.isFavorite) {
-                viewModel.setEvent(event: CharacterDetailContractEvent.RemoveCharacterToFavorite.shared)
-            } else {
-                viewModel.setEvent(event: CharacterDetailContractEvent.AddCharacterToFavorite.shared)
-            }
-        }, label: {
-            Image(systemName: viewModel.isFavorite ? "star.fill" : "star")
-        }))
-        .alert(isPresented: $viewModel.showAlert, content: {
-            return Alert(title: Text(viewModel.isFavorite ? "Character added to favorite" : "Character removed to favorite"))
-        })
-        .onAppear(perform: {
-            viewModel.setEvent(event: CharacterDetailContractEvent.GetCharacter(idCharacter: Int32(characterId)))
-        })
     }
 }
 

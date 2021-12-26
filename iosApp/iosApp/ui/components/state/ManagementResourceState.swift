@@ -1,31 +1,50 @@
 //
-//  BaseObservable.swift
+//  BaseView.swift
 //  iosApp
 //
-//  Created by Daniel Ávila on 17/12/21.
+//  Created by Daniel Ávila on 25/12/21.
 //  Copyright © 2021 orgName. All rights reserved.
 //
 
-import shared
 import SwiftUI
+import shared
 
-protocol ManagementResourceState : ObservableObject {
-    func managementResourceState<T>(resourceState: BasicUiState<T>, successClosure: (T?) -> Void)
-}
+struct ManagementResourceState<T : AnyObject, SuccessView : View>: View {
+    private let resourceState: BasicUiState<T>
+    private let successView: (T?) -> SuccessView
+    private let onTryAgain: () -> Void
+    private let msgTryAgain: String
+    private let onCheckAgain: () -> Void
+    private let msgCheckAgain: String
 
-extension ManagementResourceState {
-    func managementResourceState<T>(resourceState: BasicUiState<T>, successClosure: (T?) -> Void) {
-        switch resourceState {
+    init(
+        resourceState: BasicUiState<T>,
+        successView:  @escaping (T?) -> SuccessView,
+        onTryAgain: @escaping () -> Void,
+        msgTryAgain: String = "An error has ocurred",
+        onCheckAgain: @escaping () -> Void,
+        msgCheckAgain: String = "No data to show"
+    ) {
+        self.resourceState = resourceState
+        self.successView = successView
+        self.onTryAgain = onTryAgain
+        self.msgTryAgain = msgTryAgain
+        self.onCheckAgain = onCheckAgain
+        self.msgCheckAgain = msgCheckAgain
+    }
+    
+    var body: some View {
+        switch self.resourceState {
             case is BasicUiStateEmpty:
-                EmptyView()
+                EmptyView(msg: self.msgCheckAgain, onClick: self.onCheckAgain)
+            case is BasicUiStateError:
+                ErrorView(msg: self.msgTryAgain, onClick: self.onTryAgain)
             case is BasicUiStateLoading:
                 LoadingView()
-            case is BasicUiStateError:
-                ErrorView()
             case let success as BasicUiStateSuccess<T>:
-                successClosure(success.data)
+                successView(success.data)
             default:
-                break
+                Text("You shouldn't be seeing this message")
         }
     }
 }

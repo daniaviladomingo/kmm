@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Error(
-    msg: String = "An error has ocurred",
+    msg: String,
     onTryAgain: () -> Unit = {}
 ) {
     Box(

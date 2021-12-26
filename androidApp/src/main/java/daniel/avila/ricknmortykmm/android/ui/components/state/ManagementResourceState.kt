@@ -12,7 +12,9 @@ fun <T> ManagementResourceState(
     resourceState: BasicUiState<T>,
     successView: @Composable (data: T?) -> Unit,
     onTryAgain: () -> Unit,
+    msgTryAgain: String = "No data to show",
     onCheckAgain: () -> Unit,
+    msgCheckAgain: String = "An error has ocurred",
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -20,8 +22,8 @@ fun <T> ManagementResourceState(
         modifier = modifier.fillMaxSize()
     ) {
         when (resourceState) {
-            is BasicUiState.Empty -> Empty(onCheckAgain = onCheckAgain)
-            is BasicUiState.Error -> Error(onTryAgain = onTryAgain)
+            is BasicUiState.Empty -> Empty(onCheckAgain = onCheckAgain, msg = msgCheckAgain)
+            is BasicUiState.Error -> Error(onTryAgain = onTryAgain, msg = msgTryAgain)
             BasicUiState.Loading -> Loading()
             is BasicUiState.Success -> successView(resourceState.data)
             BasicUiState.Idle -> Unit

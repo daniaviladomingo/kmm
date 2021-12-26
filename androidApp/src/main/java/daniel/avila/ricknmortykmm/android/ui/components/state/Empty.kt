@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Empty(
-    msg: String = "No data to show",
+    msg: String,
     onCheckAgain: () -> Unit = {}
 ) {
     Box(

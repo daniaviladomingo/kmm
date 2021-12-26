@@ -8,21 +8,15 @@
 
 import shared
 
-class CharactersFavoritesVM : CharactersFavoritesViewModel, ManagementResourceState {
-    @Published var listCharactersFavorites: [Character] = []
+class CharactersFavoritesVM : CharactersFavoritesViewModel, ObservableObject {
+    @Published var state: CharactersFavoritesContractState =
+        CharactersFavoritesContractState(charactersFavorites: BasicUiState<NSArray>())
         
     override init() {
         super.init()
         
-        collect(flow: uiState, collect: { data in
-            let state = data as! CharactersFavoritesContractState
-            
-            self.managementResourceState(
-                resourceState: state.charactersFavorites,
-                successClosure: { data in
-                    self.listCharactersFavorites = data as! [Character]
-                }
-            )
+        collect(flow: uiState, collect: { state in
+            self.state = state as! CharactersFavoritesContractState
         })
     }
 }
