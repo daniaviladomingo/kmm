@@ -8,21 +8,14 @@
 
 import shared
 
-class CharactersVM: CharactersViewModel, ManagementResourceState {
-    @Published var listCharacters: [Character] = []
+class CharactersVM: CharactersViewModel, ObservableObject {
+    @Published var state: CharactersContractState = CharactersContractState(characters: BasicUiState<NSArray>())
     
     override init() {
         super.init()
         
-        collect(flow: uiState, collect: { data in
-            let state = data as! CharactersContractState
-            
-            self.managementResourceState(
-                resourceState: state.characters,
-                successClosure: { data in
-                    self.listCharacters = data as! [Character]
-                }
-            )
+        collect(flow: uiState, collect: { state in
+            self.state = state as! CharactersContractState
         })
     }
 }

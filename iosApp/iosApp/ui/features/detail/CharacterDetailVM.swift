@@ -7,26 +7,19 @@
 //
 
 import shared
+import Combine
 
-class CharacterDetailVM : CharacterDetailViewModel, ManagementResourceState {
-    @Published var character: Character = Character(id: 1, name: "", status: Status.alive, species: "", gender: Gender.female, origin: "", location: "", image: "")
+class CharacterDetailVM : CharacterDetailViewModel, ObservableObject {
+    @Published var state: CharacterDetailContractState =
+        CharacterDetailContractState(character: BasicUiState<Character>(), isFavorite: false)
     @Published var isFavorite: Bool = false
     @Published var showAlert: Bool = false
     
     override init() {
         super.init()
         
-        collect(flow: uiState, collect: { data in            
-            let state = data as! CharacterDetailContractState
-            
-            self.isFavorite = state.isFavorite
-            
-            self.managementResourceState(
-                resourceState: state.character,
-                successClosure: { data in
-                    self.character = data!
-                }
-            )
+        collect(flow: uiState, collect: { state in
+            self.state = state as! CharacterDetailContractState
         })
         
         collect(flow: effect) { uiEffect in
