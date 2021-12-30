@@ -39,9 +39,9 @@ fun CharactersScreen(
                     onCharacterClick = onCharacterClick
                 )
             },
+            modifier = Modifier.padding(padding),
             onTryAgain = { viewModel.setEvent(CharactersContract.Event.OnGetCharacters) },
             onCheckAgain = { viewModel.setEvent(CharactersContract.Event.OnGetCharacters) },
-            modifier = Modifier.padding(padding)
         )
     }
 }

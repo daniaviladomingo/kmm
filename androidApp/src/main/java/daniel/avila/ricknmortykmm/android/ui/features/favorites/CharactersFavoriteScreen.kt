@@ -33,10 +33,10 @@ fun CharactersFavoriteScreen(
                     onCharacterClick = onCharacterClick
                 )
             },
+            modifier = Modifier.padding(padding),
             onTryAgain = { viewModel.setEvent(CharactersFavoritesContract.Event.OnGetCharactersFavorites) },
             onCheckAgain = { viewModel.setEvent(CharactersFavoritesContract.Event.OnGetCharactersFavorites) },
-            msgCheckAgain = "You don't favorite characters yet",
-            modifier = Modifier.padding(padding)
+            msgCheckAgain = "You don't favorite characters yet"
         )
     }
 }
