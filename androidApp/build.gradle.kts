@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("kotlin-parcelize")
     id("kotlin-kapt")
 }
 
@@ -36,8 +35,6 @@ dependencies {
     implementation(project(":shared"))
 
     implementation(SupportLibraries.material)
-    implementation(SupportLibraries.appcompat)
-    implementation(SupportLibraries.constraintLayout)
 
     implementation(Libraries.coroutinesCore)
     implementation(Libraries.coroutinesAndroid)
@@ -46,7 +43,6 @@ dependencies {
     implementation(Libraries.ktorCore)
     implementation(Libraries.ktorSerialization)
     implementation(Libraries.ktorAndroid)
-    implementation(Libraries.glide)
 
     implementation(Libraries.Compose.ui)
     implementation(Libraries.Compose.material)
@@ -54,6 +50,4 @@ dependencies {
     implementation(Libraries.Compose.coil)
     implementation(Libraries.Compose.activity)
     implementation(Libraries.Compose.navigation)
-
-    kapt(Libraries.glideCompiler)
 }
