@@ -14,13 +14,10 @@ object Versions {
     const val navigation      = "2.4.0-beta02"
 
     const val material         = "1.4.0"
-    const val appcompat        = "1.3.1"
-    const val constraintLayout = "2.1.0"
 
     const val coroutines = "1.5.2"
     const val koin       = "3.1.2"
     const val ktor       = "1.6.3"
-    const val glide      = "4.12.0"
 
     const val minSdk     = 23
     const val compileSdk = 31
@@ -43,8 +40,6 @@ object Libraries {
     const val ktorCore          = "io.ktor:ktor-client-core:${Versions.ktor}"
     const val ktorSerialization = "io.ktor:ktor-client-serialization:${Versions.ktor}"
     const val ktorAndroid       = "io.ktor:ktor-client-android:${Versions.ktor}"
-    const val glide             = "com.github.bumptech.glide:glide:${Versions.glide}"
-    const val glideCompiler     = "com.github.bumptech.glide:compiler:${Versions.glide}"
 
     object Compose {
         const val activity         = "androidx.activity:activity-compose:${Versions.activityCompose}"
@@ -72,8 +67,6 @@ object Libraries {
 }
 
 object SupportLibraries {
-    const val material         = "com.google.android.material:material:${Versions.material}"
-    const val appcompat        = "androidx.appcompat:appcompat:${Versions.appcompat}"
-    const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
+    const val material = "com.google.android.material:material:${Versions.material}"
 }
 

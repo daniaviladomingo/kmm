@@ -11,11 +11,11 @@ import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
 fun <T> ManagementResourceState(
     resourceState: BasicUiState<T>,
     successView: @Composable (data: T?) -> Unit,
+    modifier: Modifier = Modifier,
     onTryAgain: () -> Unit,
     msgTryAgain: String = "No data to show",
     onCheckAgain: () -> Unit,
-    msgCheckAgain: String = "An error has ocurred",
-    modifier: Modifier = Modifier
+    msgCheckAgain: String = "An error has ocurred"
 ) {
     Box(
         contentAlignment = Alignment.Center,

@@ -63,9 +63,9 @@ fun CharacterDetailScreen(
                 CharacterDetail(character)
                 name = character.name
             },
+            modifier = Modifier.padding(padding),
             onTryAgain = { viewModel.setEvent(CharacterDetailContract.Event.Retry) },
             onCheckAgain = { viewModel.setEvent(CharacterDetailContract.Event.Retry) },
-            modifier = Modifier.padding(padding)
         )
     }
 }
