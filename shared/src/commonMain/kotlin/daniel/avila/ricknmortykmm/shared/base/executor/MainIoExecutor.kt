@@ -35,7 +35,6 @@ abstract class MainIoExecutor : IExecutorScope, CoroutineScope, KoinComponent {
         onError: ((Throwable) -> Unit)? = null
     ) {
         launch {
-            delay(5000)
             flow
                 .flowOn(ioDispatcher)
                 .catch {
