@@ -6,13 +6,8 @@ import daniel.avila.ricknmortykmm.shared.base.executor.IExecutorScope
 abstract class BaseActivity : ComponentActivity() {
     protected abstract val vm: Array<IExecutorScope>
 
-    override fun onStart() {
-        vm.forEach { it.attach() }
-        super.onStart()
-    }
-
-    override fun onStop() {
-        vm.forEach { it.detach() }
-        super.onStop()
+    override fun onDestroy() {
+        vm.forEach { it.cancel() }
+        super.onDestroy()
     }
 }
