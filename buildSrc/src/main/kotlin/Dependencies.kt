@@ -60,7 +60,7 @@ object Libraries {
         const val sqlDelight = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
     }
 
-    object IOs{
+    object IOs {
         const val ktorClient = "io.ktor:ktor-client-ios:${Versions.ktor}"
         const val sqlDelight = "com.squareup.sqldelight:native-driver:${Versions.sqlDelight}"
     }

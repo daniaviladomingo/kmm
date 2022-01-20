@@ -2,8 +2,13 @@ package daniel.avila.ricknmortykmm.android.ui.features.detail
 
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.sharp.Star
 import androidx.compose.runtime.Composable
-import daniel.avila.ricknmortykmm.android.R
 import daniel.avila.ricknmortykmm.android.ui.components.ActionBarIcon
 import daniel.avila.ricknmortykmm.android.ui.components.ArrowBackIcon
 
@@ -22,12 +27,12 @@ fun ActionBar(
             if (isFavorite) {
                 ActionBarIcon(
                     onClick = actionRemoveFavorite,
-                    iconResource = R.drawable.ic_action_star_rate
+                    icon = Icons.Filled.Favorite
                 )
             } else {
                 ActionBarIcon(
                     onClick = actionAddFavorite,
-                    iconResource = R.drawable.ic_action_star_border
+                    icon = Icons.Filled.FavoriteBorder
                 )
             }
         }
