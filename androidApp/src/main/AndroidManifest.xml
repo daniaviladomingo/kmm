@@ -13,8 +13,7 @@
 
         <activity
             android:exported="true"
-            android:name=".ui.MainActivity"
-            android:screenOrientation="portrait">
+            android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

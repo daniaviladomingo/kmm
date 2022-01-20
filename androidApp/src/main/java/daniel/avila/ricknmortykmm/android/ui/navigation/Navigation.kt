@@ -10,19 +10,20 @@ import coil.annotation.ExperimentalCoilApi
 import daniel.avila.ricknmortykmm.android.ui.features.characters.CharactersScreen
 import daniel.avila.ricknmortykmm.android.ui.features.detail.CharacterDetailScreen
 import daniel.avila.ricknmortykmm.android.ui.features.favorites.CharactersFavoriteScreen
+import daniel.avila.ricknmortykmm.shared.features.characters.mvi.CharactersViewModel
 import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailContract
 import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailViewModel
 import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesContract
 import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesViewModel
-import org.koin.java.KoinJavaComponent.get
 
 @ExperimentalCoilApi
 @Composable
-fun Navigation() {
+fun Navigation(
+    vmCharacters: CharactersViewModel,
+    vmCharacterDetail: CharacterDetailViewModel,
+    vmCharactersFavorites: CharactersFavoritesViewModel
+) {
     val navController = rememberNavController()
-
-    val vmCharacterDetail: CharacterDetailViewModel = get(CharacterDetailViewModel::class.java)
-    val vmCharactersFavorites: CharactersFavoritesViewModel = get(CharactersFavoritesViewModel::class.java)
 
     NavHost(
         navController = navController,
@@ -41,7 +42,8 @@ fun Navigation() {
                 navigateToFavorite = {
                     navController.navigate(route = NavItem.Favorites.route)
                     vmCharactersFavorites.setEvent(CharactersFavoritesContract.Event.OnGetCharactersFavorites)
-                }
+                },
+                viewModel = vmCharacters
             )
         }
         composable(NavItem.Detail) {

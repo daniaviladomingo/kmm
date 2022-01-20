@@ -3,16 +3,16 @@ package daniel.avila.ricknmortykmm.android.ui.components
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
 fun ActionBarIcon(
     onClick: () -> Unit,
-    iconResource: Int
+    icon: ImageVector
 ) {
     IconButton(onClick = onClick) {
         Icon(
-            painter = painterResource(id = iconResource),
+            imageVector = icon,
             contentDescription = null
         )
     }

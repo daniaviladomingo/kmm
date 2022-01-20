@@ -23,7 +23,7 @@ import org.koin.java.KoinJavaComponent.get
 fun CharactersScreen(
     onCharacterClick: (Int) -> Unit,
     navigateToFavorite: () -> Unit,
-    viewModel: CharactersViewModel = get(CharactersViewModel::class.java)
+    viewModel: CharactersViewModel
 ) {
     val state by viewModel.uiState.collectAsState()
 
