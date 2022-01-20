@@ -1,9 +1,11 @@
 package daniel.avila.ricknmortykmm.shared.base.executor
 
 import daniel.avila.ricknmortykmm.shared.domain.MainDispatcher
+import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -18,16 +20,12 @@ abstract class MainIoExecutor : IExecutorScope, CoroutineScope, KoinComponent {
     private val mainDispatcher: MainDispatcher by inject()
     private val ioDispatcher: CoroutineDispatcher by inject()
 
-    private var job = SupervisorJob()
+    private val  job: CompletableJob = SupervisorJob()
 
     override val coroutineContext: CoroutineContext
         get() = job + mainDispatcher.dispatcher
 
-    override fun attach() {
-        job = SupervisorJob()
-    }
-
-    override fun detach() {
+    override fun cancel() {
         job.cancel()
     }
 
@@ -37,6 +35,7 @@ abstract class MainIoExecutor : IExecutorScope, CoroutineScope, KoinComponent {
         onError: ((Throwable) -> Unit)? = null
     ) {
         launch {
+            delay(5000)
             flow
                 .flowOn(ioDispatcher)
                 .catch {

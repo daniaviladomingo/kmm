@@ -13,7 +13,7 @@ object Versions {
     const val activityCompose = "1.4.0"
     const val navigation      = "2.4.0-beta02"
 
-    const val material         = "1.4.0"
+    const val material        = "1.4.0"
 
     const val coroutines = "1.5.2"
     const val koin       = "3.1.2"
