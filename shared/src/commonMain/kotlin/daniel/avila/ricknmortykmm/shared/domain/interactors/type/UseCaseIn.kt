@@ -1,7 +1,9 @@
 package daniel.avila.ricknmortykmm.shared.domain.interactors.type
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-interface UseCaseIn<in IN> {
-    fun execute(param: IN): Flow<Unit>
+abstract class UseCaseIn<IN> {
+    fun execute(param: IN): Flow<Unit> = flow { emit(block(param)) }
+    protected abstract val block: suspend (param: IN) -> Unit
 }

@@ -1,7 +1,9 @@
 package daniel.avila.ricknmortykmm.shared.domain.interactors.type
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-interface UseCase {
-    fun execute(): Flow<Unit>
+abstract class UseCase {
+    fun execute(): Flow<Unit> = flow { emit(block()) }
+    protected abstract val block: suspend () -> Unit
 }
