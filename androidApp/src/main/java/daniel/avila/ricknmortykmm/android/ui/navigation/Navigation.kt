@@ -13,7 +13,6 @@ import daniel.avila.ricknmortykmm.android.ui.features.favorites.CharactersFavori
 import daniel.avila.ricknmortykmm.shared.features.characters.mvi.CharactersViewModel
 import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailContract
 import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailViewModel
-import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesContract
 import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesViewModel
 
 @ExperimentalCoilApi
@@ -32,7 +31,7 @@ fun Navigation(
         composable(NavItem.Characters) {
             CharactersScreen(
                 onCharacterClick = { idCharacter ->
-                    navController.navigate(route = NavItem.Detail.route)
+                    navController.navigate(route = NavItem.Detail.createNavRoute(idCharacter))
                     vmCharacterDetail.setEvent(
                         CharacterDetailContract.Event.GetCharacter(
                             idCharacter = idCharacter
@@ -45,8 +44,12 @@ fun Navigation(
                 viewModel = vmCharacters
             )
         }
-        composable(NavItem.Detail) {
-//            backStackEntry.findArg(NavArg.CharacterId.key)
+        composable(NavItem.Detail) { backStackEntry ->
+            // vmCharacterDetail.setEvent(
+            //     CharacterDetailContract.Event.GetCharacter(
+            //         idCharacter = backStackEntry.findArg(NavArg.IdCharacter.key)
+            //     )
+            // )
             CharacterDetailScreen(
                 onBackPressed = { navController.popBackStack() },
                 viewModel = vmCharacterDetail
@@ -55,7 +58,7 @@ fun Navigation(
         composable(NavItem.Favorites) {
             CharactersFavoriteScreen(
                 onCharacterClick = { idCharacter ->
-                    navController.navigate(route = NavItem.Detail.route)
+                    navController.navigate(route = NavItem.Detail.createNavRoute(idCharacter))
                     vmCharacterDetail.setEvent(
                         CharacterDetailContract.Event.GetCharacter(
                             idCharacter = idCharacter
