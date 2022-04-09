@@ -36,7 +36,6 @@ dependencies {
 
     implementation(SupportLibraries.material)
 
-    implementation(Libraries.coroutinesCore)
     implementation(Libraries.coroutinesAndroid)
     implementation(Libraries.koinCore)
     implementation(Libraries.koinAndroid)

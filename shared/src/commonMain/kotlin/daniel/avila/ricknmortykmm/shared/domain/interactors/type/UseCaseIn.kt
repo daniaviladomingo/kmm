@@ -4,6 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 abstract class UseCaseIn<IN> {
-    fun execute(param: IN): Flow<Unit> = flow { emit(block(param)) }
+    operator fun invoke(param: IN): Flow<Unit> = flow { emit(block(param)) }
     protected abstract val block: suspend (param: IN) -> Unit
 }

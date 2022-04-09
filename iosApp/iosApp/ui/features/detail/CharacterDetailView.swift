@@ -10,13 +10,11 @@ import SwiftUI
 import shared
 
 struct CharacterDetailView: View {
-    
-    var characterId: Int
-    
+        
     @ObservedObject var viewModel: CharacterDetailVM = CharacterDetailVM()
     
     init(characterId: Int) {
-        self.characterId = characterId
+        viewModel.setEvent(event: CharacterDetailContractEvent.GetCharacter(idCharacter: Int32(characterId)))
     }
 
     var body: some View {
@@ -40,9 +38,6 @@ struct CharacterDetailView: View {
         .alert(isPresented: $viewModel.showAlert, content: {
             return Alert(title: Text(viewModel.state.isFavorite ? "Character added to favorite" : "Character removed to favorite"))
             })
-        .onAppear(perform: {
-            viewModel.setEvent(event: CharacterDetailContractEvent.GetCharacter(idCharacter: Int32(characterId)))
-        })
     }
 }
 

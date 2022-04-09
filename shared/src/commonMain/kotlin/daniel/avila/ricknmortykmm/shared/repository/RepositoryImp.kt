@@ -3,6 +3,7 @@ package daniel.avila.ricknmortykmm.shared.repository
 import daniel.avila.ricknmortykmm.shared.domain.IRepository
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.repository.model.mapper.ApiCharacterMapper
+import kotlinx.coroutines.flow.Flow
 
 class RepositoryImp(
     private val cacheData: ICacheData,
@@ -13,7 +14,7 @@ class RepositoryImp(
     override suspend fun getCharacters(): List<Character> =
         remoteData.getCharactersFromApi().results.map { apiCharacterMapper.map(it) }
 
-    override fun getCharactersFavorites(): List<Character> =
+    override fun getCharactersFavorites(): Flow<List<Character>> =
         cacheData.getAllCharacterFavorites()
 
     override suspend fun getCharacter(id: Int): Character =
