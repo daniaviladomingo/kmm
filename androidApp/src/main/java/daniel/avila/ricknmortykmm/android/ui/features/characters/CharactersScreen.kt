@@ -16,7 +16,6 @@ import daniel.avila.ricknmortykmm.android.ui.components.state.ManagementResource
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.features.characters.mvi.CharactersContract
 import daniel.avila.ricknmortykmm.shared.features.characters.mvi.CharactersViewModel
-import org.koin.java.KoinJavaComponent.get
 
 @ExperimentalCoilApi
 @Composable
