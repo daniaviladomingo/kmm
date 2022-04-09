@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun CharacterDetailScreen(
     onBackPressed: () -> Unit,
-    onRemoveFavorite: () -> Unit,
     viewModel: CharacterDetailViewModel
 ) {
     var name by remember { mutableStateOf("") }
@@ -35,10 +34,7 @@ fun CharacterDetailScreen(
             scaffoldState.snackbarHostState.showSnackbar(
                 message = when (effect) {
                     CharacterDetailContract.Effect.CharacterAdded -> "Character added to favorites"
-                    CharacterDetailContract.Effect.CharacterRemoved -> {
-                        onRemoveFavorite()
-                        "Character removed from favorites"
-                    }
+                    CharacterDetailContract.Effect.CharacterRemoved -> "Character removed from favorites"
                 }
             )
         }

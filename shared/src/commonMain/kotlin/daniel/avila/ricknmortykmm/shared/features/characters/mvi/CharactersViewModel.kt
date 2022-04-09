@@ -25,7 +25,7 @@ open class CharactersViewModel :
 
     private fun getCharacters() {
         setState { copy(characters = BasicUiState.Loading) }
-        launch(getCharactersUseCase.execute(), { characters ->
+        launch(getCharactersUseCase(), { characters ->
             setState {
                 copy(
                     characters = if (characters.isEmpty())

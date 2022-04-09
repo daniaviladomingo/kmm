@@ -31,6 +31,7 @@ kotlin {
                 implementation(Libraries.ktorCore)
                 implementation(Libraries.ktorSerialization)
                 implementation(Libraries.Common.sqlDelight)
+                implementation(Libraries.Common.sqlDelightExtension)
                 implementation(Libraries.Common.kotlinxSerializationCore)
                 implementation(Libraries.Common.kotlinxCoroutinesCore)
                 implementation(Libraries.koinCore)

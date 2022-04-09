@@ -41,7 +41,6 @@ fun Navigation(
                 },
                 navigateToFavorite = {
                     navController.navigate(route = NavItem.Favorites.route)
-                    vmCharactersFavorites.setEvent(CharactersFavoritesContract.Event.OnGetCharactersFavorites)
                 },
                 viewModel = vmCharacters
             )
@@ -50,7 +49,6 @@ fun Navigation(
 //            backStackEntry.findArg(NavArg.CharacterId.key)
             CharacterDetailScreen(
                 onBackPressed = { navController.popBackStack() },
-                onRemoveFavorite = { vmCharactersFavorites.setEvent(CharactersFavoritesContract.Event.OnGetCharactersFavorites) },
                 viewModel = vmCharacterDetail
             )
         }

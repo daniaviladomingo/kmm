@@ -23,9 +23,6 @@ struct CharactersFavoritesView: View {
             msgCheckAgain: "You don't favorite characters yet"
         )
         .navigationTitle(Text("Characters Favorites"))
-        .onAppear(perform: {
-            viewModel.setEvent(event:CharactersFavoritesContractEvent.OnGetCharactersFavorites.shared)
-        })
     }
 }
 

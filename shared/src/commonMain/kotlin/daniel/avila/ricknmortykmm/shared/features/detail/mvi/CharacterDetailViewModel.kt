@@ -37,7 +37,7 @@ open class CharacterDetailViewModel :
     private fun getCharacter(characterId: Int) {
         this.characterId = characterId
         setState { copy(character = BasicUiState.Loading) }
-        launch(getCharacterUseCase.execute(characterId), { character ->
+        launch(getCharacterUseCase(characterId), { character ->
             setState { copy(character = BasicUiState.Success(character)) }
             this.character = character
             checkIfIsFavorite(character.id)
@@ -47,7 +47,7 @@ open class CharacterDetailViewModel :
     }
 
     private fun checkIfIsFavorite(idCharacter: Int) {
-        launch(isCharacterFavoriteUseCase.execute(idCharacter), { isFavorite ->
+        launch(isCharacterFavoriteUseCase(idCharacter), { isFavorite ->
             setState { copy(isFavorite = isFavorite) }
         }, {
             setState { copy(character = BasicUiState.Error()) }
@@ -55,14 +55,14 @@ open class CharacterDetailViewModel :
     }
 
     private fun addToFavorite() {
-        launch(addCharacterToFavoritesUseCase.execute(character), {
+        launch(addCharacterToFavoritesUseCase(character), {
             setState { copy(isFavorite = true) }
             setEffect { CharacterDetailContract.Effect.CharacterAdded }
         })
     }
 
     private fun removeFromFavorite() {
-        launch(removeCharacterFromFavoritesUseCase.execute(character.id), {
+        launch(removeCharacterFromFavoritesUseCase(character.id), {
             setState { copy(isFavorite = false) }
             setEffect { CharacterDetailContract.Effect.CharacterRemoved }
         })
