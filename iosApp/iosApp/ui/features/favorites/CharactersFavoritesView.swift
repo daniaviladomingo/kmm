@@ -13,13 +13,13 @@ struct CharactersFavoritesView: View {
     @ObservedObject var viewModel: CharactersFavoritesVM = CharactersFavoritesVM()
     
     var body: some View {
-        ManagementResourceState(
+        ManagementResourceState<NSArray, CharactersListView>(
             resourceState: viewModel.state.charactersFavorites,
             successView: { charactersFavorites in
                 CharactersListView(characters: charactersFavorites as! [Character])
             },
-            onTryAgain: { viewModel.setEvent(event: CharactersFavoritesContractEvent.OnGetCharactersFavorites.shared) },
-            onCheckAgain: { viewModel.setEvent(event: CharactersFavoritesContractEvent.OnGetCharactersFavorites.shared) },
+            onTryAgain: { viewModel.setEvent(event: CharactersFavoritesContractEventOnGetCharactersFavorites.shared) },
+            onCheckAgain: { viewModel.setEvent(event: CharactersFavoritesContractEventOnGetCharactersFavorites.shared) },
             msgCheckAgain: "You don't favorite characters yet"
         )
         .navigationTitle(Text("Characters Favorites"))

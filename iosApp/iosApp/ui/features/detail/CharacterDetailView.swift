@@ -14,7 +14,7 @@ struct CharacterDetailView: View {
     @ObservedObject var viewModel: CharacterDetailVM = CharacterDetailVM()
     
     init(characterId: Int) {
-        viewModel.setEvent(event: CharacterDetailContractEvent.GetCharacter(idCharacter: Int32(characterId)))
+        viewModel.setEvent(event: CharacterDetailContractEventGetCharacter.init(idCharacter: Int32(characterId)))
     }
 
     var body: some View {
@@ -23,14 +23,14 @@ struct CharacterDetailView: View {
             successView: { character in
                 CharacterView(character: character!)
             },
-            onTryAgain: { viewModel.setEvent(event: CharacterDetailContractEvent.Retry.shared) },
-            onCheckAgain: { viewModel.setEvent(event: CharacterDetailContractEvent.Retry.shared) }
+            onTryAgain: { viewModel.setEvent(event: CharacterDetailContractEventRetry.shared) },
+            onCheckAgain: { viewModel.setEvent(event: CharacterDetailContractEventRetry.shared) }
         )
         .navigationBarItems(trailing: Button(action: {
             if (viewModel.state.isFavorite) {
-                viewModel.setEvent(event: CharacterDetailContractEvent.RemoveCharacterToFavorite.shared)
+                viewModel.setEvent(event: CharacterDetailContractEventRemoveCharacterToFavorite.shared)
             } else {
-                viewModel.setEvent(event: CharacterDetailContractEvent.AddCharacterToFavorite.shared)
+                viewModel.setEvent(event: CharacterDetailContractEventAddCharacterToFavorite.shared)
             }
         }, label: {
             Image(systemName: viewModel.state.isFavorite ? "star.fill" : "star")

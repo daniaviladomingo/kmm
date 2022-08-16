@@ -10,7 +10,7 @@ import shared
 
 class CharactersFavoritesVM : CharactersFavoritesViewModel, ObservableObject {
     @Published var state: CharactersFavoritesContractState =
-        CharactersFavoritesContractState(charactersFavorites: BasicUiState<NSArray>())
+    CharactersFavoritesContractState(charactersFavorites: BasicUiStateIdle.shared)
         
     override init() {
         super.init()

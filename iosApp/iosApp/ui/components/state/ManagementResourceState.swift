@@ -10,7 +10,7 @@ import SwiftUI
 import shared
 
 struct ManagementResourceState<T : AnyObject, SuccessView : View>: View {
-    private let resourceState: BasicUiState<T>
+    private let resourceState: BasicUiState
     private let successView: (T?) -> SuccessView
     private let onTryAgain: () -> Void
     private let msgTryAgain: String
@@ -18,7 +18,7 @@ struct ManagementResourceState<T : AnyObject, SuccessView : View>: View {
     private let msgCheckAgain: String
 
     init(
-        resourceState: BasicUiState<T>,
+        resourceState: BasicUiState,
         successView:  @escaping (T?) -> SuccessView,
         onTryAgain: @escaping () -> Void,
         msgTryAgain: String = "An error has ocurred",

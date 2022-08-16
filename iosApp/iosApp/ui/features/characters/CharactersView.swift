@@ -14,13 +14,13 @@ struct CharactersView: View {
    
     var body: some View {
         NavigationView {
-            ManagementResourceState(
+            ManagementResourceState<NSArray, CharactersListView>(
                 resourceState: viewModel.state.characters,
                 successView: { characters in
                     CharactersListView(characters: characters as! [Character])
                 },
-                onTryAgain: { viewModel.setEvent(event: CharactersContractEvent.OnGetCharacters.shared) },
-                onCheckAgain: { viewModel.setEvent(event: CharactersContractEvent.OnGetCharacters.shared) }
+                onTryAgain: { viewModel.setEvent(event: CharactersContractEventOnGetCharacters.shared) },
+                onCheckAgain: { viewModel.setEvent(event: CharactersContractEventOnGetCharacters.shared) }
             )
             .navigationBarItems(trailing: NavigationLink(destination: CharactersFavoritesView()){
                 Image(systemName: "star.fill")

@@ -4,27 +4,27 @@ object App {
 }
 
 object Versions {
-    const val kotlin         = "1.6.0"
-    const val gradle         = "7.0.4"
+    const val kotlin         = "1.7.0"
+    const val gradle         = "7.2.2"
     const val sqlDelight     = "1.5.3"
 
-    const val compose         = "1.1.0-beta04"
-    const val coil            = "1.3.2"
-    const val activityCompose = "1.4.0"
-    const val navigation      = "2.4.0-beta02"
+    const val compose         = "1.2.0"
+    const val coil            = "1.4.0"
+    const val activityCompose = "1.5.1"
+    const val navigation      = "2.5.1"
 
-    const val material        = "1.4.0"
+    const val material        = "1.6.1"
 
-    const val coroutines = "1.6.1"
-    const val koin       = "3.1.2"
+    const val coroutines = "1.6.4"
+    const val koin       = "3.1.6"
     const val ktor       = "1.6.8"
 
     const val minSdk     = 23
-    const val compileSdk = 31
-    const val targetSdk  = 31
+    const val compileSdk = 32
+    const val targetSdk  = 32
 
-    const val kotlinxSerializationCore = "1.2.2"
-    const val kotlinxCoroutinesCore    = "1.6.1-native-mt"
+    const val kotlinxSerializationCore = "1.3.3"
+    const val kotlinxCoroutinesCore    = "1.6.3-native-mt"
 }
 
 object Libraries {

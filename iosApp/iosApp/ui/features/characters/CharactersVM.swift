@@ -9,7 +9,7 @@
 import shared
 
 class CharactersVM: CharactersViewModel, ObservableObject {
-    @Published var state: CharactersContractState = CharactersContractState(characters: BasicUiState<NSArray>())
+    @Published var state: CharactersContractState = CharactersContractState(characters: BasicUiStateIdle.shared)
     
     override init() {
         super.init()
