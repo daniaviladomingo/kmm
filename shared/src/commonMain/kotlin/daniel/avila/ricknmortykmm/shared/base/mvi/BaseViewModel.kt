@@ -1,6 +1,7 @@
 package daniel.avila.ricknmortykmm.shared.base.mvi
 
 import daniel.avila.ricknmortykmm.shared.base.executor.MainIoExecutor
+import daniel.avila.ricknmortykmm.shared.domain.model.core.Resource
 import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailContract
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -66,4 +67,5 @@ abstract class BaseViewModel<Event : UiEvent, State : UiState, Effect : UiEffect
         val effectValue = builder()
         launch { _effect.send(effectValue) }
     }
+
 }

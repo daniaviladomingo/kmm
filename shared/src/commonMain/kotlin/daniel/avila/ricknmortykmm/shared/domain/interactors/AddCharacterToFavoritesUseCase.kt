@@ -6,5 +6,5 @@ import daniel.avila.ricknmortykmm.shared.domain.model.Character
 
 class AddCharacterToFavoritesUseCase(
     private val repository: IRepository,
-    override val block: suspend (param: Character) -> Unit = { repository.addCharacterToFavorites(it) }
+    override val block: suspend (param: Character) -> Unit = { repository.addCharacterToFavorites(it) },
 ) : UseCaseIn<Character>()

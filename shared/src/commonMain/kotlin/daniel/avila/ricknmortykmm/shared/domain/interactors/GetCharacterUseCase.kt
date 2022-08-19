@@ -6,5 +6,5 @@ import daniel.avila.ricknmortykmm.shared.domain.model.Character
 
 class GetCharacterUseCase(
     private val repository: IRepository,
-    override val block: suspend (param: Int) -> Character = { repository.getCharacter(it) }
+    override val block: suspend (param: Int) -> Character = { repository.getCharacter(it) },
 ) : UseCaseInOut<Int, Character>()

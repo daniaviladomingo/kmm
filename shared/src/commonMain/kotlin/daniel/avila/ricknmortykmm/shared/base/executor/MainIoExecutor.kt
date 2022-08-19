@@ -32,14 +32,10 @@ abstract class MainIoExecutor : IExecutorScope, CoroutineScope, KoinComponent {
     protected fun <T> launch(
         flow: Flow<T>,
         onSuccess: (T) -> Unit,
-        onError: ((Throwable) -> Unit)? = null
     ) {
         launch {
             flow
                 .flowOn(ioDispatcher)
-                .catch {
-                    onError?.invoke(it)
-                }
                 .collect {
                     onSuccess(it)
                 }

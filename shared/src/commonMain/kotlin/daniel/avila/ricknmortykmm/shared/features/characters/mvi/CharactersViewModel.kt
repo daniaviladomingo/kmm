@@ -4,6 +4,7 @@ import daniel.avila.ricknmortykmm.shared.base.mvi.BaseViewModel
 import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
 import daniel.avila.ricknmortykmm.shared.base.mvi.UiEffect
 import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersUseCase
+import daniel.avila.ricknmortykmm.shared.domain.model.core.Resource
 import org.koin.core.component.inject
 
 open class CharactersViewModel :
@@ -25,17 +26,18 @@ open class CharactersViewModel :
 
     private fun getCharacters() {
         setState { copy(characters = BasicUiState.Loading) }
-        launch(getCharactersUseCase(), { characters ->
-            setState {
-                copy(
-                    characters = if (characters.isEmpty())
-                        BasicUiState.Empty
-                    else
-                        BasicUiState.Success(characters)
-                )
+        launch(getCharactersUseCase()) { resourceCharacters ->
+            when (resourceCharacters) {
+                is Resource.Error -> setState { copy(characters = BasicUiState.Error()) }
+                is Resource.Success -> setState {
+                    copy(
+                        characters = if (resourceCharacters.data.isEmpty())
+                            BasicUiState.Empty
+                        else
+                            BasicUiState.Success(resourceCharacters.data)
+                    )
+                }
             }
-        }, {
-            setState { copy(characters = BasicUiState.Error()) }
-        })
+        }
     }
 }
