@@ -38,7 +38,7 @@ open class CharacterDetailViewModel :
     private fun getCharacter(characterId: Int) {
         this.characterId = characterId
         setState { copy(character = BasicUiState.Loading) }
-        launch(getCharacterUseCase(characterId)) { resourceCharacter ->
+        collect(getCharacterUseCase(characterId)) { resourceCharacter ->
             when (resourceCharacter) {
                 is Resource.Error -> setState { copy(character = BasicUiState.Error()) }
                 is Resource.Success -> {
@@ -52,7 +52,7 @@ open class CharacterDetailViewModel :
     }
 
     private fun checkIfIsFavorite(idCharacter: Int) {
-        launch(isCharacterFavoriteUseCase(idCharacter)) { resourceIsFavorite ->
+        collect(isCharacterFavoriteUseCase(idCharacter)) { resourceIsFavorite ->
             when (resourceIsFavorite) {
                 is Resource.Error -> setState { copy(character = BasicUiState.Error()) }
                 is Resource.Success -> setState { copy(isFavorite = resourceIsFavorite.data) }
@@ -61,7 +61,7 @@ open class CharacterDetailViewModel :
     }
 
     private fun addToFavorite() {
-        launch(addCharacterToFavoritesUseCase(character)) { resource ->
+        collect(addCharacterToFavoritesUseCase(character)) { resource ->
             when (resource) {
                 is Resource.Error -> setState { copy(character = BasicUiState.Error()) }
                 is Resource.Success -> {
@@ -73,7 +73,7 @@ open class CharacterDetailViewModel :
     }
 
     private fun removeFromFavorite() {
-        launch(removeCharacterFromFavoritesUseCase(character.id)) { resource ->
+        collect(removeCharacterFromFavoritesUseCase(character.id)) { resource ->
             when (resource) {
                 is Resource.Error -> setState { copy(character = BasicUiState.Error()) }
                 is Resource.Success -> {

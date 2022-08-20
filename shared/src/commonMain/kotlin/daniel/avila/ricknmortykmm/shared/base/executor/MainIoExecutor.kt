@@ -29,22 +29,15 @@ abstract class MainIoExecutor : IExecutorScope, CoroutineScope, KoinComponent {
         job.cancel()
     }
 
-    protected fun <T> launch(
-        flow: Flow<T>,
-        onSuccess: (T) -> Unit,
+    protected fun <T> collect(
+        flow: Flow<T>, collect: (T) -> Unit
     ) {
         launch {
             flow
                 .flowOn(ioDispatcher)
                 .collect {
-                    onSuccess(it)
+                    collect(it)
                 }
-        }
-    }
-
-    protected fun <T> collect(flow: Flow<T>, collect: (T) -> Unit) {
-        launch {
-            flow.collect { collect(it) }
         }
     }
 }

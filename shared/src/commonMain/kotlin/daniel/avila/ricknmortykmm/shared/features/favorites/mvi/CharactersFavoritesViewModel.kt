@@ -28,7 +28,7 @@ open class CharactersFavoritesViewModel :
 
     private fun getCharactersFavorites() {
         setState { copy(charactersFavorites = BasicUiState.Loading) }
-        launch(getCharactersFavoritesUseCase()) { resourceFavorites ->
+        collect(getCharactersFavoritesUseCase()) { resourceFavorites ->
             when (resourceFavorites) {
                 is Resource.Error -> setState { copy(charactersFavorites = BasicUiState.Error()) }
                 is Resource.Success -> setState {

@@ -26,7 +26,7 @@ open class CharactersViewModel :
 
     private fun getCharacters() {
         setState { copy(characters = BasicUiState.Loading) }
-        launch(getCharactersUseCase()) { resourceCharacters ->
+        collect(getCharactersUseCase()) { resourceCharacters ->
             when (resourceCharacters) {
                 is Resource.Error -> setState { copy(characters = BasicUiState.Error()) }
                 is Resource.Success -> setState {
