@@ -1,9 +1,8 @@
 package daniel.avila.ricknmortykmm.shared.repository
 
-import daniel.avila.ricknmortykmm.shared.data_remote.model.ApiCharacter
-import daniel.avila.ricknmortykmm.shared.data_remote.model.ApiCharactersResponse
+import daniel.avila.ricknmortykmm.shared.domain.model.Character
 
 interface IRemoteData {
-    suspend fun getCharactersFromApi(): ApiCharactersResponse
-    suspend fun getCharacterFromApi(id: Int): ApiCharacter
+    suspend fun getCharactersFromApi(): List<Character>
+    suspend fun getCharacterFromApi(id: Int): Character
 }

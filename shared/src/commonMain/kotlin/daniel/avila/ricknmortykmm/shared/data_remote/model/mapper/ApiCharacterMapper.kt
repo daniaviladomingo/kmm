@@ -1,4 +1,4 @@
-package daniel.avila.ricknmortykmm.shared.repository.model.mapper
+package daniel.avila.ricknmortykmm.shared.data_remote.model.mapper
 
 import daniel.avila.ricknmortykmm.shared.data_remote.model.ApiCharacter
 import daniel.avila.ricknmortykmm.shared.domain.model.Character

@@ -2,15 +2,20 @@ package daniel.avila.ricknmortykmm.shared.di
 
 import daniel.avila.ricknmortykmm.shared.data_cache.CacheDataImp
 import daniel.avila.ricknmortykmm.shared.data_remote.RemoteDataImp
+import daniel.avila.ricknmortykmm.shared.data_remote.model.mapper.ApiCharacterMapper
 import daniel.avila.ricknmortykmm.shared.domain.IRepository
-import daniel.avila.ricknmortykmm.shared.domain.interactors.*
+import daniel.avila.ricknmortykmm.shared.domain.interactors.AddCharacterToFavoritesUseCase
+import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharacterUseCase
+import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersFavoritesUseCase
+import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersUseCase
+import daniel.avila.ricknmortykmm.shared.domain.interactors.IsCharacterFavoriteUseCase
+import daniel.avila.ricknmortykmm.shared.domain.interactors.RemoveCharacterFromFavoritesUseCase
 import daniel.avila.ricknmortykmm.shared.repository.ICacheData
 import daniel.avila.ricknmortykmm.shared.repository.IRemoteData
 import daniel.avila.ricknmortykmm.shared.repository.RepositoryImp
-import daniel.avila.ricknmortykmm.shared.repository.model.mapper.ApiCharacterMapper
-import io.ktor.client.HttpClient
+import io.ktor.client.*
 import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.features.json.serializer.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
@@ -34,9 +39,9 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
 fun initKoin() = initKoin {}
 
 val repositoryModule = module {
-    single<IRepository> { RepositoryImp(get(), get(), get()) }
+    single<IRepository> { RepositoryImp(get(), get()) }
     single<ICacheData> { CacheDataImp(get()) }
-    single<IRemoteData> { RemoteDataImp(get(), get()) }
+    single<IRemoteData> { RemoteDataImp(get(), get(), get()) }
 
     single {
         HttpClient {
