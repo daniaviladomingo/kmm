@@ -6,8 +6,8 @@ import daniel.avila.ricknmortykmm.shared.data_remote.model.mapper.ApiCharacterMa
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.repository.IRemoteData
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.request.*
-import io.ktor.http.*
 
 class RemoteDataImp(
     private val endPoint: String,
@@ -16,18 +16,11 @@ class RemoteDataImp(
 ) : IRemoteData {
     override suspend fun getCharactersFromApi(): List<Character> =
         apiCharacterMapper.map(
-            httpClient.get<ApiCharactersResponse> { apiUrl("/api/character") }.results
+            (httpClient.get("$endPoint/api/character").body<ApiCharactersResponse>()).results
         )
 
     override suspend fun getCharacterFromApi(id: Int): Character =
         apiCharacterMapper.map(
-            httpClient.get<ApiCharacter> { apiUrl("/api/character/$id") }
+            httpClient.get("$endPoint/api/character/$id").body<ApiCharacter>()
         )
-
-    private fun HttpRequestBuilder.apiUrl(path: String) {
-        url {
-            takeFrom(endPoint)
-            encodedPath = path
-        }
-    }
 }

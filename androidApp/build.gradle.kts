@@ -39,14 +39,9 @@ android {
 dependencies {
     implementation(project(":shared"))
 
-    implementation(SupportLibraries.material)
-
-    implementation(Libraries.coroutinesAndroid)
-    implementation(Libraries.koinCore)
     implementation(Libraries.koinAndroid)
-    implementation(Libraries.ktorCore)
-    implementation(Libraries.ktorSerialization)
-    implementation(Libraries.ktorAndroid)
+
+    implementation(SupportLibraries.material)
 
     implementation(Libraries.Compose.ui)
     implementation(Libraries.Compose.material)

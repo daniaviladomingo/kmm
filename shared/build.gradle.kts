@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -28,13 +26,15 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Libraries.ktorCore)
-                implementation(Libraries.ktorSerialization)
+                implementation(Libraries.Common.Ktor.core)
+                implementation(Libraries.Common.Ktor.content)
+                implementation(Libraries.Common.Ktor.serializationJson)
+                implementation(Libraries.Common.Ktor.logging)
                 implementation(Libraries.Common.sqlDelight)
                 implementation(Libraries.Common.sqlDelightExtension)
                 implementation(Libraries.Common.kotlinxSerializationCore)
                 implementation(Libraries.Common.kotlinxCoroutinesCore)
-                implementation(Libraries.koinCore)
+                implementation(Libraries.Common.koinCore)
             }
         }
         val commonTest by getting {
@@ -46,8 +46,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(Libraries.Android.sqlDelight)
-                implementation(Libraries.ktorAndroid)
-                implementation(Libraries.coroutinesAndroid)
+                implementation(Libraries.Android.ktorClient)
             }
         }
         val androidTest by getting {

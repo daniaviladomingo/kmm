@@ -14,8 +14,9 @@ import daniel.avila.ricknmortykmm.shared.repository.ICacheData
 import daniel.avila.ricknmortykmm.shared.repository.IRemoteData
 import daniel.avila.ricknmortykmm.shared.repository.RepositoryImp
 import io.ktor.client.*
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
@@ -45,14 +46,23 @@ val repositoryModule = module {
 
     single {
         HttpClient {
-            install(JsonFeature) {
-                val json = Json { ignoreUnknownKeys = true }
-                serializer = KotlinxSerializer(json)
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                        prettyPrint = true
+                        isLenient = true
+                    }
+                )
+            }
+            install(Logging) {
+                logger = Logger.DEFAULT
+                level = LogLevel.ALL
             }
         }
     }
 
-    single { "https://rickandmortyapi.com/" }
+    single { "https://rickandmortyapi.com" }
 }
 
 val useCasesModule: Module = module {
