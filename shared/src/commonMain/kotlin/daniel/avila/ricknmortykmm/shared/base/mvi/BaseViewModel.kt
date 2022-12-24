@@ -1,8 +1,6 @@
 package daniel.avila.ricknmortykmm.shared.base.mvi
 
 import daniel.avila.ricknmortykmm.shared.base.executor.MainIoExecutor
-import daniel.avila.ricknmortykmm.shared.domain.model.core.Resource
-import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailContract
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package daniel.avila.ricknmortykmm.shared.domain
+package daniel.avila.ricknmortykmm.shared.base.executor
 
 import kotlinx.coroutines.CoroutineDispatcher
 

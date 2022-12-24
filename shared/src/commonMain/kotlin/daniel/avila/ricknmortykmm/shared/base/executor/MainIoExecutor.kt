@@ -1,6 +1,6 @@
 package daniel.avila.ricknmortykmm.shared.base.executor
 
-import daniel.avila.ricknmortykmm.shared.domain.MainDispatcher
+import daniel.avila.ricknmortykmm.shared.base.executor.MainDispatcher
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
