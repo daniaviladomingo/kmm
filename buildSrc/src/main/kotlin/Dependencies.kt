@@ -4,11 +4,14 @@ object App {
 }
 
 object Versions {
-    const val kotlin         = "1.7.10"
+    const val kotlin         = "1.7.20"
     const val gradle         = "7.3.1"
     const val sqlDelight     = "1.5.4"
 
-    const val compose         = "1.3.1"
+    const val kotlinCompilerExtensionVersion = "1.3.2"
+
+    const val composeUi       = "1.3.2"
+    const val composeMaterial = "1.3.1"
     const val coil            = "1.4.0"
     const val activityCompose = "1.6.1"
     const val navigation      = "2.5.1"
@@ -25,7 +28,6 @@ object Versions {
     const val targetSdk  = 33
 
     const val kotlinxSerializationCore = "1.4.1"
-    const val kotlinxCoroutinesCore    = "1.6.3-native-mt"
 }
 
 object Libraries {
@@ -36,10 +38,10 @@ object Libraries {
     const val koinAndroid           = "io.insert-koin:koin-android:${Versions.koinAndroid}"
 
     object Compose {
+        const val ui               = "androidx.compose.ui:ui:${Versions.composeUi}"
+        const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.composeUi}"
+        const val material         = "androidx.compose.material:material:${Versions.composeMaterial}"
         const val activity         = "androidx.activity:activity-compose:${Versions.activityCompose}"
-        const val ui               = "androidx.compose.ui:ui:${Versions.compose}"
-        const val material         = "androidx.compose.material:material:${Versions.compose}"
-        const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
         const val navigation       = "androidx.navigation:navigation-compose:${Versions.navigation}"
         const val coil             = "io.coil-kt:coil-compose:${Versions.coil}"
     }
@@ -48,7 +50,7 @@ object Libraries {
         const val sqlDelight               = "com.squareup.sqldelight:runtime:${Versions.sqlDelight}"
         const val sqlDelightExtension      = "com.squareup.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
         const val kotlinxSerializationCore = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerializationCore}"
-        const val kotlinxCoroutinesCore    = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinxCoroutinesCore}"
+        const val kotlinxCoroutinesCore    = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
         const val koinCore                 = "io.insert-koin:koin-core:${Versions.koinCore}"
 
         object Ktor {
