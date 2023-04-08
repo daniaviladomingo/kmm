@@ -8,7 +8,7 @@ import daniel.avila.ricknmortykmm.shared.domain.model.core.Resource
 import org.koin.core.component.inject
 
 open class CharactersFavoritesViewModel :
-    BaseViewModel<CharactersFavoritesContract.Event, CharactersFavoritesContract.State, UiEffect>() {
+    BaseViewModel<CharactersFavoritesContract.Event, CharactersFavoritesContract.State, CharactersFavoritesContract.Effect>() {
     private val getCharactersFavoritesUseCase: GetCharactersFavoritesUseCase by inject()
 
     init {
@@ -22,7 +22,11 @@ open class CharactersFavoritesViewModel :
 
     override fun handleEvent(event: CharactersFavoritesContract.Event) {
         when (event) {
-            CharactersFavoritesContract.Event.OnGetCharactersFavorites -> getCharactersFavorites()
+            CharactersFavoritesContract.Event.OnTryCheckAgainClick -> getCharactersFavorites()
+            is CharactersFavoritesContract.Event.OnCharacterClick ->
+                setEffect { CharactersFavoritesContract.Effect.NavigateToDetailCharacter(event.idCharacter) }
+            CharactersFavoritesContract.Event.OnBackPressed ->
+                setEffect { CharactersFavoritesContract.Effect.BackNavigation }
         }
     }
 

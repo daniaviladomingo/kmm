@@ -1,6 +1,7 @@
 package daniel.avila.ricknmortykmm.android.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
@@ -20,7 +21,7 @@ import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavori
 fun Navigation(
     vmCharacters: CharactersViewModel,
     vmCharacterDetail: CharacterDetailViewModel,
-    vmCharactersFavorites: CharactersFavoritesViewModel
+    vmCharactersFavorites: CharactersFavoritesViewModel,
 ) {
     val navController = rememberNavController()
 
@@ -30,43 +31,31 @@ fun Navigation(
     ) {
         composable(NavItem.Characters) {
             CharactersScreen(
-                onCharacterClick = { idCharacter ->
-                    navController.navigate(route = NavItem.Detail.createNavRoute(idCharacter))
-                    vmCharacterDetail.setEvent(
-                        CharacterDetailContract.Event.GetCharacter(
-                            idCharacter = idCharacter
-                        )
-                    )
-                },
-                navigateToFavorite = {
-                    navController.navigate(route = NavItem.Favorites.route)
-                },
-                viewModel = vmCharacters
+                navController = navController,
+                onEvent = { event -> vmCharacters.setEvent(event) },
+                state = vmCharacters.uiState.collectAsState(),
+                effect = vmCharacters.effect
             )
         }
         composable(NavItem.Detail) { backStackEntry ->
-            // vmCharacterDetail.setEvent(
-            //     CharacterDetailContract.Event.GetCharacter(
-            //         idCharacter = backStackEntry.findArg(NavArg.IdCharacter.key)
-            //     )
-            // )
+            vmCharacterDetail.setEvent(
+                CharacterDetailContract.Event.GetCharacter(
+                    idCharacter = backStackEntry.findArg(NavArg.IdCharacter.key)
+                )
+            )
             CharacterDetailScreen(
-                onBackPressed = { navController.popBackStack() },
-                viewModel = vmCharacterDetail
+                navController = navController,
+                onEvent = { event -> vmCharacterDetail.setEvent(event) },
+                state = vmCharacterDetail.uiState.collectAsState(),
+                effect = vmCharacterDetail.effect
             )
         }
         composable(NavItem.Favorites) {
             CharactersFavoriteScreen(
-                onCharacterClick = { idCharacter ->
-                    navController.navigate(route = NavItem.Detail.createNavRoute(idCharacter))
-                    vmCharacterDetail.setEvent(
-                        CharacterDetailContract.Event.GetCharacter(
-                            idCharacter = idCharacter
-                        )
-                    )
-                },
-                onBackPressed = { navController.popBackStack() },
-                viewModel = vmCharactersFavorites
+                navController = navController,
+                onEvent = { event -> vmCharactersFavorites.setEvent(event) },
+                state = vmCharactersFavorites.uiState.collectAsState(),
+                effect = vmCharactersFavorites.effect
             )
         }
     }
@@ -74,7 +63,7 @@ fun Navigation(
 
 private fun NavGraphBuilder.composable(
     navItem: NavItem,
-    content: @Composable (NavBackStackEntry) -> Unit
+    content: @Composable (NavBackStackEntry) -> Unit,
 ) {
     composable(
         route = navItem.route,

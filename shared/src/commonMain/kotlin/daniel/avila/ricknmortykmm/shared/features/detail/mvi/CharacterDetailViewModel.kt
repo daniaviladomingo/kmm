@@ -29,9 +29,10 @@ open class CharacterDetailViewModel :
     override fun handleEvent(event: CharacterDetailContract.Event) {
         when (event) {
             is CharacterDetailContract.Event.GetCharacter -> getCharacter(event.idCharacter)
-            CharacterDetailContract.Event.AddCharacterToFavorite -> addToFavorite()
-            CharacterDetailContract.Event.RemoveCharacterToFavorite -> removeFromFavorite()
-            CharacterDetailContract.Event.Retry -> characterId?.let { getCharacter(it) }
+            CharacterDetailContract.Event.OnAddCharacterToFavoriteClick -> addToFavorite()
+            CharacterDetailContract.Event.OnRemoveCharacterFromFavoriteClick -> removeFromFavorite()
+            CharacterDetailContract.Event.OnTryCheckAgainClick -> characterId?.let { getCharacter(it) }
+            CharacterDetailContract.Event.OnBackPressed -> setEffect { CharacterDetailContract.Effect.BackNavigation }
         }
     }
 

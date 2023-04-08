@@ -2,13 +2,12 @@ package daniel.avila.ricknmortykmm.shared.features.characters.mvi
 
 import daniel.avila.ricknmortykmm.shared.base.mvi.BaseViewModel
 import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
-import daniel.avila.ricknmortykmm.shared.base.mvi.UiEffect
 import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersUseCase
 import daniel.avila.ricknmortykmm.shared.domain.model.core.Resource
 import org.koin.core.component.inject
 
 open class CharactersViewModel :
-    BaseViewModel<CharactersContract.Event, CharactersContract.State, UiEffect>() {
+    BaseViewModel<CharactersContract.Event, CharactersContract.State, CharactersContract.Effect>() {
     private val getCharactersUseCase: GetCharactersUseCase by inject()
 
     init {
@@ -20,7 +19,9 @@ open class CharactersViewModel :
 
     override fun handleEvent(event: CharactersContract.Event) {
         when (event) {
-            CharactersContract.Event.OnGetCharacters -> getCharacters()
+            CharactersContract.Event.OnTryCheckAgainClick -> getCharacters()
+            is CharactersContract.Event.OnCharacterClick -> setEffect { CharactersContract.Effect.NavigateToDetailCharacter(event.idCharacter) }
+            CharactersContract.Event.OnFavoritesClick -> setEffect { CharactersContract.Effect.NavigateToFavorites }
         }
     }
 

@@ -38,6 +38,7 @@ dependencies {
     implementation(SupportLibraries.material)
 
     implementation(Libraries.Compose.ui)
+    // implementation(Libraries.Compose.lifecycle)
     implementation(Libraries.Compose.material)
     implementation(Libraries.Compose.uiToolingPreview)
     implementation(Libraries.Compose.coil)

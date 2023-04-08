@@ -3,39 +3,54 @@ package daniel.avila.ricknmortykmm.android.ui.features.favorites
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import daniel.avila.ricknmortykmm.android.ui.components.state.ManagementResourceState
 import daniel.avila.ricknmortykmm.android.ui.features.characters.CharactersList
+import daniel.avila.ricknmortykmm.android.ui.navigation.NavItem
 import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesContract
-import daniel.avila.ricknmortykmm.shared.features.favorites.mvi.CharactersFavoritesViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 
 @ExperimentalCoilApi
 @Composable
 fun CharactersFavoriteScreen(
-    onCharacterClick: (Int) -> Unit,
-    onBackPressed: () -> Unit,
-    viewModel: CharactersFavoritesViewModel
+    navController: NavController,
+    onEvent: (CharactersFavoritesContract.Event) -> Unit,
+    state: State<CharactersFavoritesContract.State>,
+    effect: Flow<CharactersFavoritesContract.Effect>,
 ) {
-    val state by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(key1 = null) {
+        effect.collectLatest { effect ->
+            when (effect) {
+                is CharactersFavoritesContract.Effect.NavigateToDetailCharacter ->
+                    navController.navigate(route = NavItem.Detail.createNavRoute(effect.idCharacter))
+                CharactersFavoritesContract.Effect.BackNavigation -> navController.popBackStack()
+            }
+        }
+    }
 
     Scaffold(
-        topBar = { ActionBar(onBackPressed = onBackPressed) }
+        topBar = { ActionBar(onBackPressed = { onEvent(CharactersFavoritesContract.Event.OnBackPressed) }) }
     ) { padding ->
         ManagementResourceState(
-            resourceState = state.charactersFavorites,
+            resourceState = state.value.charactersFavorites,
             successView = { favorites ->
                 checkNotNull(favorites)
                 CharactersList(
                     characters = favorites,
-                    onCharacterClick = onCharacterClick
+                    onCharacterClick = { idCharacter ->
+                        onEvent(CharactersFavoritesContract.Event.OnCharacterClick(idCharacter))
+                    }
                 )
             },
             modifier = Modifier.padding(padding),
-            onTryAgain = { viewModel.setEvent(CharactersFavoritesContract.Event.OnGetCharactersFavorites) },
-            onCheckAgain = { viewModel.setEvent(CharactersFavoritesContract.Event.OnGetCharactersFavorites) },
+            onTryAgain = { onEvent(CharactersFavoritesContract.Event.OnTryCheckAgainClick) },
+            onCheckAgain = { onEvent(CharactersFavoritesContract.Event.OnTryCheckAgainClick) },
             msgCheckAgain = "You don't favorite characters yet"
         )
     }

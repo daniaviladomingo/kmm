@@ -9,13 +9,13 @@ import daniel.avila.ricknmortykmm.android.ui.components.ActionBarIcon
 
 @Composable
 fun ActionBar(
-    actionFavorite: () -> Unit
+    onClickFavorite: () -> Unit
 ) {
     TopAppBar(
         title = { Text(text = "Rick & Morty KMM") },
         actions = {
             ActionBarIcon(
-                onClick = actionFavorite,
+                onClick = onClickFavorite,
                 icon = Icons.Filled.Favorite
             )
         }

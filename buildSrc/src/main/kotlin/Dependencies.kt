@@ -15,6 +15,7 @@ object Versions {
     const val coil            = "1.4.0"
     const val activityCompose = "1.6.1"
     const val navigation      = "2.5.1"
+    const val lifecycle       = "2.6.1"
 
     const val material        = "1.7.0"
 
@@ -39,6 +40,7 @@ object Libraries {
 
     object Compose {
         const val ui               = "androidx.compose.ui:ui:${Versions.composeUi}"
+        const val lifecycle        = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycle}"
         const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.composeUi}"
         const val material         = "androidx.compose.material:material:${Versions.composeMaterial}"
         const val activity         = "androidx.activity:activity-compose:${Versions.activityCompose}"
