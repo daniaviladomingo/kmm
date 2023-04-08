@@ -19,8 +19,8 @@ struct CharactersView: View {
                 successView: { characters in
                     CharactersListView(characters: characters as! [Character])
                 },
-                onTryAgain: { viewModel.setEvent(event: CharactersContractEventOnGetCharacters.shared) },
-                onCheckAgain: { viewModel.setEvent(event: CharactersContractEventOnGetCharacters.shared) }
+                onTryAgain: { viewModel.setEvent(event: CharactersContractEventOnTryCheckAgainClick.shared) },
+                onCheckAgain: { viewModel.setEvent(event: CharactersContractEventOnTryCheckAgainClick.shared) }
             )
             .navigationBarItems(trailing: NavigationLink(destination: CharactersFavoritesView()){
                 Image(systemName: "star.fill")

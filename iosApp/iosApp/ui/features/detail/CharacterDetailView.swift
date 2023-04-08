@@ -23,14 +23,14 @@ struct CharacterDetailView: View {
             successView: { character in
                 CharacterView(character: character!)
             },
-            onTryAgain: { viewModel.setEvent(event: CharacterDetailContractEventRetry.shared) },
-            onCheckAgain: { viewModel.setEvent(event: CharacterDetailContractEventRetry.shared) }
+            onTryAgain: { viewModel.setEvent(event: CharacterDetailContractEventOnTryCheckAgainClick.shared) },
+            onCheckAgain: { viewModel.setEvent(event: CharacterDetailContractEventOnTryCheckAgainClick.shared) }
         )
         .navigationBarItems(trailing: Button(action: {
             if (viewModel.state.isFavorite) {
-                viewModel.setEvent(event: CharacterDetailContractEventRemoveCharacterToFavorite.shared)
+                viewModel.setEvent(event: CharacterDetailContractEventOnRemoveCharacterFromFavoriteClick.shared)
             } else {
-                viewModel.setEvent(event: CharacterDetailContractEventAddCharacterToFavorite.shared)
+                viewModel.setEvent(event: CharacterDetailContractEventOnAddCharacterToFavoriteClick.shared)
             }
         }, label: {
             Image(systemName: viewModel.state.isFavorite ? "star.fill" : "star")

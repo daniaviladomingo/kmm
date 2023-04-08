@@ -18,8 +18,8 @@ struct CharactersFavoritesView: View {
             successView: { charactersFavorites in
                 CharactersListView(characters: charactersFavorites as! [Character])
             },
-            onTryAgain: { viewModel.setEvent(event: CharactersFavoritesContractEventOnGetCharactersFavorites.shared) },
-            onCheckAgain: { viewModel.setEvent(event: CharactersFavoritesContractEventOnGetCharactersFavorites.shared) },
+            onTryAgain: { viewModel.setEvent(event: CharactersFavoritesContractEventOnTryCheckAgainClick.shared) },
+            onCheckAgain: { viewModel.setEvent(event: CharactersFavoritesContractEventOnTryCheckAgainClick.shared) },
             msgCheckAgain: "You don't favorite characters yet"
         )
         .navigationTitle(Text("Characters Favorites"))
