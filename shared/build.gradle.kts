@@ -57,6 +57,7 @@ kotlin {
                 implementation(Libraries.Android.ktorClient)
             }
         }
+
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))

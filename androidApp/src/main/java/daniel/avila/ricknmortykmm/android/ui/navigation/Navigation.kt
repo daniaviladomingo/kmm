@@ -2,6 +2,7 @@ package daniel.avila.ricknmortykmm.android.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
@@ -33,7 +34,7 @@ fun Navigation(
             CharactersScreen(
                 navController = navController,
                 onEvent = { event -> vmCharacters.setEvent(event) },
-                state = vmCharacters.uiState.collectAsState(),
+                state = vmCharacters.uiState.collectAsStateWithLifecycle(),
                 effect = vmCharacters.effect
             )
         }
@@ -46,7 +47,7 @@ fun Navigation(
             CharacterDetailScreen(
                 navController = navController,
                 onEvent = { event -> vmCharacterDetail.setEvent(event) },
-                state = vmCharacterDetail.uiState.collectAsState(),
+                state = vmCharacterDetail.uiState.collectAsStateWithLifecycle(),
                 effect = vmCharacterDetail.effect
             )
         }
@@ -54,7 +55,7 @@ fun Navigation(
             CharactersFavoriteScreen(
                 navController = navController,
                 onEvent = { event -> vmCharactersFavorites.setEvent(event) },
-                state = vmCharactersFavorites.uiState.collectAsState(),
+                state = vmCharactersFavorites.uiState.collectAsStateWithLifecycle(),
                 effect = vmCharactersFavorites.effect
             )
         }
