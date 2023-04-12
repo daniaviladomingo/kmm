@@ -12,7 +12,6 @@ import Combine
 class CharacterDetailVM : CharacterDetailViewModel, ObservableObject {
     @Published var state: CharacterDetailContractState =
     CharacterDetailContractState(character: BasicUiStateIdle.shared, isFavorite: false)
-    @Published var isFavorite: Bool = false
     @Published var showAlert: Bool = false
     
     override init() {
@@ -25,14 +24,7 @@ class CharacterDetailVM : CharacterDetailViewModel, ObservableObject {
         collect(flow: effect) { uiEffect in
             let effect = (uiEffect as! CharacterDetailContractEffect)
             
-            switch effect {
-            case is CharacterDetailContractEffectCharacterAdded:
-                    self.isFavorite = true
-            case is CharacterDetailContractEffectCharacterRemoved:
-                    self.isFavorite = false
-                default:
-                    break
-            }
+            
             
             self.showAlert = true
         }
