@@ -7,7 +7,6 @@ import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharacterUseCase
 import daniel.avila.ricknmortykmm.shared.domain.interactors.IsCharacterFavoriteUseCase
 import daniel.avila.ricknmortykmm.shared.domain.interactors.RemoveCharacterFromFavoritesUseCase
 import daniel.avila.ricknmortykmm.shared.domain.model.Character
-import daniel.avila.ricknmortykmm.shared.domain.model.core.Resource
 import org.koin.core.component.inject
 
 open class CharacterDetailViewModel :
@@ -40,48 +39,44 @@ open class CharacterDetailViewModel :
         this.characterId = characterId
         setState { copy(character = BasicUiState.Loading) }
         collect(getCharacterUseCase(characterId)) { resourceCharacter ->
-            when (resourceCharacter) {
-                is Resource.Error -> setState { copy(character = BasicUiState.Error()) }
-                is Resource.Success -> {
-                    setState { copy(character = BasicUiState.Success(resourceCharacter.data)) }
-                    this.character = resourceCharacter.data
-                    checkIfIsFavorite(resourceCharacter.data.id)
+            resourceCharacter
+                .onSuccess {
+                    setState { copy(character = BasicUiState.Success(it)) }
+                    this.character = it
+                    checkIfIsFavorite(it.id)
                 }
-            }
+                .onFailure { setState { copy(character = BasicUiState.Error()) } }
 
         }
     }
 
     private fun checkIfIsFavorite(idCharacter: Int) {
         collect(isCharacterFavoriteUseCase(idCharacter)) { resourceIsFavorite ->
-            when (resourceIsFavorite) {
-                is Resource.Error -> setState { copy(character = BasicUiState.Error()) }
-                is Resource.Success -> setState { copy(isFavorite = resourceIsFavorite.data) }
-            }
+            resourceIsFavorite
+                .onSuccess { setState { copy(isFavorite = it) } }
+                .onFailure { setState { copy(character = BasicUiState.Error()) } }
         }
     }
 
     private fun addToFavorite() {
         collect(addCharacterToFavoritesUseCase(character)) { resource ->
-            when (resource) {
-                is Resource.Error -> setState { copy(character = BasicUiState.Error()) }
-                is Resource.Success -> {
+            resource
+                .onSuccess {
                     setState { copy(isFavorite = true) }
                     setEffect { CharacterDetailContract.Effect.CharacterAdded }
                 }
-            }
+                .onFailure { setState { copy(character = BasicUiState.Error()) } }
         }
     }
 
     private fun removeFromFavorite() {
         collect(removeCharacterFromFavoritesUseCase(character.id)) { resource ->
-            when (resource) {
-                is Resource.Error -> setState { copy(character = BasicUiState.Error()) }
-                is Resource.Success -> {
+            resource
+                .onSuccess {
                     setState { copy(isFavorite = false) }
                     setEffect { CharacterDetailContract.Effect.CharacterRemoved }
                 }
-            }
+                .onFailure { setState { copy(character = BasicUiState.Error()) } }
         }
     }
 }

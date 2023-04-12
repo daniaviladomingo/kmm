@@ -1,18 +1,17 @@
 package daniel.avila.ricknmortykmm.shared.domain.interactors.type
 
-import daniel.avila.ricknmortykmm.shared.domain.model.core.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 abstract class UseCase {
-    operator fun invoke(): Flow<Resource<Unit>> = flow {
+    operator fun invoke(): Flow<Result<Unit>> = flow {
         emit(
             try {
-                Resource.Success(block())
+                Result.success(block())
             } catch (ex: Exception) {
-                Resource.Error(exception = ex)
+                Result.failure(exception = ex)
             }
         )
     }
@@ -21,10 +20,10 @@ abstract class UseCase {
 }
 
 abstract class UseCaseFlow {
-    operator fun invoke(): Flow<Resource<Unit>> = try {
-        build().map { Resource.Success(data = it) }
+    operator fun invoke(): Flow<Result<Unit>> = try {
+        build().map { Result.success(it) }
     } catch (ex: Exception) {
-        flowOf(Resource.Error(exception = ex))
+        flowOf(Result.failure(exception = ex))
     }
 
     protected abstract fun build(): Flow<Unit>

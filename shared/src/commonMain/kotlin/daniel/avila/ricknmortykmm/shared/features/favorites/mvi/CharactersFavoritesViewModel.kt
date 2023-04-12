@@ -2,9 +2,7 @@ package daniel.avila.ricknmortykmm.shared.features.favorites.mvi
 
 import daniel.avila.ricknmortykmm.shared.base.mvi.BaseViewModel
 import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
-import daniel.avila.ricknmortykmm.shared.base.mvi.UiEffect
 import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersFavoritesUseCase
-import daniel.avila.ricknmortykmm.shared.domain.model.core.Resource
 import org.koin.core.component.inject
 
 open class CharactersFavoritesViewModel :
@@ -33,18 +31,19 @@ open class CharactersFavoritesViewModel :
     private fun getCharactersFavorites() {
         setState { copy(charactersFavorites = BasicUiState.Loading) }
         collect(getCharactersFavoritesUseCase()) { resourceFavorites ->
-            when (resourceFavorites) {
-                is Resource.Error -> setState { copy(charactersFavorites = BasicUiState.Error()) }
-                is Resource.Success -> setState {
-                    copy(
-                        charactersFavorites =
-                        if (resourceFavorites.data.isEmpty())
-                            BasicUiState.Empty
-                        else
-                            BasicUiState.Success(resourceFavorites.data)
-                    )
+            resourceFavorites
+                .onSuccess {
+                    setState {
+                        copy(
+                            charactersFavorites =
+                            if (it.isEmpty())
+                                BasicUiState.Empty
+                            else
+                                BasicUiState.Success(it)
+                        )
+                    }
                 }
-            }
+                .onFailure { setState { copy(charactersFavorites = BasicUiState.Error()) } }
         }
     }
 }

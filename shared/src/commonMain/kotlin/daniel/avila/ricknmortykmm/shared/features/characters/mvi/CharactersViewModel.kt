@@ -3,7 +3,6 @@ package daniel.avila.ricknmortykmm.shared.features.characters.mvi
 import daniel.avila.ricknmortykmm.shared.base.mvi.BaseViewModel
 import daniel.avila.ricknmortykmm.shared.base.mvi.BasicUiState
 import daniel.avila.ricknmortykmm.shared.domain.interactors.GetCharactersUseCase
-import daniel.avila.ricknmortykmm.shared.domain.model.core.Resource
 import org.koin.core.component.inject
 
 open class CharactersViewModel :
@@ -20,7 +19,11 @@ open class CharactersViewModel :
     override fun handleEvent(event: CharactersContract.Event) {
         when (event) {
             CharactersContract.Event.OnTryCheckAgainClick -> getCharacters()
-            is CharactersContract.Event.OnCharacterClick -> setEffect { CharactersContract.Effect.NavigateToDetailCharacter(event.idCharacter) }
+            is CharactersContract.Event.OnCharacterClick -> setEffect {
+                CharactersContract.Effect.NavigateToDetailCharacter(
+                    event.idCharacter
+                )
+            }
             CharactersContract.Event.OnFavoritesClick -> setEffect { CharactersContract.Effect.NavigateToFavorites }
         }
     }
@@ -28,17 +31,18 @@ open class CharactersViewModel :
     private fun getCharacters() {
         setState { copy(characters = BasicUiState.Loading) }
         collect(getCharactersUseCase()) { resourceCharacters ->
-            when (resourceCharacters) {
-                is Resource.Error -> setState { copy(characters = BasicUiState.Error()) }
-                is Resource.Success -> setState {
-                    copy(
-                        characters = if (resourceCharacters.data.isEmpty())
-                            BasicUiState.Empty
-                        else
-                            BasicUiState.Success(resourceCharacters.data)
-                    )
+            resourceCharacters
+                .onSuccess {
+                    setState {
+                        copy(
+                            characters = if (it.isEmpty())
+                                BasicUiState.Empty
+                            else
+                                BasicUiState.Success(it)
+                        )
+                    }
                 }
-            }
+                .onFailure { setState { copy(characters = BasicUiState.Error()) } }
         }
     }
 }
