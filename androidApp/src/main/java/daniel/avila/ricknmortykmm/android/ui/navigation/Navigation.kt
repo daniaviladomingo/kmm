@@ -34,15 +34,15 @@ fun Navigation(
                 navController = navController,
                 onEvent = { event -> vmCharacters.setEvent(event) },
                 state = vmCharacters.uiState.collectAsStateWithLifecycle(),
-                effect = vmCharacters.effect
+                effect = vmCharacters.effect,
+                onCharacterDetailNavigate = { idCharacter ->
+                    navController.navigate(route = NavItem.Detail.route)
+                    vmCharacterDetail.setEvent(CharacterDetailContract.Event.GetCharacter(idCharacter = idCharacter))
+                }
             )
         }
-        composable(NavItem.Detail) { backStackEntry ->
-            vmCharacterDetail.setEvent(
-                CharacterDetailContract.Event.GetCharacter(
-                    idCharacter = backStackEntry.findArg(NavArg.IdCharacter.key)
-                )
-            )
+        composable(NavItem.Detail) {
+            //backStackEntry.findArg(NavArg.IdCharacter.key)
             CharacterDetailScreen(
                 navController = navController,
                 onEvent = { event -> vmCharacterDetail.setEvent(event) },
@@ -55,7 +55,11 @@ fun Navigation(
                 navController = navController,
                 onEvent = { event -> vmCharactersFavorites.setEvent(event) },
                 state = vmCharactersFavorites.uiState.collectAsStateWithLifecycle(),
-                effect = vmCharactersFavorites.effect
+                effect = vmCharactersFavorites.effect,
+                onCharacterDetailNavigate = { idCharacter ->
+                    navController.navigate(route = NavItem.Detail.route)
+                    vmCharacterDetail.setEvent(CharacterDetailContract.Event.GetCharacter(idCharacter = idCharacter))
+                }
             )
         }
     }

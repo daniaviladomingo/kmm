@@ -27,12 +27,12 @@ fun CharactersScreen(
     onEvent: (CharactersContract.Event) -> Unit,
     state: State<CharactersContract.State>,
     effect: Flow<CharactersContract.Effect>,
+    onCharacterDetailNavigate: (Int) -> Unit
 ) {
     LaunchedEffect(key1 = null) {
         effect.collectLatest { effect ->
             when (effect) {
-                is CharactersContract.Effect.NavigateToDetailCharacter ->
-                    navController.navigate(route = NavItem.Detail.createNavRoute(effect.idCharacter))
+                is CharactersContract.Effect.NavigateToDetailCharacter -> onCharacterDetailNavigate(effect.idCharacter)
                 CharactersContract.Effect.NavigateToFavorites -> navController.navigate(route = NavItem.Favorites.route)
             }
         }

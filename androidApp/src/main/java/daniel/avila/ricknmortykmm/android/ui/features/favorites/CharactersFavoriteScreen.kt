@@ -22,13 +22,13 @@ fun CharactersFavoriteScreen(
     onEvent: (CharactersFavoritesContract.Event) -> Unit,
     state: State<CharactersFavoritesContract.State>,
     effect: Flow<CharactersFavoritesContract.Effect>,
+    onCharacterDetailNavigate: (Int) -> Unit,
 ) {
 
     LaunchedEffect(key1 = null) {
         effect.collectLatest { effect ->
             when (effect) {
-                is CharactersFavoritesContract.Effect.NavigateToDetailCharacter ->
-                    navController.navigate(route = NavItem.Detail.createNavRoute(effect.idCharacter))
+                is CharactersFavoritesContract.Effect.NavigateToDetailCharacter -> onCharacterDetailNavigate(effect.idCharacter)
                 CharactersFavoritesContract.Effect.BackNavigation -> navController.popBackStack()
             }
         }
