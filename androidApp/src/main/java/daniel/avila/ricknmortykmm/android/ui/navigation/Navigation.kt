@@ -32,9 +32,9 @@ fun Navigation(
         composable(NavItem.Characters) {
             CharactersScreen(
                 navController = navController,
-                onEvent = { event -> vmCharacters.setEvent(event) },
-                state = vmCharacters.uiState.collectAsStateWithLifecycle(),
-                effect = vmCharacters.effect,
+                onUiEvent = { event -> vmCharacters.setEvent(event) },
+                uiState = vmCharacters.uiState,
+                uiEffect = vmCharacters.effect,
                 onCharacterDetailNavigate = { idCharacter ->
                     navController.navigate(route = NavItem.Detail.route)
                     vmCharacterDetail.setEvent(CharacterDetailContract.Event.GetCharacter(idCharacter = idCharacter))
@@ -45,17 +45,17 @@ fun Navigation(
             //backStackEntry.findArg(NavArg.IdCharacter.key)
             CharacterDetailScreen(
                 navController = navController,
-                onEvent = { event -> vmCharacterDetail.setEvent(event) },
-                state = vmCharacterDetail.uiState.collectAsStateWithLifecycle(),
-                effect = vmCharacterDetail.effect
+                onUiEvent = { event -> vmCharacterDetail.setEvent(event) },
+                uiState = vmCharacterDetail.uiState,
+                uiEffect = vmCharacterDetail.effect
             )
         }
         composable(NavItem.Favorites) {
             CharactersFavoriteScreen(
                 navController = navController,
-                onEvent = { event -> vmCharactersFavorites.setEvent(event) },
-                state = vmCharactersFavorites.uiState.collectAsStateWithLifecycle(),
-                effect = vmCharactersFavorites.effect,
+                onUiEvent = { event -> vmCharactersFavorites.setEvent(event) },
+                uiState = vmCharactersFavorites.uiState,
+                uiEffect = vmCharactersFavorites.effect,
                 onCharacterDetailNavigate = { idCharacter ->
                     navController.navigate(route = NavItem.Detail.route)
                     vmCharacterDetail.setEvent(CharacterDetailContract.Event.GetCharacter(idCharacter = idCharacter))

@@ -14,7 +14,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
@@ -32,21 +32,24 @@ import daniel.avila.ricknmortykmm.shared.domain.model.Character
 import daniel.avila.ricknmortykmm.shared.domain.model.Status
 import daniel.avila.ricknmortykmm.shared.features.detail.mvi.CharacterDetailContract
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 
 @ExperimentalCoilApi
 @Composable
 fun CharacterDetailScreen(
     navController: NavController,
-    onEvent: (CharacterDetailContract.Event) -> Unit,
-    state: State<CharacterDetailContract.State>,
-    effect: Flow<CharacterDetailContract.Effect>,
+    onUiEvent: (CharacterDetailContract.Event) -> Unit,
+    uiState: StateFlow<CharacterDetailContract.State>,
+    uiEffect: Flow<CharacterDetailContract.Effect>,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
 ) {
+    val state by uiState.collectAsStateWithLifecycle()
+
     var name by remember { mutableStateOf("") }
 
     LaunchedEffect(key1 = null) {
-        effect.collectLatest { effect ->
+        uiEffect.collectLatest { effect ->
             when (effect) {
                 CharacterDetailContract.Effect.CharacterAdded ->
                     scaffoldState.snackbarHostState.showSnackbar("Character added to favorites")
@@ -62,23 +65,23 @@ fun CharacterDetailScreen(
         topBar = {
             ActionBar(
                 name = name,
-                isFavorite = state.value.isFavorite,
-                actionAddFavorite = { onEvent(CharacterDetailContract.Event.OnAddCharacterToFavoriteClick) },
-                actionRemoveFavorite = { onEvent(CharacterDetailContract.Event.OnRemoveCharacterFromFavoriteClick) },
-                onBackPressed = { onEvent(CharacterDetailContract.Event.OnBackPressed) }
+                isFavorite = state.isFavorite,
+                actionAddFavorite = { onUiEvent(CharacterDetailContract.Event.OnAddCharacterToFavoriteClick) },
+                actionRemoveFavorite = { onUiEvent(CharacterDetailContract.Event.OnRemoveCharacterFromFavoriteClick) },
+                onBackPressed = { onUiEvent(CharacterDetailContract.Event.OnBackPressed) }
             )
         }
     ) { padding ->
         ManagementResourceState(
-            resourceState = state.value.character,
+            resourceState = state.character,
             successView = { character ->
                 requireNotNull(character)
                 CharacterDetail(character)
                 name = character.name
             },
             modifier = Modifier.padding(padding),
-            onTryAgain = { onEvent(CharacterDetailContract.Event.OnTryCheckAgainClick) },
-            onCheckAgain = { onEvent(CharacterDetailContract.Event.OnTryCheckAgainClick) },
+            onTryAgain = { onUiEvent(CharacterDetailContract.Event.OnTryCheckAgainClick) },
+            onCheckAgain = { onUiEvent(CharacterDetailContract.Event.OnTryCheckAgainClick) },
         )
     }
 }
