@@ -6,6 +6,14 @@ pluginManagement {
     }
 }
 
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+
 rootProject.name = "RickNMortyKMM"
 include(":androidApp")
 include(":shared")

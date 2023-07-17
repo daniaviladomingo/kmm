@@ -58,15 +58,13 @@ kotlin {
                 implementation(Libraries.Android.ktorClient)
             }
         }
-/*
-        val androidTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
-            }
-        }
 
- */
+        // val androidTest by getting {
+        //     dependencies {
+        //         implementation(kotlin("test-junit"))
+        //         implementation("junit:junit:4.13.2")
+        //     }
+        // }
 
         val iosX64Main by getting
         val iosArm64Main by getting

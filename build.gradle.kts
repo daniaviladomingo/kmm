@@ -1,22 +1,10 @@
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath(Libraries.kotlin)
-        classpath(Libraries.kotlinSerialization)
-        classpath(Libraries.gradle)
-        classpath(Libraries.sqlDelight)
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+plugins{
+    id("com.android.application") version Versions.gradle apply false
+    id("com.android.library") version Versions.gradle apply false
+    id("com.squareup.sqldelight") version Versions.sqlDelight apply false
+    kotlin("android") version Versions.kotlin apply false
+    kotlin("multiplatform") version Versions.kotlin apply false
+    kotlin("plugin.serialization") version Versions.kotlin apply false
 }
 
 tasks.register("clean", Delete::class) {
