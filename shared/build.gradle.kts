@@ -9,21 +9,22 @@ plugins {
 version = "1.0"
 
 kotlin {
-    android()
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "shared"
+    android{
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
         }
     }
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
+        version = "1.0"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
         framework {
@@ -57,13 +58,15 @@ kotlin {
                 implementation(Libraries.Android.ktorClient)
             }
         }
-
+/*
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
             }
         }
+
+ */
 
         val iosX64Main by getting
         val iosArm64Main by getting
@@ -91,11 +94,11 @@ kotlin {
 }
 
 android {
+    namespace = "daniel.avila.ricknmortykmm.android"
     compileSdk = Versions.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = Versions.minSdk
-        targetSdk = Versions.targetSdk
     }
 }
 

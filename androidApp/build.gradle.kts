@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace = "daniel.avila.ricknmortykmm.android"
     compileSdk = Versions.compileSdk
     defaultConfig {
         applicationId = "daniel.avila.ricknmortykmm.android"
@@ -27,6 +28,13 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 

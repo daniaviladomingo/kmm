@@ -1,6 +1,8 @@
 package daniel.avila.ricknmortykmm.android
 
 import android.app.Application
+import android.content.Context
+import android.content.pm.ApplicationInfo
 import daniel.avila.ricknmortykmm.android.di.viewModelModule
 import daniel.avila.ricknmortykmm.shared.di.initKoin
 import org.koin.android.ext.koin.androidContext
@@ -12,7 +14,7 @@ class KmmApplication: Application() {
         super.onCreate()
 
         initKoin {
-            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
+            androidLogger(if (isDebug()) Level.ERROR else Level.NONE)
             androidContext(this@KmmApplication)
             modules(
                 viewModelModule
@@ -20,3 +22,5 @@ class KmmApplication: Application() {
         }
     }
 }
+
+fun Context.isDebug() = 0 != applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE
