@@ -48,7 +48,7 @@ fun CharacterDetailScreen(
 
     var name by remember { mutableStateOf("") }
 
-    LaunchedEffect(key1 = null) {
+    LaunchedEffect(key1 = Unit) {
         uiEffect.collectLatest { effect ->
             when (effect) {
                 CharacterDetailContract.Effect.CharacterAdded ->

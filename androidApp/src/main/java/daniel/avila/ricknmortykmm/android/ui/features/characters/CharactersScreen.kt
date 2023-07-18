@@ -33,7 +33,7 @@ fun CharactersScreen(
 ) {
     val state by uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = null) {
+    LaunchedEffect(key1 = Unit) {
         uiEffect.collectLatest { effect ->
             when (effect) {
                 is CharactersContract.Effect.NavigateToDetailCharacter -> onCharacterDetailNavigate(effect.idCharacter)

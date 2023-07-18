@@ -18,6 +18,7 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -75,7 +76,7 @@ val useCasesModule: Module = module {
 }
 
 val dispatcherModule = module {
-    factory { Dispatchers.Default }
+    factory { Dispatchers.IO }
 }
 
 val mapperModule = module {

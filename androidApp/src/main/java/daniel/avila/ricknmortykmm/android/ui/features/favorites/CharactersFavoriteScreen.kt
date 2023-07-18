@@ -27,7 +27,7 @@ fun CharactersFavoriteScreen(
 ) {
     val state by uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = null) {
+    LaunchedEffect(key1 = Unit) {
         uiEffect.collectLatest { effect ->
             when (effect) {
                 is CharactersFavoritesContract.Effect.NavigateToDetailCharacter -> onCharacterDetailNavigate(effect.idCharacter)
