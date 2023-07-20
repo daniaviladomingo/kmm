@@ -6,10 +6,10 @@ import daniel.avila.rnm.kmm.App
 import daniel.avila.rnm.kmm.di.initKoin
 
 fun main() = application {
-    initKoin{}
+    initKoin {}
     Window(
         title = "Rick N Morty KMM",
-        state = rememberWindowState(width = 800.dp, height = 600.dp),
+        state = rememberWindowState(width = 400.dp, height = 800.dp),
         onCloseRequest = ::exitApplication,
     ) { App() }
 }

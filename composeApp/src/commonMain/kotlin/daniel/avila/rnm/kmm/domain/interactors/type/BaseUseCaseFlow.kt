@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.map
 abstract class BaseUseCaseFlow<IN, OUT>(
     private val dispatcher: CoroutineDispatcher,
 ) {
-    operator fun invoke(param: IN): Flow<Result<OUT>> = build(param)
+    suspend operator fun  invoke(param: IN): Flow<Result<OUT>> = build(param)
         .flowOn(dispatcher)
         .map {
             Result.success(it)
         }.catch { emit(Result.failure(it)) }
 
-    protected abstract fun build(param: IN): Flow<OUT>
+    protected abstract suspend fun build(param: IN): Flow<OUT>
 }

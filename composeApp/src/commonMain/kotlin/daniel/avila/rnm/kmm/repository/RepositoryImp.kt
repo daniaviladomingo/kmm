@@ -12,18 +12,18 @@ class RepositoryImp(
     override suspend fun getCharacters(): List<Character> =
         remoteData.getCharactersFromApi()
 
-    override fun getCharactersFavorites(): Flow<List<Character>> =
+    override suspend fun getCharactersFavorites(): Flow<List<Character>> =
         cacheData.getAllCharacterFavorites()
 
     override suspend fun getCharacter(id: Int): Character =
         remoteData.getCharacterFromApi(id)
 
-    override fun addCharacterToFavorites(character: Character) =
+    override suspend fun addCharacterToFavorites(character: Character) =
         cacheData.addCharacterToFavorite(character)
 
-    override fun removeCharacterFromFavorite(idCharacter: Int) =
+    override suspend fun removeCharacterFromFavorite(idCharacter: Int) =
         cacheData.removeCharacterFromFavorite(idCharacter)
 
-    override fun isCharacterFavorite(idCharacter: Int): Boolean =
+    override suspend fun isCharacterFavorite(idCharacter: Int): Boolean =
         cacheData.isCharacterFavorite(idCharacter)
 }

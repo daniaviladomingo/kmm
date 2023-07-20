@@ -1,6 +1,7 @@
 package daniel.avila.rnm.kmm.di
 
 import daniel.avila.rnm.kmm.data_cache.CacheDataImp
+import daniel.avila.rnm.kmm.data_cache.sqldelight.SharedDatabase
 import daniel.avila.rnm.kmm.data_remote.RemoteDataImp
 import daniel.avila.rnm.kmm.data_remote.model.mapper.ApiCharacterMapper
 import daniel.avila.rnm.kmm.domain.IRepository
@@ -37,6 +38,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
             viewModelModule,
             useCasesModule,
             repositoryModule,
+            ktorModule,
+            sqlDelightModule,
             mapperModule,
             dispatcherModule,
             platformModule()
@@ -63,6 +66,10 @@ val repositoryModule = module {
     single<ICacheData> { CacheDataImp(get()) }
     single<IRemoteData> { RemoteDataImp(get(), get(), get()) }
 
+
+}
+
+val ktorModule = module {
     single {
         HttpClient {
             install(ContentNegotiation) {
@@ -82,6 +89,10 @@ val repositoryModule = module {
     }
 
     single { "https://rickandmortyapi.com" }
+}
+
+val sqlDelightModule = module {
+    single { SharedDatabase(get()) }
 }
 
 val dispatcherModule = module {
