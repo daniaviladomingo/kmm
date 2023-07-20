@@ -1,16 +1,16 @@
 package daniel.avila.rnm.kmm.data_cache
 
 import app.cash.sqldelight.ColumnAdapter
+import app.cash.sqldelight.coroutines.asFlow
 import daniel.avila.rnm.kmm.data_cache.sqldelight.AppDatabase
 import daniel.avila.rnm.kmm.data_cache.sqldelight.DatabaseDriverFactory
 import daniel.avila.rnm.kmm.datacache.sqldelight.CharacterFavorite
 import daniel.avila.rnm.kmm.domain.model.Character
 import daniel.avila.rnm.kmm.domain.model.Gender
 import daniel.avila.rnm.kmm.domain.model.Status
-
 import daniel.avila.rnm.kmm.repository.ICacheData
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 class CacheDataImp(
     databaseDriverFactory: DatabaseDriverFactory
@@ -74,7 +74,7 @@ class CacheDataImp(
     }
 
     override fun getAllCharacterFavorites(): Flow<List<Character>> =
-        flowOf(dbQuery.selectAllCharacterFavorite(::mapFavorite).executeAsList())
+        dbQuery.selectAllCharacterFavorite(::mapFavorite).asFlow().map { it.executeAsList() }
 
     override fun isCharacterFavorite(idCharacter: Int): Boolean =
         dbQuery.selectCharacterFavoriteById(idCharacter.toLong()).executeAsOne()
