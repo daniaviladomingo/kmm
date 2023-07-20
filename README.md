@@ -36,9 +36,10 @@ To run the application on iPhone device/simulator:
 Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
 
 
-## Architecture
+[//]: # (## Architecture)
 
-![alt text](./kmm.png)
+[//]: # ()
+[//]: # (![alt text]&#40;./kmm.png&#41;)
 
 ## Especial thank
 
