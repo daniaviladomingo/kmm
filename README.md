@@ -3,6 +3,7 @@
 * Kotlin/Compose Multiplatform Mobile [KMM]
 * [Compose]
 * [Voyager]
+* [Compose Multiplatform Wizard]
 * [MVI]
 * [Flow]
 * [Sqldelight]
@@ -42,6 +43,8 @@ Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
 ## Especial thank
 
 * [Alex Fuhrmann] for his fantastic job: [The Rick and Morty Api]
+* [Compose Multiplatform Wizard] amazing tool to create KMM template
+* [Voyager] simply: makes your kmm life easy
 
 [KMM]: https://kotlinlang.org/lp/mobile/
 [Flow]: https://github.com/Kotlin/kotlinx.coroutines
@@ -53,4 +56,5 @@ Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
 [Compose]: https://www.jetbrains.com/lp/compose-multiplatform/
 [MVI]: https://abhiappm
 [Voyager]: https://voyager.adriel.cafe/
+[Compose Multiplatform Wizard]: https://terrakok.github.io/Compose-Multiplatform-Wizard/
 
