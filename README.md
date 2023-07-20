@@ -1,7 +1,5 @@
 # Rick & Morty KMM
 
-![alt text](./result.png)
-
 * Kotlin/Compose Multiplatform Mobile [KMM]
 * [Compose]
 * [Voyager]
@@ -10,6 +8,10 @@
 * [Sqldelight]
 * [Ktor]
 * [Koin]
+
+## Android, iOS, Desktop
+
+![alt text](./result.png)
 
 ## Run project
 
@@ -36,10 +38,6 @@ Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
 ## Architecture
 
 ![alt text](./kmm.png)
-
-## Result
-
-![](android.gif)![](ios.gif)
 
 ## Especial thank
 
