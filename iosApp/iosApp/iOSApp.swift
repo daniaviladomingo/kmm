@@ -1,20 +1,30 @@
+import UIKit
 import SwiftUI
-import shared
+import ComposeApp
 
 @main
-struct iOSApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
+struct iosApp: App {
+    init() {
+        KoinKt.doInitKoin()
+    }
+
     var body: some Scene {
         WindowGroup {
-            CharactersView()
+            ContentView()
         }
     }
 }
 
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        KoinKt.doInitKoin()
-        return true
+struct ContentView: View {
+    var body: some View {
+        ComposeView().ignoresSafeArea(.keyboard)
     }
+}
+
+struct ComposeView: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        MainKt.MainViewController()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }

@@ -1,12 +1,9 @@
-plugins{
-    id("com.android.application") version Versions.gradle apply false
-    id("com.android.library") version Versions.gradle apply false
-    id("com.squareup.sqldelight") version Versions.sqlDelight apply false
-    kotlin("android") version Versions.kotlin apply false
-    kotlin("multiplatform") version Versions.kotlin apply false
-    kotlin("plugin.serialization") version Versions.kotlin apply false
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+plugins {
+    alias(libs.plugins.multiplatform).apply(false)
+    alias(libs.plugins.compose).apply(false)
+    alias(libs.plugins.cocoapods).apply(false)
+    alias(libs.plugins.android.application).apply(false)
+    alias(libs.plugins.libres).apply(false)
+    alias(libs.plugins.kotlinx.serialization).apply(false)
+    alias(libs.plugins.sqlDelight).apply(false)
 }

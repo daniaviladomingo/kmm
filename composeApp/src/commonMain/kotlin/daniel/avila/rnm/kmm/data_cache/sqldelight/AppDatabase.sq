@@ -1,0 +1,26 @@
+import daniel.avila.rnm.kmm.domain.model.Gender;
+import daniel.avila.rnm.kmm.domain.model.Status;
+
+CREATE TABLE CharacterFavorite(
+    id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    status TEXT AS Status NOT NULL,
+    species TEXT NOT NULL,
+    gender TEXT AS Gender NOT NULL,
+    origin TEXT NOT NULL,
+    location TEXT NOT NULL,
+    image TEXT NOT NULL
+);
+
+insertCharacterFavorite:
+INSERT INTO CharacterFavorite(id, name, status, species, gender, origin, location, image) VALUES (?,?,?,?,?,?,?,?);
+
+removeCharacterFavorite:
+DELETE FROM CharacterFavorite WHERE id = ?;
+
+selectAllCharacterFavorite:
+SELECT * FROM CharacterFavorite;
+
+selectCharacterFavoriteById:
+-- SELECT * FROM CharacterFavorite WHERE id = ?;
+SELECT EXISTS(SELECT 1 FROM CharacterFavorite WHERE id = ? LIMIT 1);
