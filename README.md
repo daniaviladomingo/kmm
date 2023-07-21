@@ -14,6 +14,10 @@
 
 ![alt text](./result.png)
 
+## Architecture
+
+![alt text](./architecture.png)
+
 ## Run project
 
 ### Android
