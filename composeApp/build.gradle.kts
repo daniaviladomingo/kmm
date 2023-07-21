@@ -98,7 +98,7 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
-                implementation(compose.web.core)
+                implementation(compose.html.core)
                 implementation(libs.sqlDelight.driver.sqljs)
                 implementation(npm("sql.js", "1.6.2"))
                 implementation(devNpm("copy-webpack-plugin", "9.1.0"))
@@ -114,7 +114,6 @@ kotlin {
                 implementation(libs.sqlDelight.driver.native)
             }
         }
-
     }
 }
 
@@ -174,6 +173,5 @@ sqldelight {
             packageName.set("daniel.avila.rnm.kmm.data_cache.sqldelight")
             sourceFolders.set(listOf("kotlin"))
         }
-
     }
 }
