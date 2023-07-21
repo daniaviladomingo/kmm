@@ -16,7 +16,9 @@
 
 ## Architecture
 
-![alt text](./architecture.png)
+<p align="center">    
+  <img src="./architecture.png">
+<p>
 
 ## Run project
 
