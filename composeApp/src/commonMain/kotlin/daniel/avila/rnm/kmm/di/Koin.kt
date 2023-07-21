@@ -14,9 +14,9 @@ import daniel.avila.rnm.kmm.domain.interactors.RemoveCharacterFromFavoritesUseCa
 import daniel.avila.rnm.kmm.repository.ICacheData
 import daniel.avila.rnm.kmm.repository.IRemoteData
 import daniel.avila.rnm.kmm.repository.RepositoryImp
-import daniel.avila.rnm.kmm.ui.features.character_detail.CharacterDetailViewModel
-import daniel.avila.rnm.kmm.ui.features.characters.CharactersViewModel
-import daniel.avila.rnm.kmm.ui.features.characters_favorites.CharactersFavoritesViewModel
+import daniel.avila.rnm.kmm.presentation.ui.features.character_detail.CharacterDetailViewModel
+import daniel.avila.rnm.kmm.presentation.ui.features.characters.CharactersViewModel
+import daniel.avila.rnm.kmm.presentation.ui.features.characters_favorites.CharactersFavoritesViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.DEFAULT
