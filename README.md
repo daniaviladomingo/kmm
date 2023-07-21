@@ -17,7 +17,7 @@
 ## Architecture
 
 <p align="center">    
-  <img src="./architecture.png">
+  <img src="./arch.png">
 <p>
 
 ## Run project

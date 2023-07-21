@@ -35,7 +35,7 @@ class CharacterDetailViewModel(
             is CharacterDetailContract.Event.GetCharacter -> getCharacter(event.idCharacter)
             CharacterDetailContract.Event.OnAddCharacterToFavoriteClick -> addToFavorite()
             CharacterDetailContract.Event.OnRemoveCharacterFromFavoriteClick -> removeFromFavorite()
-            CharacterDetailContract.Event.OnTryCheckAgainClick -> characterId?.let { getCharacter(it) }
+            CharacterDetailContract.Event.OnTryCheckAgainClick -> getCharacter(characterId)
             CharacterDetailContract.Event.OnBackPressed -> setEffect { CharacterDetailContract.Effect.BackNavigation }
         }
     }
