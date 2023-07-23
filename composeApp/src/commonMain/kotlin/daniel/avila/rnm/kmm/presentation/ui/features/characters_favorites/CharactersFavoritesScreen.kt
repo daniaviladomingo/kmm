@@ -70,7 +70,7 @@ class CharactersFavoritesScreen : Screen {
                 modifier = Modifier.padding(padding),
                 onTryAgain = { charactersFavoritesViewModel.setEvent(CharactersFavoritesContract.Event.OnTryCheckAgainClick) },
                 onCheckAgain = { charactersFavoritesViewModel.setEvent(CharactersFavoritesContract.Event.OnTryCheckAgainClick) },
-                msgCheckAgain = "You don't favorite characters yet"
+                msgCheckAgain = "You don't have favorite characters yet"
             )
         }
     }

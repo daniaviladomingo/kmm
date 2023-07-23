@@ -22,6 +22,7 @@ class CharacterDetailViewModel(
 
     init {
         getCharacter(characterId)
+        checkIfIsFavorite(characterId)
     }
 
     override fun createInitialState(): CharacterDetailContract.State =
@@ -51,8 +52,6 @@ class CharacterDetailViewModel(
             getCharacterUseCase(characterId)
                 .onSuccess {
                     setState { copy(character = BasicUiState.Success(it)) }
-                    character = it
-                    checkIfIsFavorite(it.id)
                 }.onFailure { setState { copy(character = BasicUiState.Error()) } }
         }
     }

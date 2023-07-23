@@ -41,12 +41,6 @@ To run the application on iPhone device/simulator:
 ### Browser
 Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
 
-
-[//]: # (## Architecture)
-
-[//]: # ()
-[//]: # (![alt text]&#40;./kmm.png&#41;)
-
 ## Especial thanks
 
 * [Alex Fuhrmann] for his fantastic job: [The Rick and Morty Api]
