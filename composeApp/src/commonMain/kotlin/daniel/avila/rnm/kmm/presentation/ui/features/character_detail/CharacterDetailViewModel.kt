@@ -1,11 +1,9 @@
 package daniel.avila.rnm.kmm.presentation.ui.features.character_detail
 
 import cafe.adriel.voyager.core.model.coroutineScope
-import daniel.avila.rnm.kmm.domain.interactors.AddCharacterToFavoritesUseCase
 import daniel.avila.rnm.kmm.domain.interactors.GetCharacterUseCase
 import daniel.avila.rnm.kmm.domain.interactors.IsCharacterFavoriteUseCase
-import daniel.avila.rnm.kmm.domain.interactors.RemoveCharacterFromFavoritesUseCase
-import daniel.avila.rnm.kmm.domain.model.Character
+import daniel.avila.rnm.kmm.domain.interactors.SwitchCharacterFavoriteUseCase
 import daniel.avila.rnm.kmm.presentation.mvi.BaseViewModel
 import daniel.avila.rnm.kmm.presentation.mvi.BasicUiState
 import kotlinx.coroutines.launch
@@ -13,12 +11,9 @@ import kotlinx.coroutines.launch
 class CharacterDetailViewModel(
     private val getCharacterUseCase: GetCharacterUseCase,
     private val isCharacterFavoriteUseCase: IsCharacterFavoriteUseCase,
-    private val addCharacterToFavoritesUseCase: AddCharacterToFavoritesUseCase,
-    private val removeCharacterFromFavoritesUseCase: RemoveCharacterFromFavoritesUseCase,
+    private val switchCharacterFavoriteUseCase: SwitchCharacterFavoriteUseCase,
     private val characterId: Int,
 ) : BaseViewModel<CharacterDetailContract.Event, CharacterDetailContract.State, CharacterDetailContract.Effect>() {
-
-    private lateinit var character: Character
 
     init {
         getCharacter(characterId)
@@ -33,14 +28,7 @@ class CharacterDetailViewModel(
 
     override fun handleEvent(event: CharacterDetailContract.Event) {
         when (event) {
-            CharacterDetailContract.Event.OnFavoriteClick -> {
-                if (currentState.isFavorite) {
-                    removeFromFavorite()
-                } else {
-                    addToFavorite()
-                }
-            }
-
+            CharacterDetailContract.Event.OnFavoriteClick -> switchCharacterFavorite(characterId)
             CharacterDetailContract.Event.OnTryCheckAgainClick -> getCharacter(characterId)
             CharacterDetailContract.Event.OnBackPressed -> setEffect { CharacterDetailContract.Effect.BackNavigation }
         }
@@ -64,22 +52,12 @@ class CharacterDetailViewModel(
         }
     }
 
-    private fun addToFavorite() {
+    private fun switchCharacterFavorite(idCharacter: Int) {
         coroutineScope.launch {
-            addCharacterToFavoritesUseCase(character)
+            switchCharacterFavoriteUseCase(idCharacter)
                 .onSuccess {
-                    setState { copy(isFavorite = true) }
+                    setState { copy(isFavorite = it) }
                     setEffect { CharacterDetailContract.Effect.CharacterAdded }
-                }.onFailure { setState { copy(character = BasicUiState.Error()) } }
-        }
-    }
-
-    private fun removeFromFavorite() {
-        coroutineScope.launch {
-            removeCharacterFromFavoritesUseCase(character.id)
-                .onSuccess {
-                    setState { copy(isFavorite = false) }
-                    setEffect { CharacterDetailContract.Effect.CharacterRemoved }
                 }.onFailure { setState { copy(character = BasicUiState.Error()) } }
         }
     }

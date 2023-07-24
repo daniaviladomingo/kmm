@@ -5,12 +5,11 @@ import daniel.avila.rnm.kmm.data_cache.sqldelight.SharedDatabase
 import daniel.avila.rnm.kmm.data_remote.RemoteDataImp
 import daniel.avila.rnm.kmm.data_remote.model.mapper.ApiCharacterMapper
 import daniel.avila.rnm.kmm.domain.IRepository
-import daniel.avila.rnm.kmm.domain.interactors.AddCharacterToFavoritesUseCase
 import daniel.avila.rnm.kmm.domain.interactors.GetCharacterUseCase
 import daniel.avila.rnm.kmm.domain.interactors.GetCharactersFavoritesUseCase
 import daniel.avila.rnm.kmm.domain.interactors.GetCharactersUseCase
 import daniel.avila.rnm.kmm.domain.interactors.IsCharacterFavoriteUseCase
-import daniel.avila.rnm.kmm.domain.interactors.RemoveCharacterFromFavoritesUseCase
+import daniel.avila.rnm.kmm.domain.interactors.SwitchCharacterFavoriteUseCase
 import daniel.avila.rnm.kmm.repository.ICacheData
 import daniel.avila.rnm.kmm.repository.IRemoteData
 import daniel.avila.rnm.kmm.repository.RepositoryImp
@@ -49,16 +48,15 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
 val viewModelModule = module {
     factory { CharactersViewModel(get()) }
     factory { CharactersFavoritesViewModel(get()) }
-    factory { params -> CharacterDetailViewModel(get(), get(), get(), get(), params.get()) }
+    factory { params -> CharacterDetailViewModel(get(), get(), get(), params.get()) }
 }
 
 val useCasesModule: Module = module {
     factory { GetCharactersUseCase(get(), get()) }
     factory { GetCharactersFavoritesUseCase(get(), get()) }
     factory { GetCharacterUseCase(get(), get()) }
-    factory { AddCharacterToFavoritesUseCase(get(), get()) }
-    factory { RemoveCharacterFromFavoritesUseCase(get(), get()) }
     factory { IsCharacterFavoriteUseCase(get(), get()) }
+    factory { SwitchCharacterFavoriteUseCase(get(), get()) }
 }
 
 val repositoryModule = module {
