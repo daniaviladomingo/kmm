@@ -1,5 +1,6 @@
 package daniel.avila.rnm.kmm.presentation.ui.features.characters_favorites
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -53,9 +54,11 @@ class CharactersFavoritesScreen : Screen {
             }
         ) { padding ->
             ManagementResourceState(
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxSize(),
                 resourceState = state.charactersFavorites,
                 successView = { favorites ->
-                    checkNotNull(favorites)
                     CharactersList(
                         characters = favorites,
                         onCharacterClick = { idCharacter ->
@@ -67,7 +70,6 @@ class CharactersFavoritesScreen : Screen {
                         }
                     )
                 },
-                modifier = Modifier.padding(padding),
                 onTryAgain = { charactersFavoritesViewModel.setEvent(CharactersFavoritesContract.Event.OnTryCheckAgainClick) },
                 onCheckAgain = { charactersFavoritesViewModel.setEvent(CharactersFavoritesContract.Event.OnTryCheckAgainClick) },
                 msgCheckAgain = "You don't have favorite characters yet"

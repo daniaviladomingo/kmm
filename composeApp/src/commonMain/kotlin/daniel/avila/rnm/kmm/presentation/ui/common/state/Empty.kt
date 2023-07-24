@@ -11,12 +11,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Empty(
+    modifier: Modifier = Modifier,
     msg: String,
     onCheckAgain: () -> Unit = {}
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally

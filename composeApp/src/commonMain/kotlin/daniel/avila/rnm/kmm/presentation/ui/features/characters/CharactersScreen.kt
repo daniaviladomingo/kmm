@@ -1,5 +1,6 @@
 package daniel.avila.rnm.kmm.presentation.ui.features.characters
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -40,6 +41,7 @@ class CharactersScreen : Screen {
                 when (effect) {
                     is CharactersContract.Effect.NavigateToDetailCharacter ->
                         navigator.push(CharacterDetailScreen(effect.idCharacter))
+
                     CharactersContract.Effect.NavigateToFavorites ->
                         navigator.push(CharactersFavoritesScreen())
                 }
@@ -50,9 +52,11 @@ class CharactersScreen : Screen {
             topBar = { ActionAppBar { charactersViewModel.setEvent(CharactersContract.Event.OnFavoritesClick) } }
         ) { padding ->
             ManagementResourceState(
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxSize(),
                 resourceState = state.characters,
                 successView = { characters ->
-                    checkNotNull(characters)
                     CharactersList(
                         characters = characters,
                         onCharacterClick = { idCharacter ->
@@ -64,7 +68,6 @@ class CharactersScreen : Screen {
                         }
                     )
                 },
-                modifier = Modifier.padding(padding),
                 onTryAgain = { charactersViewModel.setEvent(CharactersContract.Event.OnTryCheckAgainClick) },
                 onCheckAgain = { charactersViewModel.setEvent(CharactersContract.Event.OnTryCheckAgainClick) },
             )
@@ -74,7 +77,7 @@ class CharactersScreen : Screen {
 
 @Composable
 fun ActionAppBar(
-    onClickFavorite: () -> Unit
+    onClickFavorite: () -> Unit,
 ) {
     TopAppBar(
         title = { Text(text = "Rick & Morty KMM") },

@@ -7,10 +7,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
 fun ActionBarIcon(
+    enabled: Boolean = true,
     onClick: () -> Unit,
     icon: ImageVector
 ) {
-    IconButton(onClick = onClick) {
+    IconButton(
+        onClick = onClick,
+        enabled = enabled,
+    ) {
         Icon(
             imageVector = icon,
             contentDescription = null

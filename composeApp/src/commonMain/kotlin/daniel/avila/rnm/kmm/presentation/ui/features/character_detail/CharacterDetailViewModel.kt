@@ -6,6 +6,7 @@ import daniel.avila.rnm.kmm.domain.interactors.IsCharacterFavoriteUseCase
 import daniel.avila.rnm.kmm.domain.interactors.SwitchCharacterFavoriteUseCase
 import daniel.avila.rnm.kmm.presentation.mvi.BaseViewModel
 import daniel.avila.rnm.kmm.presentation.mvi.BasicUiState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CharacterDetailViewModel(
@@ -23,7 +24,7 @@ class CharacterDetailViewModel(
     override fun createInitialState(): CharacterDetailContract.State =
         CharacterDetailContract.State(
             character = BasicUiState.Idle,
-            isFavorite = false,
+            isFavorite = BasicUiState.Idle,
         )
 
     override fun handleEvent(event: CharacterDetailContract.Event) {
@@ -38,27 +39,29 @@ class CharacterDetailViewModel(
         setState { copy(character = BasicUiState.Loading) }
         coroutineScope.launch {
             getCharacterUseCase(characterId)
-                .onSuccess {
-                    setState { copy(character = BasicUiState.Success(it)) }
-                }.onFailure { setState { copy(character = BasicUiState.Error()) } }
-        }
-    }
-
-    private fun checkIfIsFavorite(idCharacter: Int) {
-        coroutineScope.launch {
-            isCharacterFavoriteUseCase(idCharacter)
-                .onSuccess { setState { copy(isFavorite = it) } }
+                .onSuccess { setState { copy(character = BasicUiState.Success(it)) } }
                 .onFailure { setState { copy(character = BasicUiState.Error()) } }
         }
     }
 
-    private fun switchCharacterFavorite(idCharacter: Int) {
+    private fun checkIfIsFavorite(idCharacter: Int) {
+        setState { copy(isFavorite = BasicUiState.Loading) }
         coroutineScope.launch {
+            isCharacterFavoriteUseCase(idCharacter)
+                .onSuccess { setState { copy(isFavorite = BasicUiState.Success(it)) } }
+                .onFailure { setState { copy(isFavorite = BasicUiState.Error()) } }
+        }
+    }
+
+    private fun switchCharacterFavorite(idCharacter: Int) {
+        setState { copy(isFavorite = BasicUiState.Loading) }
+        coroutineScope.launch {
+            delay(2000)
             switchCharacterFavoriteUseCase(idCharacter)
                 .onSuccess {
-                    setState { copy(isFavorite = it) }
+                    setState { copy(isFavorite = BasicUiState.Success(it)) }
                     setEffect { CharacterDetailContract.Effect.CharacterAdded }
-                }.onFailure { setState { copy(character = BasicUiState.Error()) } }
+                }.onFailure { setState { copy(isFavorite = BasicUiState.Error()) } }
         }
     }
 }

@@ -20,9 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,6 +37,7 @@ import daniel.avila.rnm.kmm.presentation.ui.common.ActionBarIcon
 import daniel.avila.rnm.kmm.presentation.ui.common.ArrowBackIcon
 import daniel.avila.rnm.kmm.presentation.ui.common.state.ManagementResourceState
 import daniel.avila.rnm.kmm.presentation.ext.getScreenModel
+import daniel.avila.rnm.kmm.presentation.mvi.BasicUiState
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.core.parameter.parametersOf
 
@@ -57,8 +55,6 @@ class CharacterDetailScreen(
         val state by characterDetailViewModel.uiState.collectAsState()
 
         val navigator = LocalNavigator.currentOrThrow
-
-        var name by remember { mutableStateOf("") }
 
         LaunchedEffect(key1 = Unit) {
             characterDetailViewModel.effect.collectLatest { effect ->
@@ -78,21 +74,21 @@ class CharacterDetailScreen(
             scaffoldState = scaffoldState,
             topBar = {
                 ActionBar(
-                    name = name,
-                    isFavorite = state.isFavorite,
+                    character = state.character,
+                    favorite = state.isFavorite,
                     onActionFavorite = { characterDetailViewModel.setEvent(CharacterDetailContract.Event.OnFavoriteClick) },
                     onBackPressed = { characterDetailViewModel.setEvent(CharacterDetailContract.Event.OnBackPressed) }
                 )
             }
         ) { padding ->
             ManagementResourceState(
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxSize(),
                 resourceState = state.character,
                 successView = { character ->
-                    requireNotNull(character)
                     CharacterDetail(character)
-                    name = character.name
                 },
-                modifier = Modifier.padding(padding),
                 onTryAgain = { characterDetailViewModel.setEvent(CharacterDetailContract.Event.OnTryCheckAgainClick) },
                 onCheckAgain = { characterDetailViewModel.setEvent(CharacterDetailContract.Event.OnTryCheckAgainClick) },
             )
@@ -137,18 +133,40 @@ fun CharacterDetail(character: Character) {
 
 @Composable
 fun ActionBar(
-    name: String,
-    isFavorite: Boolean,
+    character: BasicUiState<Character>,
+    favorite: BasicUiState<Boolean>,
     onActionFavorite: () -> Unit,
     onBackPressed: () -> Unit,
 ) {
     TopAppBar(
-        title = { Text(text = name) },
+        title = {
+            ManagementResourceState(
+                resourceState = character,
+                successView = { Text(text = it.name) },
+                loadingView = { Text(text = "....") },
+                onCheckAgain = {},
+                onTryAgain = {}
+            )
+        },
         navigationIcon = { ArrowBackIcon(onBackPressed) },
         actions = {
-            ActionBarIcon(
-                onClick = onActionFavorite,
-                icon = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder
+            ManagementResourceState(
+                resourceState = favorite,
+                successView = {
+                    ActionBarIcon(
+                        onClick = onActionFavorite,
+                        icon = if (it) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder
+                    )
+                },
+                loadingView = {
+                    ActionBarIcon(
+                        enabled = false,
+                        onClick = {},
+                        icon = Icons.Filled.Favorite
+                    )
+                },
+                onCheckAgain = {},
+                onTryAgain = {}
             )
         }
     )

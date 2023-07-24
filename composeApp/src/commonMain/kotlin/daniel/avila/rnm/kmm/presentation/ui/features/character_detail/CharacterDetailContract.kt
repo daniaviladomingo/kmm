@@ -15,7 +15,7 @@ interface CharacterDetailContract {
 
     data class State(
         val character: BasicUiState<Character>,
-        val isFavorite: Boolean,
+        val isFavorite: BasicUiState<Boolean>,
     ) : UiState
 
     sealed interface Effect : UiEffect {
