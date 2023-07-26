@@ -15,7 +15,7 @@ fun <T> ManagementResourceState(
     onTryAgain: () -> Unit,
     msgTryAgain: String = "No data to show",
     onCheckAgain: () -> Unit,
-    msgCheckAgain: String = "An error has ocurred"
+    msgCheckAgain: String = "An error has occurred"
 ) {
     Box(
         modifier = modifier,
