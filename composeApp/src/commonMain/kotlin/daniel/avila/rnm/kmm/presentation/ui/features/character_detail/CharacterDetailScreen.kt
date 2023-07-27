@@ -35,9 +35,9 @@ import daniel.avila.rnm.kmm.domain.model.Character
 import daniel.avila.rnm.kmm.domain.model.Status
 import daniel.avila.rnm.kmm.presentation.ui.common.ActionBarIcon
 import daniel.avila.rnm.kmm.presentation.ui.common.ArrowBackIcon
-import daniel.avila.rnm.kmm.presentation.ui.common.state.ManagementResourceState
+import daniel.avila.rnm.kmm.presentation.ui.common.state.ManagementResourceUiState
 import daniel.avila.rnm.kmm.presentation.ext.getScreenModel
-import daniel.avila.rnm.kmm.presentation.mvi.BasicUiState
+import daniel.avila.rnm.kmm.presentation.model.ResourceUiState
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.core.parameter.parametersOf
 
@@ -81,11 +81,11 @@ class CharacterDetailScreen(
                 )
             }
         ) { padding ->
-            ManagementResourceState(
+            ManagementResourceUiState(
                 modifier = Modifier
                     .padding(padding)
                     .fillMaxSize(),
-                resourceState = state.character,
+                resourceUiState = state.character,
                 successView = { character ->
                     CharacterDetail(character)
                 },
@@ -133,15 +133,15 @@ fun CharacterDetail(character: Character) {
 
 @Composable
 fun ActionBar(
-    character: BasicUiState<Character>,
-    favorite: BasicUiState<Boolean>,
+    character: ResourceUiState<Character>,
+    favorite: ResourceUiState<Boolean>,
     onActionFavorite: () -> Unit,
     onBackPressed: () -> Unit,
 ) {
     TopAppBar(
         title = {
-            ManagementResourceState(
-                resourceState = character,
+            ManagementResourceUiState(
+                resourceUiState = character,
                 successView = { Text(text = it.name) },
                 loadingView = { Text(text = "....") },
                 onCheckAgain = {},
@@ -150,8 +150,8 @@ fun ActionBar(
         },
         navigationIcon = { ArrowBackIcon(onBackPressed) },
         actions = {
-            ManagementResourceState(
-                resourceState = favorite,
+            ManagementResourceUiState(
+                resourceUiState = favorite,
                 successView = {
                     ActionBarIcon(
                         onClick = onActionFavorite,

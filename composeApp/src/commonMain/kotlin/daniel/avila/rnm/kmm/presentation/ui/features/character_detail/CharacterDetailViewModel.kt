@@ -5,7 +5,7 @@ import daniel.avila.rnm.kmm.domain.interactors.GetCharacterUseCase
 import daniel.avila.rnm.kmm.domain.interactors.IsCharacterFavoriteUseCase
 import daniel.avila.rnm.kmm.domain.interactors.SwitchCharacterFavoriteUseCase
 import daniel.avila.rnm.kmm.presentation.mvi.BaseViewModel
-import daniel.avila.rnm.kmm.presentation.mvi.BasicUiState
+import daniel.avila.rnm.kmm.presentation.model.ResourceUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -23,8 +23,8 @@ class CharacterDetailViewModel(
 
     override fun createInitialState(): CharacterDetailContract.State =
         CharacterDetailContract.State(
-            character = BasicUiState.Idle,
-            isFavorite = BasicUiState.Idle,
+            character = ResourceUiState.Idle,
+            isFavorite = ResourceUiState.Idle,
         )
 
     override fun handleEvent(event: CharacterDetailContract.Event) {
@@ -36,32 +36,32 @@ class CharacterDetailViewModel(
     }
 
     private fun getCharacter(characterId: Int) {
-        setState { copy(character = BasicUiState.Loading) }
+        setState { copy(character = ResourceUiState.Loading) }
         coroutineScope.launch {
             getCharacterUseCase(characterId)
-                .onSuccess { setState { copy(character = BasicUiState.Success(it)) } }
-                .onFailure { setState { copy(character = BasicUiState.Error()) } }
+                .onSuccess { setState { copy(character = ResourceUiState.Success(it)) } }
+                .onFailure { setState { copy(character = ResourceUiState.Error()) } }
         }
     }
 
     private fun checkIfIsFavorite(idCharacter: Int) {
-        setState { copy(isFavorite = BasicUiState.Loading) }
+        setState { copy(isFavorite = ResourceUiState.Loading) }
         coroutineScope.launch {
             isCharacterFavoriteUseCase(idCharacter)
-                .onSuccess { setState { copy(isFavorite = BasicUiState.Success(it)) } }
-                .onFailure { setState { copy(isFavorite = BasicUiState.Error()) } }
+                .onSuccess { setState { copy(isFavorite = ResourceUiState.Success(it)) } }
+                .onFailure { setState { copy(isFavorite = ResourceUiState.Error()) } }
         }
     }
 
     private fun switchCharacterFavorite(idCharacter: Int) {
-        setState { copy(isFavorite = BasicUiState.Loading) }
+        setState { copy(isFavorite = ResourceUiState.Loading) }
         coroutineScope.launch {
             delay(2000)
             switchCharacterFavoriteUseCase(idCharacter)
                 .onSuccess {
-                    setState { copy(isFavorite = BasicUiState.Success(it)) }
+                    setState { copy(isFavorite = ResourceUiState.Success(it)) }
                     setEffect { CharacterDetailContract.Effect.CharacterAdded }
-                }.onFailure { setState { copy(isFavorite = BasicUiState.Error()) } }
+                }.onFailure { setState { copy(isFavorite = ResourceUiState.Error()) } }
         }
     }
 }

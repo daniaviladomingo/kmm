@@ -17,7 +17,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import daniel.avila.rnm.kmm.presentation.ui.common.ArrowBackIcon
 import daniel.avila.rnm.kmm.presentation.ui.common.CharactersList
-import daniel.avila.rnm.kmm.presentation.ui.common.state.ManagementResourceState
+import daniel.avila.rnm.kmm.presentation.ui.common.state.ManagementResourceUiState
 import daniel.avila.rnm.kmm.presentation.ext.getScreenModel
 import daniel.avila.rnm.kmm.presentation.ui.features.character_detail.CharacterDetailScreen
 import kotlinx.coroutines.flow.collectLatest
@@ -53,11 +53,11 @@ class CharactersFavoritesScreen : Screen {
                 })
             }
         ) { padding ->
-            ManagementResourceState(
+            ManagementResourceUiState(
                 modifier = Modifier
                     .padding(padding)
                     .fillMaxSize(),
-                resourceState = state.charactersFavorites,
+                resourceUiState = state.charactersFavorites,
                 successView = { favorites ->
                     CharactersList(
                         characters = favorites,

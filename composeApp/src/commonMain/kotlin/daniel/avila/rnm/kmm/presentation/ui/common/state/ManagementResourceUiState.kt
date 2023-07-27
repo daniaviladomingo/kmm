@@ -4,12 +4,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import daniel.avila.rnm.kmm.presentation.mvi.BasicUiState
+import daniel.avila.rnm.kmm.presentation.model.ResourceUiState
 
 @Composable
-fun <T> ManagementResourceState(
+fun <T> ManagementResourceUiState(
     modifier: Modifier = Modifier,
-    resourceState: BasicUiState<T>,
+    resourceUiState: ResourceUiState<T>,
     successView: @Composable (data: T) -> Unit,
     loadingView: @Composable () -> Unit = { Loading() },
     onTryAgain: () -> Unit,
@@ -21,12 +21,12 @@ fun <T> ManagementResourceState(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        when (resourceState) {
-            is BasicUiState.Empty -> Empty(modifier = modifier, onCheckAgain = onCheckAgain, msg = msgCheckAgain)
-            is BasicUiState.Error -> Error(modifier = modifier, onTryAgain = onTryAgain, msg = msgTryAgain)
-            BasicUiState.Loading -> loadingView()
-            is BasicUiState.Success -> successView(resourceState.data)
-            BasicUiState.Idle -> Unit
+        when (resourceUiState) {
+            is ResourceUiState.Empty -> Empty(modifier = modifier, onCheckAgain = onCheckAgain, msg = msgCheckAgain)
+            is ResourceUiState.Error -> Error(modifier = modifier, onTryAgain = onTryAgain, msg = msgTryAgain)
+            ResourceUiState.Loading -> loadingView()
+            is ResourceUiState.Success -> successView(resourceUiState.data)
+            ResourceUiState.Idle -> Unit
         }
     }
 }

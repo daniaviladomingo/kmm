@@ -3,7 +3,7 @@ package daniel.avila.rnm.kmm.presentation.ui.features.characters_favorites
 import cafe.adriel.voyager.core.model.coroutineScope
 import daniel.avila.rnm.kmm.domain.interactors.GetCharactersFavoritesUseCase
 import daniel.avila.rnm.kmm.presentation.mvi.BaseViewModel
-import daniel.avila.rnm.kmm.presentation.mvi.BasicUiState
+import daniel.avila.rnm.kmm.presentation.model.ResourceUiState
 import kotlinx.coroutines.launch
 
 class CharactersFavoritesViewModel(
@@ -16,7 +16,7 @@ class CharactersFavoritesViewModel(
 
     override fun createInitialState(): CharactersFavoritesContract.State =
         CharactersFavoritesContract.State(
-            charactersFavorites = BasicUiState.Idle
+            charactersFavorites = ResourceUiState.Idle
         )
 
     override fun handleEvent(event: CharactersFavoritesContract.Event) {
@@ -31,7 +31,7 @@ class CharactersFavoritesViewModel(
     }
 
     private fun getCharactersFavorites() {
-        setState { copy(charactersFavorites = BasicUiState.Loading) }
+        setState { copy(charactersFavorites = ResourceUiState.Loading) }
         coroutineScope.launch {
             getCharactersFavoritesUseCase(Unit).collect {
                 it.onSuccess {
@@ -39,12 +39,12 @@ class CharactersFavoritesViewModel(
                         copy(
                             charactersFavorites =
                             if (it.isEmpty())
-                                BasicUiState.Empty
+                                ResourceUiState.Empty
                             else
-                                BasicUiState.Success(it)
+                                ResourceUiState.Success(it)
                         )
                     }
-                }.onFailure { setState { copy(charactersFavorites = BasicUiState.Error()) } }
+                }.onFailure { setState { copy(charactersFavorites = ResourceUiState.Error()) } }
             }
         }
     }

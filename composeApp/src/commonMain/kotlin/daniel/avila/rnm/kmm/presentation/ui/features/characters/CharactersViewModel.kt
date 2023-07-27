@@ -3,7 +3,7 @@ package daniel.avila.rnm.kmm.presentation.ui.features.characters
 import cafe.adriel.voyager.core.model.coroutineScope
 import daniel.avila.rnm.kmm.domain.interactors.GetCharactersUseCase
 import daniel.avila.rnm.kmm.presentation.mvi.BaseViewModel
-import daniel.avila.rnm.kmm.presentation.mvi.BasicUiState
+import daniel.avila.rnm.kmm.presentation.model.ResourceUiState
 import kotlinx.coroutines.launch
 
 class CharactersViewModel(
@@ -15,7 +15,7 @@ class CharactersViewModel(
     }
 
     override fun createInitialState(): CharactersContract.State =
-        CharactersContract.State(characters = BasicUiState.Idle)
+        CharactersContract.State(characters = ResourceUiState.Idle)
 
     override fun handleEvent(event: CharactersContract.Event) {
         when (event) {
@@ -31,20 +31,20 @@ class CharactersViewModel(
     }
 
     private fun getCharacters() {
-        setState { copy(characters = BasicUiState.Loading) }
+        setState { copy(characters = ResourceUiState.Loading) }
         coroutineScope.launch {
             getCharactersUseCase(Unit)
                 .onSuccess {
                     setState {
                         copy(
                             characters = if (it.isEmpty())
-                                BasicUiState.Empty
+                                ResourceUiState.Empty
                             else
-                                BasicUiState.Success(it)
+                                ResourceUiState.Success(it)
                         )
                     }
                 }
-                .onFailure { setState { copy(characters = BasicUiState.Error()) } }
+                .onFailure { setState { copy(characters = ResourceUiState.Error()) } }
         }
     }
 }

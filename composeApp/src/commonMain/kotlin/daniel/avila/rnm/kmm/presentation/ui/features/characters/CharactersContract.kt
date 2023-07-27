@@ -1,7 +1,7 @@
 package daniel.avila.rnm.kmm.presentation.ui.features.characters
 
 import daniel.avila.rnm.kmm.domain.model.Character
-import daniel.avila.rnm.kmm.presentation.mvi.BasicUiState
+import daniel.avila.rnm.kmm.presentation.model.ResourceUiState
 import daniel.avila.rnm.kmm.presentation.mvi.UiEffect
 import daniel.avila.rnm.kmm.presentation.mvi.UiEvent
 import daniel.avila.rnm.kmm.presentation.mvi.UiState
@@ -14,7 +14,7 @@ interface CharactersContract {
     }
 
     data class State(
-        val characters: BasicUiState<List<Character>>
+        val characters: ResourceUiState<List<Character>>
     ) : UiState
 
     sealed interface Effect : UiEffect {
