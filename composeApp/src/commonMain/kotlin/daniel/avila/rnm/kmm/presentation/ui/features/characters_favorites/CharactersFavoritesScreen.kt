@@ -13,12 +13,12 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
+import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import daniel.avila.rnm.kmm.presentation.ui.common.ArrowBackIcon
 import daniel.avila.rnm.kmm.presentation.ui.common.CharactersList
 import daniel.avila.rnm.kmm.presentation.ui.common.state.ManagementResourceUiState
-import daniel.avila.rnm.kmm.presentation.ext.getScreenModel
 import daniel.avila.rnm.kmm.presentation.ui.features.character_detail.CharacterDetailScreen
 import kotlinx.coroutines.flow.collectLatest
 

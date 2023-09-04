@@ -6,7 +6,6 @@ import daniel.avila.rnm.kmm.domain.interactors.IsCharacterFavoriteUseCase
 import daniel.avila.rnm.kmm.domain.interactors.SwitchCharacterFavoriteUseCase
 import daniel.avila.rnm.kmm.presentation.mvi.BaseViewModel
 import daniel.avila.rnm.kmm.presentation.model.ResourceUiState
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CharacterDetailViewModel(
@@ -56,7 +55,6 @@ class CharacterDetailViewModel(
     private fun switchCharacterFavorite(idCharacter: Int) {
         setState { copy(isFavorite = ResourceUiState.Loading) }
         coroutineScope.launch {
-            delay(2000)
             switchCharacterFavoriteUseCase(idCharacter)
                 .onSuccess {
                     setState { copy(isFavorite = ResourceUiState.Success(it)) }

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
+import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.seiko.imageloader.rememberAsyncImagePainter
@@ -36,7 +37,6 @@ import daniel.avila.rnm.kmm.domain.model.Status
 import daniel.avila.rnm.kmm.presentation.ui.common.ActionBarIcon
 import daniel.avila.rnm.kmm.presentation.ui.common.ArrowBackIcon
 import daniel.avila.rnm.kmm.presentation.ui.common.state.ManagementResourceUiState
-import daniel.avila.rnm.kmm.presentation.ext.getScreenModel
 import daniel.avila.rnm.kmm.presentation.model.ResourceUiState
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.core.parameter.parametersOf
