@@ -13,7 +13,7 @@ plugins {
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     targetHierarchy.default()
-    android {
+    androidTarget {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "1.8"
@@ -53,7 +53,7 @@ kotlin {
                 implementation(compose.material3)
                 implementation(libs.libres)
                 implementation(libs.voyager.navigator)
-                // implementation(libs.voyager.koin)
+                implementation(libs.voyager.koin)
                 implementation(libs.composeImageLoader)
                 implementation(libs.napier)
                 implementation(libs.kotlinx.coroutines.core)
@@ -119,11 +119,11 @@ kotlin {
 
 android {
     namespace = "daniel.avila.rnm.kmm"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
 
         applicationId = "daniel.avila.rnm.kmm.androidApp"
         versionCode = 1
@@ -137,7 +137,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    packagingOptions {
+    packaging {
         resources.excludes.add("META-INF/**")
     }
 }
