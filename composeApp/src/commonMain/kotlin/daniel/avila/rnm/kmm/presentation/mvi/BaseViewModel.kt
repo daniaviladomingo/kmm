@@ -5,12 +5,8 @@ import cafe.adriel.voyager.core.model.coroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
 
-abstract class BaseViewModel<Event : UiEvent, State : UiState, Effect : UiEffect> :
-    ScreenModel,
-    KoinComponent
-{
+abstract class BaseViewModel<Event : UiEvent, State : UiState, Effect : UiEffect> : ScreenModel {
     private val initialState: State by lazy { createInitialState() }
     abstract fun createInitialState(): State
 
@@ -69,5 +65,4 @@ abstract class BaseViewModel<Event : UiEvent, State : UiState, Effect : UiEffect
         val effectValue = builder()
         coroutineScope.launch { _effect.send(effectValue) }
     }
-
 }
